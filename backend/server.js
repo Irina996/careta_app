@@ -1,7 +1,6 @@
-const express = require("express")
-const dotenv = require("dotenv")
-const pg = require("pg")
-const bcrypt = require("bcrypt")
+import express from 'express'
+import dotenv from 'dotenv'
+import pg from 'pg'
 
 const app = express();
 
@@ -29,6 +28,4 @@ pool.connect().then(() => {
 const port = process.env.PORT || 5000;
 app.listen(port, async () => {
     console.log(`Server at: http://localhost:${port}`)
-    const hashedPassword = await bcrypt.hash("admin_password", 10);
-    console.log(hashedPassword)
 });
