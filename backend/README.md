@@ -10,6 +10,6 @@ Runs the app in the development mode.
 
 Create tables in the database and add required data.
 
-### `npm run seed-data`
+### `npm run seed`
 
 Seeding database.
