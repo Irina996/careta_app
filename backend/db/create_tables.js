@@ -16,10 +16,10 @@ const pool = new pg.Pool({
     port: process.env.PGPORT,
 });
 
-pool.connect();
+const client = await pool.connect();
 
 // create tables
-console.log('creating tables...')
+console.log('Creating tables...')
 await pool.query(create_tables_sql);
 
 // add admin
@@ -28,7 +28,7 @@ if (process.env.ADMINMAIL && process.env.ADMINPASSWORD) {
     var password = await bcrypt.hash(process.env.ADMINPASSWORD, 10);
     var user_id = 0;
 
-    console.log('adding admin...')
+    console.log('Adding admin...')
 
     await pool.query(
         'INSERT INTO public.User(email, user_password) VALUES ($1, $2) RETURNING user_id;', 
@@ -40,11 +40,10 @@ if (process.env.ADMINMAIL && process.env.ADMINPASSWORD) {
 }
 
 // add some data
-console.log('adding some required data...')
+console.log('Adding some required data...')
 await pool.query(init_data_sql);
 
+client.release();
 pool.end();
 
-console.log("Tables created");
-
-// pool.end();
+console.log("Successfully ended");

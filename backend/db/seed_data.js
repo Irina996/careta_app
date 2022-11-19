@@ -19,13 +19,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARYAPISECRET 
 });
 
-console.log('adding car brands...')
+console.log('Adding car brands...')
 var brand_array = fs.readFileSync('./db/seed_data/brand.txt').toString().split('\n');
 for (i in brand_array) {
     await pool.query('INSERT INTO Car_brand(brand_name) VALUES ($1);', [i])
 }
 
-console.log('adding car models...')
+console.log('Adding car models...')
 var model_array = fs.readFileSync('./db/seed_data/model.txt').toString().split('\n');
 for (i in model_array) {
     await pool.query('INSERT INTO Car_model(model_name) VALUES ($1);', [i])
@@ -39,7 +39,7 @@ img_paths.sort(function(a, b) {
     });
 });
 
-console.log('adding car groups...')
+console.log('Adding car groups...')
 var data_array = fs.readFileSync('./db/seed_data/group.txt').toString().split("\n");
 for (var i=0; i < data_array.length; i++) {
     var img;

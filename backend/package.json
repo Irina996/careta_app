@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "create-db": "node ./db/create_tables.js",
-    "seed-data": "node ./db/seed_data.js"
+    "seed": "node ./db/seed_data.js"
   },
   "keywords": [],
   "author": "",
