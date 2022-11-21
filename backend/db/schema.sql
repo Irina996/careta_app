@@ -61,7 +61,7 @@ CREATE TABLE public.Car_group (
 	creation_year INTEGER NOT NULL,
 	fuel_consumption REAL NOT NULL,
 	seats_number INTEGER NOT NULL,
-	image BYTEA NOT NULL,
+	image VARCHAR(300),
 	car_cost REAL NOT NULL
 );
 
@@ -70,6 +70,11 @@ CREATE TABLE public.Car (
 	car_group_id INTEGER NOT NULL REFERENCES public.Car_group(group_id),
 	color_id INTEGER NOT NULL REFERENCES public.Color(color_id),
 	car_number text NOT NULL
+);
+
+CREATE TABLE public.State(
+    state_id SERIAL PRIMARY KEY,
+    state_name text
 );
 
 CREATE TABLE public.Booking(
@@ -81,14 +86,14 @@ CREATE TABLE public.Booking(
 	baby_seat_amount INTEGER NOT NULL,
 	is_driver BOOLEAN NOT NULL,
 	booking_date date NOT NULL,
-	booking_state text
+	booking_state INTEGER NOT NULL REFERENCES public.State(state_id)
 );
 
 CREATE TABLE public.Rent(
 	rent_id SERIAL PRIMARY KEY,
 	booking_id INTEGER NOT NULL REFERENCES public.Booking(booking_id),
 	rent_cost REAL NOT NULL,
-	rent_state text NOT NULL
+	rent_state INTEGER NOT NULL REFERENCES public.State(state_id)
 );
 
 CREATE TABLE public.Fine(
