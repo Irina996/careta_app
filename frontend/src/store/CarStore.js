@@ -3,7 +3,10 @@ import {makeAutoObservable} from 'mobx';
 export default class CarStore{
     constructor() {
         this._brand = [
-            {id:1, name: "toyota"}
+            {id:1, name: "toyota"},
+            {id:2, name: "bmw"},
+            {id:3, name: "renault"},
+            {id:4, name: "lamborgini"}
         ]
         this._model = [
             {id:1, name: "corolla"}
@@ -20,6 +23,7 @@ export default class CarStore{
         this._car = [
             {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'}
         ]
+        this._selectedbrand = {}
         makeAutoObservable(this)
     }
 
@@ -41,6 +45,9 @@ export default class CarStore{
     setCar(car){
         this._car = car;
     }
+    setSelectedBrand(brand){
+        this._selectedbrand = brand
+    }
 
     get brand(){
         return this._brand
@@ -59,5 +66,8 @@ export default class CarStore{
     }
     get car(){
         return this._car
+    }
+    get selectedBrand(){
+        return this._selectedbrand
     }
 }
