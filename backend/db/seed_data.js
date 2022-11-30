@@ -22,13 +22,13 @@ cloudinary.config({
 console.log('Adding car brands...')
 var brand_array = fs.readFileSync('./db/seed_data/brand.txt').toString().split('\n');
 for (i in brand_array) {
-    await pool.query('INSERT INTO Car_brand(brand_name) VALUES ($1);', [i])
+    await pool.query('INSERT INTO Car_brand(brand_name) VALUES ($1);', [brand_array[i]])
 }
 
 console.log('Adding car models...')
 var model_array = fs.readFileSync('./db/seed_data/model.txt').toString().split('\n');
 for (i in model_array) {
-    await pool.query('INSERT INTO Car_model(model_name) VALUES ($1);', [i])
+    await pool.query('INSERT INTO Car_model(model_name) VALUES ($1);', [model_array[i]])
 }
 
 var img_paths = fs.readdirSync('./db/seed_data/images/');
