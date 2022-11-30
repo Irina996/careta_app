@@ -62,7 +62,32 @@ const login = async(req, res, next) => {
     }).catch(err => console.log(err))
 }
 
+const carsFilter = async (req, res, next) => {
+    const validationRule = {
+        "brand": "present",
+        "model": "present",
+        "class_name": "present",
+        "gearbox_type": "present",
+        "year_start": "required|digits:4",
+        "year_finish": "required|digits:4",
+        "seats_number": "required"
+    }
+    await validator(req.body, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412)
+                .send({
+                    success: false,
+                    message: 'Validation failed',
+                    data: err
+                });
+        } else {
+            next();
+        }
+    }).catch(err => console.log(err))
+}
+
 export {
     register, 
     login,
+    carsFilter,
 }
