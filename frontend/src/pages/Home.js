@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Col, Form, Button, Row } from 'react-bootstrap';
 import BrandBar from '../components/BrandBar';
+import CarList from '../components/CarList';
 import TypeBar from '../components/TypeBar';
 
 const Home = () => {
@@ -11,7 +12,11 @@ const Home = () => {
                     <TypeBar/>
                 </Col>
                 <Col md={9}>
-                <BrandBar/>
+                {/* <BrandBar/> */}
+                <div className="d-flex align-items-center">
+                    <h2 className=" mx-auto mt-5 mb-5">Cars for book</h2>
+                </div>
+                <CarList/>
                 </Col>
             </Row>
         </Container>

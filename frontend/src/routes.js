@@ -1,11 +1,12 @@
 import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BOOKING_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, RENTADMIN_ROUTE, FINESADMIN_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, BOOKING_ROUTE, PAYMENT_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, RENTADMIN_ROUTE, FINESADMIN_ROUTE} from "./utils/consts";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Car from "./pages/Car";
 import Rent from "./pages/Rent";
 import Fines from "./pages/Fines";
+import Payment from "./pages/Payment";
 
 export const authRoutes = [
     {
@@ -23,6 +24,10 @@ export const authRoutes = [
     {
         path: FINES_ROUTE,
         Component: Fines
+    },
+    {
+        path: PAYMENT_ROUTE,
+        Component: Payment
     },
     {
         path: RENTADMIN_ROUTE,
