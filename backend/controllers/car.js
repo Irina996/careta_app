@@ -9,12 +9,20 @@ const getCars = async(req, res) => {
         year_start,
         year_finish,
         seats_number,
+        start_date, 
+        end_date
     } = req.body;
 
     try {
+        //TODO: get page from client
+        let page = 0;
+        let rows_count = 5;
+
+        let offset_number = page * rows_count;
         let cars = await selectCarGroup(brand, model, 
             class_name, gearbox_type, year_start, 
-            year_finish, seats_number
+            year_finish, seats_number, offset_number,
+            rows_count, start_date, end_date
         );
         //console.log(cars);
         
