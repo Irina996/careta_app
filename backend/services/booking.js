@@ -51,16 +51,16 @@ const updateBooking = async(booking_id, state_id) => {
 // return booking cost(days * 24 hours * car cost)
 const selectBookingCost = async(booking_id) => {
     let query_text = 
-        `SELECT Car_group.car_cost * 24 * (Booking.end_date - Booking.start_date) 
+        `SELECT Car_group.car_cost * 24 * (Booking.end_date - Booking.start_date + 1) 
             as booking_cost 
         FROM Booking
             INNER JOIN Car ON Car.car_id = Booking.car_id
             INNER JOIN Car_group ON Car_group.group_id = Car.car_group_id
-        WHERE Booking.booking_id = ;1;`;
+        WHERE Booking.booking_id = $1;`;
     let query_params = [booking_id];
 
     let result = await db_query(query_text, query_params);
-    return result[0].car_cost;
+    return result[0].booking_cost;
 }
 
 export {

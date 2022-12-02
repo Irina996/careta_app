@@ -62,7 +62,7 @@ const cancelBooking = async(req, res) => {
 }
 
 const payBooking = async(req, res) => {
-    const booking_id = {id} = req.body;
+    const booking_id = req.body.id; //booking_id
 
     let rent_cost = await selectBookingCost(booking_id);
 
