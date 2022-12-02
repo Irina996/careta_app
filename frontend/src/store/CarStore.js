@@ -20,8 +20,12 @@ export default class CarStore{
         this._color = [
             {id:1, name: "silver"}
         ]
-        this._car = [
-            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'}
+        this._cars = [
+            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
+            {id:2, brand_id:2, class_id:2, model_id:2, gearbox_id:2, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
+            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
+            {id:4, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
+            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
         ]
         this._selectedbrand = {}
         makeAutoObservable(this)
@@ -42,8 +46,8 @@ export default class CarStore{
     setGearbox(gearbox){
         this._gearbox = gearbox;
     }
-    setCar(car){
-        this._car = car;
+    setCars(cars){
+        this._cars = cars;
     }
     setSelectedBrand(brand){
         this._selectedbrand = brand
@@ -64,8 +68,8 @@ export default class CarStore{
     get gearbox(){
         return this._gearbox
     }
-    get car(){
-        return this._car
+    get cars(){
+        return this._cars
     }
     get selectedBrand(){
         return this._selectedbrand

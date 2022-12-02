@@ -1,30 +1,48 @@
 import React from 'react';
 import { Container, Card, Form, Button, Row } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
+import { login, registration } from '../http/userAPI';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
+import {useState} from 'react'
 
 const Auth = () => {
-
     const location = useLocation()
     const isLogin = location.pathname === LOGIN_ROUTE
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const click = async () =>{
+        if(isLogin){
+            const response = await login()
+        }else{
+            const response = await registration(email, password)
+            console.log(response)
+        }
+
+        
+    }
+
     return (
         <Container 
             className="d-flex justify-content-center align-items-center"
             style={{height: window.innerHeight - 54}}>
             <Card style={{width: 600}} className="p-5">
                 <h2 className="m-auto">{isLogin ? 'Login' : 'Registration'}</h2>
-
-                
                 <Form classname="d-flex flex-column ">
                 {isLogin ?
                     <div>
                     <Form.Control
                         className="mt-3"
                         placeholder = "Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        type="password"
                     />
                     </div>
                 :
@@ -59,12 +77,12 @@ const Auth = () => {
 
                     <Row className="d-flex justify-content-center align-items-center pl-3 pr-3">
                         {isLogin ?
-                        <Button
+                        <Button onClick={click}
                             className="mt-4"
                             variant={"outline-secondary"}> Login
                         </Button>
                         :
-                        <Button
+                        <Button onClick={click}
                             className="mt-4"
                             variant={"outline-secondary"}> Register
                         </Button>

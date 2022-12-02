@@ -8,6 +8,7 @@ import Fines from '../pages/Fines';
 import Admin from '../pages/Admin';
 import Car from '../pages/Car';
 import Auth from '../pages/Auth';
+import Payment from '../pages/Payment';
 import { HOME_ROUTE } from '../utils/consts';
 import { Context } from '..';
 
@@ -23,6 +24,7 @@ const AppRouter = () => {
             <Route path='/fines' element={user.isAuth ? (<Fines />) : (<Navigate replace to={'/'}/>)}/> ,
             <Route path='/car/:id' element={<Car />}/>  
             <Route path='/car' element={<Car />}/>  
+            <Route path='/payment' element={<Payment />}/>  
             <Route path='/login' element={<Auth />}/> 
             <Route path='/registration' element={<Auth />}/> 
         </Routes>
