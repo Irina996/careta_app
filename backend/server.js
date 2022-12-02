@@ -1,31 +1,37 @@
 import express from 'express'
-import dotenv from 'dotenv'
-import pg from 'pg'
+import pool from './config/db.js';
+
+import userRouter from './routes/user.js';
+import clientRouter from './routes/client.js';
+import mainRouter from './routes/home.js';
+import bookingRouter from './routes/booking.js';
+import rentalRouter from './routes/rent.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// connect to db
-dotenv.config();
-const pool = new pg.Pool({
-    user: process.env.PGUSER,
-    password: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
-});
-pool.connect().then(() => {
-
-    console.log("Connected to DB");
-
-}).catch((error) => {
-    console.log(error.message);
-});
+app.use('/user/', userRouter);
+app.use('/client/', clientRouter);
+app.use('/home', mainRouter);
+app.use('/booking', bookingRouter);
+app.use('/rent', rentalRouter);
 
 // create port
 const port = process.env.PORT || 5000;
-app.listen(port, async () => {
-    console.log(`Server at: http://localhost:${port}`)
+// connect to db
+pool.connect().then(() => {
+    console.log("Connected to DB");
+
+    app.listen(port, async () => {
+        console.log(`Server at: http://localhost:${port}`);
+
+        
+
+    });
+
+}).catch((error) => {
+    console.log(error);
+    console.log(error.message);
 });
