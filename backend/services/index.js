@@ -1,9 +1,9 @@
 import pool from '../config/db.js';
 import {insertUser, selectUser, selectUserIdByEmail} from './user.js';
 import {insertClient, selectClient} from './client.js';
-import { selectCarGroup, selectCarInfo } from './car.js';
-import { selectBookingList } from './booking.js';
-import { selectRentalList } from './rental.js';
+import { selectCarGroup, selectCarInfo, selectAvailableCarId } from './car.js';
+import { selectBookingList, insertBooking, updateBooking, selectBookingCost } from './booking.js';
+import { selectRentalList, insertRent } from './rent.js';
 
 
 const db_query = async (query_text, params) => {
@@ -37,4 +37,9 @@ export {
     selectCarInfo,
     selectBookingList,
     selectRentalList,
+    selectAvailableCarId,
+    insertBooking,
+    updateBooking,
+    insertRent,
+    selectBookingCost,
 }

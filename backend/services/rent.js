@@ -24,6 +24,16 @@ const selectRentalList = async(client_id) => {
     return result;
 }
 
+const insertRent = async(booking_id, rent_cost, rent_state) => {
+    let query_text = 
+        `INSERT INTO Rent(booking_id, rent_cost, rent_state) 
+        VALUES ($1, $2, $3);`;
+    let query_params = [booking_id, rent_cost, rent_state];
+    let result = await db_query(query_text, query_params);
+    return result;
+}
+
 export {
     selectRentalList,
+    insertRent,
 }

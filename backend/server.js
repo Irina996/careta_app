@@ -5,7 +5,7 @@ import userRouter from './routes/user.js';
 import clientRouter from './routes/client.js';
 import mainRouter from './routes/home.js';
 import bookingRouter from './routes/booking.js';
-import rentalRouter from './routes/rental.js';
+import rentalRouter from './routes/rent.js';
 
 const app = express();
 
