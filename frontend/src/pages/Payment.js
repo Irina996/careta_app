@@ -1,12 +1,14 @@
 import React from 'react';
 import { Container, Card, Form, Button, Row } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
+import { LOGIN_ROUTE, RENT_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
+import {useNavigate} from 'react-router-dom'
 
 const Payment = () => {
-
     const location = useLocation()
     const isLogin = location.pathname === LOGIN_ROUTE
+    const navigate = useNavigate()
+
     return (
         <Container 
             className="d-flex justify-content-center align-items-center"
@@ -36,7 +38,7 @@ const Payment = () => {
 
                 
                     <Row className="d-flex justify-content-center align-items-center pl-3 pr-3">
-                        <Button
+                        <Button onClick={() => navigate(RENT_ROUTE)}
                             className="mt-4"
                             variant={"outline-secondary"}> Pay
                         </Button>
