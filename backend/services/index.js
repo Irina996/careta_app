@@ -4,6 +4,7 @@ import {insertClient, selectClient} from './client.js';
 import { selectCarGroup, selectCarInfo, selectAvailableCarId } from './car.js';
 import { selectBookingList, insertBooking, updateBooking, selectBookingCost } from './booking.js';
 import { selectRentalList, insertRent } from './rent.js';
+import { selectFines, deleteFines } from './fine.js';
 
 
 const db_query = async (query_text, params) => {
@@ -42,4 +43,6 @@ export {
     updateBooking,
     insertRent,
     selectBookingCost,
+    selectFines,
+    deleteFines,
 }

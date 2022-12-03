@@ -6,6 +6,7 @@ import clientRouter from './routes/client.js';
 import mainRouter from './routes/home.js';
 import bookingRouter from './routes/booking.js';
 import rentalRouter from './routes/rent.js';
+import fineRouter from './routes/fine.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/client/', clientRouter);
 app.use('/home', mainRouter);
 app.use('/booking', bookingRouter);
 app.use('/rent', rentalRouter);
+app.use('/fines/', fineRouter);
 
 // create port
 const port = process.env.PORT || 5000;
