@@ -17,10 +17,10 @@ const AdminBar = observer (() => {
     return(
         <Container
              className="d-flex  align-items-center "
-             style={{height: window.innerHeight - 54}}>
-             <Card style={{width: 700}} className="p-3">
-             <h2 className="text-center">Add car</h2>
+             >
+             <Card style={{width: 700}} className="p-3" >
              <Form classname="d-flex flex-column ">
+                 
              <form >
                 <div class="form-group">
                 <label for="exampleFormControlFile1"></label>
@@ -29,43 +29,57 @@ const AdminBar = observer (() => {
             </form>
              <h5 >Brand</h5>
                 <Form.Control
-                    className="mb-3 mx-auto "
+                    className="mb-1 mx-auto "
                     placeholder = ""
                 />
                 <h5 >Model</h5>
                 <Form.Control
-                    className="mb-3 mx-auto"
+                    className="mb-1 mx-auto"
                     placeholder = ""
                 />
                 <h5 >Class</h5>
-                <ButtonGroup className="mb-3 mx-auto " >
+                <ButtonGroup className="mb-1 mx-auto " >
                     <Button  variant={"outline-secondary"}>Premium</Button>
                     <Button  variant={"outline-secondary"}>Middle</Button>
                     <Button  variant={"outline-secondary"}>Economy</Button>
                 </ButtonGroup>
                 <h5 >Year</h5>
                 <Form.Control
-                    className="mb-3 mx-auto"
+                    className="mb-1 mx-auto"
                     placeholder = ""
                 />
-                <h5 className="mt-3 mx-auto ">Gearbox</h5>
-                <ButtonGroup  className="mb-3 mx-auto ">
+                <h5 >Car number</h5>
+                <Form.Control
+                    className="mb-1 mx-auto "
+                    placeholder = ""
+                />
+                <h5 >Color</h5>
+                <Form.Control
+                    className="mb-1 mx-auto "
+                    placeholder = ""
+                />
+ 
+                <h5 className="mt-1 mx-auto ">Gearbox</h5>
+                <ButtonGroup  className="mb-1 mx-auto ">
                     <Button  variant={"outline-secondary"}>Mechanic</Button>
                     <Button  variant={"outline-secondary"}>Authomath</Button>
                 </ButtonGroup>
                 <h5 >Number of seats</h5>
                 <Form.Control
-                    className="mb-3 mx-auto "
+                    className="mb-1 mx-auto "
                     placeholder = ""
                 />
                 <h5 >Cost</h5>
                 <Form.Control
-                    className="mb-3 mx-auto "
+                    className="mb-1 mx-auto "
                     placeholder = ""
                 />
+
+                
+
                 <Row className="d-flex justify-content-center align-items-center mx-5">
                 <Button
-                    className="mx-auto mt-3"
+                    className="mx-auto mt-1"
                     variant={"outline-secondary"}> Save
                 </Button>
                 </Row>

@@ -16,9 +16,9 @@ const TypeBar = observer (() => {
     return(
         <Container
              className="d-flex  align-items-center "
-             style={{height: window.innerHeight - 54}}>
+             >
              <Card style={{width: 700}} className="p-3">
-             <h2 className="text-center">Filter</h2>
+          
              <Form classname="d-flex flex-column p-5">
              <h5 >Brand</h5>
                 <Form.Control
