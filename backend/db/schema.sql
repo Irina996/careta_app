@@ -1,6 +1,6 @@
 CREATE TABLE public.User (
     user_id SERIAL PRIMARY KEY,
-    email text NOT NULL,
+    email text NOT NULL UNIQUE,
     user_password text NOT NULL
 );
 
@@ -14,34 +14,34 @@ CREATE TABLE public.Client (
     user_id integer NOT NULL REFERENCES  public.User(user_id),
     client_name text NOT NULL,
     surname text NOT NULL,
-    phone text NOT NULL,
+    phone text NOT NULL UNIQUE,
     rate integer DEFAULT 5 NOT NULL,
     client_address text NOT NULL
 );
 
 CREATE TABLE public.Car_model (
 	model_id SERIAL PRIMARY KEY ,
-	model_name text NOT NULL
+	model_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Car_brand (
 	brand_id SERIAL PRIMARY KEY ,
-	brand_name text NOT NULL
+	brand_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Car_class (
 	class_id SERIAL PRIMARY KEY ,
-	class_name text NOT NULL
+	class_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Gearbox_type (
 	type_id SERIAL PRIMARY KEY ,
-	type_name text NOT NULL
+	type_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Color (
 	color_id SERIAL PRIMARY KEY ,
-	color_name text NOT NULL
+	color_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Credit_card (
@@ -69,12 +69,12 @@ CREATE TABLE public.Car (
 	car_id SERIAL PRIMARY KEY,
 	car_group_id INTEGER NOT NULL REFERENCES public.Car_group(group_id),
 	color_id INTEGER NOT NULL REFERENCES public.Color(color_id),
-	car_number text NOT NULL
+	car_number text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.State(
     state_id SERIAL PRIMARY KEY,
-    state_name text
+    state_name text NOT NULL UNIQUE
 );
 
 CREATE TABLE public.Booking(
