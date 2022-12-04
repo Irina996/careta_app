@@ -8,10 +8,13 @@ const Home = () => {
     return (
         <Container>
             <Row className="mt-2 ml-2">
-                <Col md={3}>
+                <Col md={4}>
+                <div className="d-flex align-items-center">
+                    <h2 className=" mx-auto mt-5 mb-3">Filter</h2>
+                </div>
                     <TypeBar/>
                 </Col>
-                <Col md={9}>
+                <Col md={8}>
                 {/* <BrandBar/> */}
                 <div className="d-flex align-items-center">
                     <h2 className=" mx-auto mt-5 mb-5">Cars for book</h2>
