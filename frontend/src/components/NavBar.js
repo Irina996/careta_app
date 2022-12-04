@@ -16,7 +16,7 @@ const NavBar = observer (() => {
         <Navbar bg="dark" variant="dark">
         <Container>
           <NavLink style={{color: 'white'}} to={HOME_ROUTE}>CAReta</NavLink>
-        {user.isAuth ?
+        {user.isAuth ? 
             <Nav>
             <NavLink style={{color: 'white'}}  className=" mx-5" to={BOOKING_ROUTE} >Booking list</NavLink>
             <NavLink style={{color: 'white'}} className=" mx-5" to={RENT_ROUTE} >Rental list</NavLink>
@@ -28,6 +28,7 @@ const NavBar = observer (() => {
             <NavLink style={{color: 'white'}} onClick={() => user.setIsAuth(true)}>Authorization</NavLink>
           </Nav>
         }
+
         </Container>
       </Navbar>
     );
