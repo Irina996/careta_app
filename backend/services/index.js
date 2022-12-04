@@ -1,10 +1,25 @@
 import pool from '../config/db.js';
 import {insertUser, selectUser, selectUserIdByEmail} from './user.js';
 import {insertClient, selectClient} from './client.js';
-import { selectCarGroup, selectCarInfo, selectAvailableCarId } from './car.js';
+import { 
+    selectCarGroup, 
+    selectCarInfo, 
+    selectAvailableCarId, 
+    selectAllCarGroups, 
+    selectCarGroupId,
+    insertCarGroup,
+    insertCar,
+    selectAllCars,
+    deleteCar,
+    updateCar,
+} from './car.js';
 import { selectBookingList, insertBooking, updateBooking, selectBookingCost } from './booking.js';
 import { selectRentalList, insertRent } from './rent.js';
 import { selectFines, deleteFines } from './fine.js';
+import { selectBrandId, insertBrand} from './car_brand.js';
+import { selectModelId, insertModel } from './car_model.js';
+import { selectClassId, insertClass } from './car_class.js';
+import { selectColorId, insertColor } from './car_color.js';
 
 
 const db_query = async (query_text, params) => {
@@ -45,4 +60,19 @@ export {
     selectBookingCost,
     selectFines,
     deleteFines,
+    selectAllCarGroups,
+    selectCarGroupId,
+    selectBrandId,
+    insertBrand,
+    selectModelId,
+    insertModel,
+    selectClassId,
+    insertClass,
+    selectColorId,
+    insertColor,
+    insertCarGroup,
+    insertCar,
+    selectAllCars,
+    deleteCar,
+    updateCar,
 }

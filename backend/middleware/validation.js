@@ -11,6 +11,7 @@ const validator = async(body, rules, customMessage, callback) => {
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
 const phoneRegex = /\+\d{3}\(\d{2}\)\d{7}/;
 const dateRegex = /^(\d\d\d\d)\-(0\d|1[0-2])\-(0\d|1\d|2\d|3[0-1])$/;
+const vinRegex = /\d\d\d\d [A-Z][A-Z]-[1-7]/; // vehicle identification number
 
 // password policy
 Validator.register('strict', value => passwordRegex.test(value),
@@ -40,6 +41,10 @@ Validator.register('after_or_equal_now', value => {
 
     return Date.parse(value) >= Date.parse(currentDate);
 }, 'date must be equal or after current date');
+
+//car number policy
+Validator.register('vin', value => vinRegex.test(value),
+    'car number must be composed of four digits, two letters and another digit (e.g. 1234 AB-5)')
 
 const register = async(req, res, next) => {
     const validationRule = {
@@ -152,10 +157,45 @@ const validateId = async(req, res, next) => {
     }).catch(err => console.log(err))
 }
 
+const carCharacteristics = async(req, res, next)=> {
+    let validationRule = {
+        brand: "required|string", 
+        model: "required", 
+        car_class: "required", 
+        gearbox: "required", 
+        creation_year: "required|integer|min:2000", 
+        seats_number: "required|integer|min:1", 
+        fuel_consumption: "required|numeric",
+        car_number: "required|vin",
+        color: "required",
+        cost: "required|numeric|min:1",
+    }
+    await validator(req.body, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412)
+                .send({
+                    success: false,
+                    message: 'Validation failed',
+                    data: err
+                });
+        }else if (!req.files){
+            res.status(412)
+                .send({
+                    success: false,
+                    message: 'Validation failed',
+                    data: 'image  is required'
+                });
+        } else {
+            next();
+        }
+    }).catch(err => console.log(err))
+}
+
 export {
     register, 
     login,
     carsFilter,
     booking,
     validateId,
+    carCharacteristics,
 }
