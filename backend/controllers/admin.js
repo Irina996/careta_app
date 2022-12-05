@@ -1,12 +1,15 @@
 import { 
     deleteCar,
+    deleteFines,
     insertBrand, 
     insertCar, 
     insertCarGroup, 
     insertClass, 
     insertColor, 
+    insertFine, 
     insertModel, 
     selectAllCars, 
+    selectAllFines, 
     selectBrandId, 
     selectCarGroupId, 
     selectClassId, 
@@ -14,6 +17,7 @@ import {
     selectModelId, 
     selectStateRentalList, 
     updateCar,
+    updateRate,
     updateRent
 } from "../services/index.js";
 import state from '../config/state_code.js';
@@ -223,6 +227,76 @@ const estimateRent = async(req, res, state_value)=>{
     }
 }
 
+const getFines = async(req, res)=> {
+    try {
+        let result = await selectAllFines();
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+            data: result
+        });
+    } catch(err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+const removeFine = async(req, res)=> {
+    try {
+        const {id} = req.body; // fine_id
+        let result = await deleteFines(id);
+
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+        });
+    } catch(err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+const addFine = async(req, res)=> {
+    try {
+        const {car_id, fine_cost, fine_date} = req.body;
+        let fine_id = await insertFine(car_id, fine_cost, fine_date);
+
+        if (fine_id && fine_cost > 100.0) {
+            let r = await updateRate(fine_id, -1);
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+        });
+    } catch(err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+const editFine = async(req, res)=> {
+    try {
+        const {car_id, fine_cost, fine_date} = req.body;
+        let result = await updateFine(car_id, fine_cost, fine_date);
+
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+        });
+    } catch(err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
 export {
     getCars,
     addCar,
@@ -230,4 +304,8 @@ export {
     editCar,
     getRentalList,
     estimateRent,
+    getFines,
+    removeFine,
+    addFine,
+    editFine,
 }
