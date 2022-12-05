@@ -12,8 +12,11 @@ import {
     selectClassId, 
     selectColorId, 
     selectModelId, 
-    updateCar
-} from "../services/index.js"
+    selectStateRentalList, 
+    updateCar,
+    updateRent
+} from "../services/index.js";
+import state from '../config/state_code.js';
 
 const getCars = async(req, res) => {
     try{
@@ -180,9 +183,51 @@ const editCar = async(req, res)=>{
     }
 }
 
+const getRentalList = async(req, res)=> {
+    try {
+        let activeRent = await selectStateRentalList(state.paid);
+        let badRent = await selectStateRentalList(state.bad);
+        let goodRent = await selectStateRentalList(state.good);
+
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+            data: {
+                active: activeRent,
+                history: [badRent, goodRent]
+            }
+        });
+    } catch(err) {
+        return res.status(500).json({ 
+            success: false,
+            message: err.message 
+        })
+    }
+}
+
+const estimateRent = async(req, res, state_value)=>{
+    try {
+        const {id} = req.body; // rent_id
+
+        let result = await updateRent(state_value, id);
+
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+        });
+    } catch(err) {
+        return res.status(500).json({ 
+            success: false,
+            message: err.message 
+        })
+    }
+}
+
 export {
     getCars,
     addCar,
     removeCar,
     editCar,
+    getRentalList,
+    estimateRent,
 }
