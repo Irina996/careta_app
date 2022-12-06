@@ -14,7 +14,7 @@ import CarItem from './CarItem';
 const CarList = observer (() => {
     const {car} = useContext(Context)
     return(
-        <Row classname="d-flex">
+        <Row className="d-flex">
             {
                 car.cars.map(car =>
                     <CarItem key={car.id} car={car}/>

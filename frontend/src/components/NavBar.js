@@ -29,6 +29,7 @@ const NavBar = observer (() => {
           </Nav>
         }
 
+
         </Container>
       </Navbar>
     );

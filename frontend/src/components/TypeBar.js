@@ -19,7 +19,7 @@ const TypeBar = observer (() => {
              >
              <Card style={{width: 700}} className="p-3">
           
-             <Form classname="d-flex flex-column p-5">
+             <Form className="d-flex flex-column p-5">
              <h5 >Brand</h5>
                 <Form.Control
                     className="mb-3 mx-auto "
@@ -37,10 +37,10 @@ const TypeBar = observer (() => {
                     <Button  variant={"outline-secondary"}>Economy</Button>
                 </ButtonGroup>
                 <h5 >Year</h5>
-                <div class="input-group input-yearrange" >
-                    <input type="number" min="1990" max="2021" class="form-control"/>
-                    <div class="input-group-addon">to</div>
-                    <input type="number"  min="1990" max="2021" class="form-control" />
+                <div className="input-group input-yearrange" >
+                    <input type="number" min="1990" max="2021" className="form-control"/>
+                    <div className="input-group-addon">to</div>
+                    <input type="number"  min="1990" max="2021" className="form-control" />
                 </div>
                 <h5 className="mt-3 mx-auto ">Gearbox</h5>
                 <ButtonGroup  className="mb-3 mx-auto ">
@@ -53,10 +53,10 @@ const TypeBar = observer (() => {
                     placeholder = "4"
                 />
                 <h5 >Availability</h5>
-                <div class="input-group input-daterange">
-                    <input type="date" class="form-control"/>
-                    <div class="input-group-addon">to</div>
-                    <input type="date" class="form-control" />
+                <div className="input-group input-daterange">
+                    <input type="date" className="form-control"/>
+                    <div className="input-group-addon">to</div>
+                    <input type="date" className="form-control" />
                 </div>
                 <Row className="d-flex justify-content-center align-items-center mx-5">
                 <Button

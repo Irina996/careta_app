@@ -11,23 +11,29 @@ export default class CarStore{
         this._model = [
             {id:1, name: "corolla"}
         ]
-        this._class = [
-            {id:1, name: "premium"}
+        this._carclass = [
+            {id:1, name: "premium"},
+            {id:2, name: "middle"},
+            {id:3, name: "economy"}
         ]
-        this._gerbox = [
-            {id:1, name: "fuel"}
+        this._gearbox = [
+            {id:1, name: "mechanic"},
+            {id:2, name: "authomath"}
         ]
-        this._color = [
-            {id:1, name: "silver"}
+        this._cargroup = [
+            {id: 1, car_brand: "subaru", car_model: "outback", car_class: "middle", year: "2017", cost:"125$"},
+            // {id: 2, car_brand: "toyota", car_model: "corolla", car_class: "premium", year: "2021", cost:"350$"}
         ]
         this._cars = [
-            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
-            {id:2, brand_id:2, class_id:2, model_id:2, gearbox_id:2, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
-            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
-            {id:4, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
-            {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'},
+            {id:1, car_number: "1234AA-7", carbrand: this._cargroup.car_brand, color: "black", image:'frontend/src/images/t.jpg'},
+            {id:2, car_number: "1334WW-1",  carbrand: this._cargroup.car_brand, color: "white", image:'/src/images/t.jpg'},
+            {id:3, car_number: "5834YT-7", carbrand: this._cargroup.car_brand, color: "black", image:'/src/images/t.jpg'},
+            {id:4, car_number: "6538CC-5", carbrand: this._cargroup.car_brand, color: "red", image:'/src/images/t.jpg'},
+            {id:5, car_number: "0905BN-6", carbrand: this._cargroup.car_brand, color: "silver", image:'/src/images/t.jpg'},
         ]
         this._selectedbrand = {}
+        this._selectedclass = {}
+        this._selectedgearbox = {}
         makeAutoObservable(this)
     }
 
@@ -37,11 +43,11 @@ export default class CarStore{
     setModel(model){
         this._model = model;
     }
-    setClass(car_class){
-        this._class = car_class;
+    setClass(carclass){
+        this._carclass = carclass;
     }
-    setColor(car_color){
-        this._color = car_color;
+    setCargroup(cargroup){
+        this._cargroup = cargroup;
     }
     setGearbox(gearbox){
         this._gearbox = gearbox;
@@ -59,11 +65,11 @@ export default class CarStore{
     get model(){
         return this._model
     }
-    get car_class(){
-        return this._car_class
+    get carclass(){
+        return this._carclass
     }
-    get car_color(){
-        return this._car_color
+    get cargroup(){
+        return this._cargroup
     }
     get gearbox(){
         return this._gearbox
