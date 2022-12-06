@@ -191,6 +191,26 @@ const carCharacteristics = async(req, res, next)=> {
     }).catch(err => console.log(err))
 }
 
+const fine = async(req, res, next) => {
+    let validationRule = {
+        car_id: "required|integer", 
+        fine_cost: "required|numeric|min:0", 
+        fine_date: "required|date"
+    }
+    await validator(req.body, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412)
+                .send({
+                    success: false,
+                    message: 'Validation failed',
+                    data: err
+                });
+        } else {
+            next();
+        }
+    }).catch(err => console.log(err))
+}
+
 export {
     register, 
     login,
@@ -198,4 +218,5 @@ export {
     booking,
     validateId,
     carCharacteristics,
+    fine,
 }

@@ -1,6 +1,6 @@
 import pool from '../config/db.js';
 import {insertUser, selectUser, selectUserIdByEmail} from './user.js';
-import {insertClient, selectClient} from './client.js';
+import {insertClient, selectClient, updateRate} from './client.js';
 import { 
     selectCarGroup, 
     selectCarInfo, 
@@ -14,8 +14,8 @@ import {
     updateCar,
 } from './car.js';
 import { selectBookingList, insertBooking, updateBooking, selectBookingCost } from './booking.js';
-import { selectRentalList, insertRent } from './rent.js';
-import { selectFines, deleteFines } from './fine.js';
+import { selectRentalList, insertRent, selectStateRentalList, updateRent } from './rent.js';
+import { selectFines, deleteFines, selectAllFines, insertFine, updateFine } from './fine.js';
 import { selectBrandId, insertBrand} from './car_brand.js';
 import { selectModelId, insertModel } from './car_model.js';
 import { selectClassId, insertClass } from './car_class.js';
@@ -75,4 +75,10 @@ export {
     selectAllCars,
     deleteCar,
     updateCar,
+    selectStateRentalList,
+    updateRent,
+    selectAllFines,
+    insertFine,
+    updateFine,
+    updateRate,
 }

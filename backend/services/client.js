@@ -21,7 +21,24 @@ const selectClient = async(email, hashed_pswd) => {
     return await db_query(query_text, query_params)[0];
 }
 
+const updateRate = async(fine_id, rate_difference) => {
+    let query_text = 
+        `UPDATE Client 
+        SET rate=rate+$2 
+        WHERE client_id=
+              (SELECT Booking.client_id 
+               FROM Fine
+                   INNER JOIN Booking ON Booking.car_id = Fine.car_id
+               WHERE fine_id=$1
+                 AND Fine.fine_date BETWEEN Booking.start_date AND Booking.end_date);`
+
+    let query_params = [fine_id, rate_difference];
+
+    return await db_query(query_text, query_params);
+}
+
 export { 
     insertClient,
     selectClient,
+    updateRate,
 };
