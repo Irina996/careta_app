@@ -25,11 +25,7 @@ export default class CarStore{
             // {id: 2, car_brand: "toyota", car_model: "corolla", car_class: "premium", year: "2021", cost:"350$"}
         ]
         this._cars = [
-            {id:1, car_number: "1234AA-7", carbrand: this._cargroup.car_brand, color: "black", image:'frontend/src/images/t.jpg'},
-            {id:2, car_number: "1334WW-1",  carbrand: this._cargroup.car_brand, color: "white", image:'/src/images/t.jpg'},
-            {id:3, car_number: "5834YT-7", carbrand: this._cargroup.car_brand, color: "black", image:'/src/images/t.jpg'},
-            {id:4, car_number: "6538CC-5", carbrand: this._cargroup.car_brand, color: "red", image:'/src/images/t.jpg'},
-            {id:5, car_number: "0905BN-6", carbrand: this._cargroup.car_brand, color: "silver", image:'/src/images/t.jpg'},
+            
         ]
         this._selectedbrand = {}
         this._selectedclass = {}
@@ -59,6 +55,14 @@ export default class CarStore{
         this._selectedbrand = brand
     }
 
+    setSelectedClass(carclass){
+        this._selectedclass = carclass
+    }
+
+    setSelectedGearbox(gearbox){
+        this._selectedgearbox = gearbox
+    }
+
     get brand(){
         return this._brand
     }
@@ -79,5 +83,11 @@ export default class CarStore{
     }
     get selectedBrand(){
         return this._selectedbrand
+    }
+    get selectedclass(){
+        return this._selectedclass
+    }
+    get selectedgearbox(){
+        return this._selectedgearbox
     }
 }

@@ -17,9 +17,9 @@ const Auth = () => {
 
     const click = async () =>{
         if(isLogin){
-            const response = await login()
+            const response = await login(email, password)
         }else{
-            const response = await registration(email, password)
+            const response = await registration(first_name, last_name, address, phone, email, password)
             console.log(response)
         }
 

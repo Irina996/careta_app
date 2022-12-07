@@ -56,10 +56,10 @@ const AdminBar = observer (({show, onHide}) => {
                 />
                 <h5 >Class</h5>
                 <Dropdown>
-                    <Dropdown.Toggle variant={"outline-secondary"}>Choose class</Dropdown.Toggle>
+                    <Dropdown.Toggle variant={"outline-secondary"}>{car.selectedclass.name || "Choose class"}</Dropdown.Toggle>
                     <Dropdown.Menu>
                         {car.carclass.map(carclass =>
-                            <Dropdown.Item key={carclass.id}>{carclass.name}</Dropdown.Item>
+                            <Dropdown.Item onClick={() => car.SetSelectedClass(carclass)} key={carclass.id}>{carclass.name}</Dropdown.Item>
                         )}
                     </Dropdown.Menu>
                 </Dropdown>
@@ -93,13 +93,13 @@ const AdminBar = observer (({show, onHide}) => {
                     placeholder = ""
                 />
  
-                <h5 className="mt-1 mx-auto ">Gearbox</h5>
+                <h5 >Gearbox</h5>
 
                 <Dropdown>
-                    <Dropdown.Toggle variant={"outline-secondary"}>Choose gearbox</Dropdown.Toggle>
+                    <Dropdown.Toggle variant={"outline-secondary"}>{car.selectedgearbox.name || "Choose gearbox"}</Dropdown.Toggle>
                     <Dropdown.Menu>
                         {car.gearbox.map(gearbox =>
-                            <Dropdown.Item key={gearbox.id}>{gearbox.name}</Dropdown.Item>
+                            <Dropdown.Item onClick={() => car.SetSelectedGearbox(gearbox)} key={gearbox.id}>{gearbox.name}</Dropdown.Item>
                         )}
                     </Dropdown.Menu>
                 </Dropdown>

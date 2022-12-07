@@ -9,12 +9,16 @@ import rentalRouter from './routes/rent.js';
 import fineRouter from './routes/fine.js';
 import fileUpload from 'express-fileupload';
 import adminRouter from './routes/admin.js';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(fileUpload());
+app.use(cors({
+    origin: '*'
+}))
 
 app.use('/user/', userRouter);
 app.use('/client/', clientRouter);

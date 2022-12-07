@@ -1,5 +1,5 @@
 import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BOOKING_ROUTE, PAYMENT_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, RENTADMIN_ROUTE, FINESADMIN_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, BOOKING_ROUTE, PAYMENT_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, ADMINRENT_ROUTE, ADMINFINES_ROUTE} from "./utils/consts";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
@@ -7,6 +7,8 @@ import Car from "./pages/Car";
 import Rent from "./pages/Rent";
 import Fines from "./pages/Fines";
 import Payment from "./pages/Payment";
+import AdminFines from "./pages/AdminFines";
+import AdminRent from "./pages/AdminRent";
 
 export const authRoutes = [
     {
@@ -30,12 +32,12 @@ export const authRoutes = [
         Component: Payment
     },
     {
-        path: RENTADMIN_ROUTE,
-        Component: Rent
+        path: ADMINRENT_ROUTE,
+        Component: AdminRent
     },
     {
-        path: FINESADMIN_ROUTE,
-        Component: Fines
+        path: ADMINFINES_ROUTE,
+        Component: AdminFines
     },
 ]
 
