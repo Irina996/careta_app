@@ -9,26 +9,27 @@ import {observer} from "mobx-react-lite";
 import Container from "react-bootstrap/Container";
 
 
-const NavBar = observer (() => {
+const AdminNavBar = observer (() => {
     const {user} = useContext(Context)
 
     return(
         <Navbar bg="dark" variant="dark">
         <Container>
           <NavLink style={{color: 'white'}} to={HOME_ROUTE}>CAReta</NavLink>
-        {user.isAuth ? 
+        {user.isAdmin ? 
+            <Nav>
+            <NavLink style={{color: 'white'}} className=" mx-5" to={RENT_ROUTE} >Rental list</NavLink>
+            <NavLink style={{color: 'white'}}  className=" mx-5" to={FINES_ROUTE}>Fine managment</NavLink>
+            <NavLink style={{color: 'white'}}  className=" mx-5" to={LOGIN_ROUTE}>LogOut</NavLink>
+            </Nav>
+        :
             <Nav>
             <NavLink style={{color: 'white'}}  className=" mx-5" to={BOOKING_ROUTE} >Booking list</NavLink>
             <NavLink style={{color: 'white'}} className=" mx-5" to={RENT_ROUTE} >Rental list</NavLink>
             <NavLink style={{color: 'white'}}  className=" mx-5" to={FINES_ROUTE}>Fines</NavLink>
             <NavLink style={{color: 'white'}}  className=" mx-5" to={LOGIN_ROUTE}>LogOut</NavLink>
             </Nav>
-        :
-          <Nav className="ml-auto" style={{color: 'white'}}>
-            <NavLink style={{color: 'white'}} onClick={() => user.setIsAuth(true)}>Authorization</NavLink>
-          </Nav>
         }
-
 
         </Container>
       </Navbar>
@@ -36,4 +37,4 @@ const NavBar = observer (() => {
     
 });
 
-export default NavBar;
+export default AdminNavBar;

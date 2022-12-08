@@ -10,12 +10,16 @@ const Auth = () => {
     const isLogin = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [first_name, setFirstName] = useState('')
+    const [last_name, setLastName] = useState('')
+    const [address, setAddress] = useState('')
+    const [phone, setPhone] = useState('')
 
     const click = async () =>{
         if(isLogin){
-            const response = await login()
+            const response = await login(email, password)
         }else{
-            const response = await registration(email, password)
+            const response = await registration(first_name, last_name, address, phone, email, password)
             console.log(response)
         }
 
@@ -28,21 +32,22 @@ const Auth = () => {
             style={{height: window.innerHeight - 54}}>
             <Card style={{width: 600}} className="p-5">
                 <h2 className="m-auto">{isLogin ? 'Login' : 'Registration'}</h2>
-                <Form classname="d-flex flex-column ">
+                <Form className="d-flex flex-column ">
                 {isLogin ?
                     <div>
                     <Form.Control
                         className="mt-3"
                         placeholder = "Email"
-                        value={email}
+                        value={email || ''}
                         onChange={e => setEmail(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Password"
-                        value={password}
+                        type= "password"
+                        value={password || ''}
                         onChange={e => setPassword(e.target.value)}
-                        type="password"
+                        
                     />
                     </div>
                 :
@@ -50,26 +55,40 @@ const Auth = () => {
                     <Form.Control
                         className="mt-3"
                         placeholder = "First name"
+                        value={first_name || ''}
+                        onChange={e => setFirstName(e.target.value)}
+                        
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Last name"
+                        value={last_name || ''}
+                        onChange={e => setLastName(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Address"
+                        value={address || ''}
+                        onChange={e => setAddress(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Phone"
+                        value={phone || ''}
+                        onChange={e => setPhone(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Email"
+                        value={email || ''}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <Form.Control
                         className="mt-3"
                         placeholder = "Password"
+                        type= "password"
+                        value={password || ''}
+                        onChange={e => setPassword(e.target.value)}
                     />
                     </div>
                 }

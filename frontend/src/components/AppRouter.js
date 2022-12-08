@@ -6,6 +6,8 @@ import Booking from '../pages/Booking';
 import Rent from '../pages/Rent';
 import Fines from '../pages/Fines';
 import Admin from '../pages/Admin';
+import AdminFines from '../pages/AdminFines';
+import AdminRent from '../pages/AdminRent';
 import Car from '../pages/Car';
 import Auth from '../pages/Auth';
 import Payment from '../pages/Payment';
@@ -27,6 +29,8 @@ const AppRouter = () => {
             <Route path='/payment' element={<Payment />}/>  
             <Route path='/login' element={<Auth />}/> 
             <Route path='/registration' element={<Auth />}/> 
+            <Route path='/adminrent' element={user.isAuth ? (<AdminRent />) : (<Navigate replace to={'/'}/>)}/> ,
+            <Route path='/adminfines' element={user.isAuth ? (<AdminFines />) : (<Navigate replace to={'/'}/>)}/> ,
         </Routes>
     );
 };

@@ -37,20 +37,20 @@ const Car = () => {
             <Col md={4}>
             <div className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center " >
             <h5 >Availability</h5>
-                <div class="input-group input-daterange" className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center ">
-                    <input type="date" class="form-control"/>
-                    <div class="input-group-addon">to</div>
-                    <input type="date" class="form-control" />
+                <div className="input-group input-daterange" className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center ">
+                    <input type="date" className="form-control"/>
+                    <div className="input-group-addon">to</div>
+                    <input type="date" className="form-control" />
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                    <label class="form-check-label" for="flexCheckDefault">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
                         With driver
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"/>
-                    <label class="form-check-label" for="flexCheckChecked">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"/>
+                    <label className="form-check-label" htmlFor="flexCheckChecked">
                         Baby seats
                     </label>
                 </div>

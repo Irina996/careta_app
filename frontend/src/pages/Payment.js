@@ -27,8 +27,8 @@ const Payment = () => {
                         placeholder = "GOTH MINERVA"
                     />
                     <h5>EXP MM/YY</h5>
-                    <div class="input-group input-yearrange" >
-                        <input type="month" class="form-control"/>
+                    <div className="input-group input-yearrange" >
+                        <input type="month" className="form-control"/>
                     </div>
                     <h5>CVV</h5>
                     <Form.Control

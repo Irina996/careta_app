@@ -24,7 +24,7 @@ const CarItemAdmin = observer (({car}) => {
                     <h6>{cargroup1.car_model}</h6> 
                     <h6>{car1.car_number}</h6> 
                     <h6>{cargroup1.cost}</h6> 
-                   <Row classname="d-flex space-between flex-row">
+                   <Row className="d-flex space-between flex-row">
                     <Button
                         className="mx-auto mb-3"
                         variant={"outline-secondary"}> Edit
