@@ -1,16 +1,16 @@
 import { db_query } from "./index.js";
 
-const fun = async() => {
+const selectAdmin = async(user_id) => {
     try{
-        let query_text = ``;
-        let query_params = [];
+        let query_text = `SELECT admin_id FROM admin WHERE user_id=$1;`;
+        let query_params = [user_id];
         let result = await db_query(query_text, query_params);
-        return result;
+        return result[0];
     } catch(err) {
         return undefined;
     }
 }
 
 export {
-    
+    selectAdmin,
 };

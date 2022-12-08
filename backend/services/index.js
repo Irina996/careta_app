@@ -20,6 +20,7 @@ import { selectBrandId, insertBrand} from './car_brand.js';
 import { selectModelId, insertModel } from './car_model.js';
 import { selectClassId, insertClass } from './car_class.js';
 import { selectColorId, insertColor } from './car_color.js';
+import { selectAdmin } from './admin.js';
 
 
 const db_query = async (query_text, params) => {
@@ -81,4 +82,5 @@ export {
     insertFine,
     updateFine,
     updateRate,
+    selectAdmin,
 }

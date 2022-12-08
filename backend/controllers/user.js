@@ -1,5 +1,9 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import {roles, secretKey} from '../config/jwt.js';
 import { 
+    selectAdmin,
+    selectClient,
     selectUser
 } from "../services/index.js";
 
@@ -10,29 +14,42 @@ const getUser = async(req, res) => {
     } = req.body;
     
     let user = await selectUser(email);
-    console.log('User', user);
+    // console.log('User', user);
     if (user){
         if (await bcrypt.compare(password, user.user_password)) {
 
-            console.log('login success');
-            return res.status(201).json({
-                success: true,
-                message: 'login successful',
-                data: user
-            });
+            if (await selectClient(user.user_id)) {
+                user.role = roles.client;
+            } else if(await selectAdmin(user.user_id)){
+                user.role = roles.admin;
+            } else {
+                return res.status(403).json({
+                    success: false,
+                    message: 'login failed'
+                });
+            }
+
+            console.log(user)
+
+            jwt.sign({user}, secretKey, (err, token)=>{
+                return res.status(201).json({
+                    success: true,
+                    message: 'login successful',
+                    data: token
+                });
+            })
         } else {
-            console.log('login wrong password');
             return res.status(403).json({
                 success: false,
                 message: 'wrong password'
             });
         }
+    } else {
+        return res.status(403).json({
+            success: false,
+            message: 'wrong email'
+        });
     }
-    console.log('login fail');
-    return res.status(403).json({
-        success: false,
-        message: 'wrong email'
-    });
 }
 
 export {getUser};

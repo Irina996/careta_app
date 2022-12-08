@@ -12,10 +12,12 @@ import {
     removeCar, 
     removeFine
 } from '../controllers/admin.js';
+import { verifyAdmin } from '../middleware/authentication.js';
 import { uploadImage } from '../middleware/image_upload.js';
 import { carCharacteristics, fine, validateId } from '../middleware/validation.js';
 
 const adminRouter = express.Router();
+adminRouter.use(verifyAdmin);
 
 adminRouter.get('/car/', getCars);
 adminRouter.post('/car/add/', carCharacteristics, uploadImage, addCar);

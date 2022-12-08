@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import { 
     insertUser, 
-    insertClient, 
-    selectClient, 
+    insertClient,
     selectUserIdByEmail 
 } from "../services/index.js";
 
@@ -39,18 +38,4 @@ const createClient = async(req, res) => {
     });
 }
 
-const getClient = async(req, res) => {
-    const {
-        email, 
-        password
-    } = req.body;
-
-    let hashed_pswd = await bcrypt.hash(password, 10);
-    let client = await selectClient(email, hashed_pswd);
-    if (client){
-        return client;
-    }
-    return {};
-}
-
-export {createClient, getClient};
+export {createClient};

@@ -6,19 +6,24 @@ const insertClient = async(user_id, client_name, surname, phone, client_address)
                                    surname, phone, client_address) 
         VALUES ($1, $2, $3, $4, $5);`
     let query_params = [user_id, client_name, surname, phone, client_address];
-    return await db_query(query_text, query_params)[0];
+    try{
+        let result = await db_query(query_text, query_params);
+        return result[0];
+    } catch(err){
+        return undefined;
+    }
 }
 
-const selectClient = async(email, hashed_pswd) => {
+const selectClient = async(user_id) => {
     let query_text = 
-        `SELECT Client.client_id, public.User.email, public.User.user_password,
-            Client.client_name, Client.surname, Client.phone, Client.rate,
-            Client.client_address
-        FROM Client
-          INNER JOIN public.User ON public.User.user_id = Client.user_id
-        WHERE public.User.email=$1 AND public.User.user_password=$2;`;
-    let query_params = [email, hashed_pswd];
-    return await db_query(query_text, query_params)[0];
+        `SELECT client_id FROM Client WHERE user_id=$1;`;
+    let query_params = [user_id];
+    try{
+        let result = await db_query(query_text, query_params);
+        return result[0];
+    } catch(err){
+        return undefined;
+    }
 }
 
 const updateRate = async(fine_id, rate_difference) => {
