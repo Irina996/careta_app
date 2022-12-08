@@ -2,9 +2,9 @@ import { deleteFines, selectCarInfo, selectFines } from "../services/index.js"
 
 
 const getFines = async(req, res) => {
-    const {id} = req.body; // client_id
-
     try{
+        const {id} = req.query; // client_id
+
         let fines = await selectFines(id);
         let result_data = [];
 
@@ -27,18 +27,26 @@ const getFines = async(req, res) => {
 }
 
 const payFine = async(req, res) => {
-    const {id} = req.body; // fine_id
+    try{
+        const {id} = req.body; // fine_id
 
-    //TODO: add payment
-    //TODO: check if fine with such id exist
+        //TODO: add payment
+        //TODO: check if fine with such id exist
 
-    let result = await deleteFines(id);
-    console.log(result);
+        let result = await deleteFines(id);
+        console.log(result);
 
-    return res.status(200).json({
-        success: true,
-        message: 'successful'
-    });
+        return res.status(200).json({
+            success: true,
+            message: 'successful'
+        });
+    } catch(err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            message: 'fail'
+        });
+    }
 }
 
 export { 

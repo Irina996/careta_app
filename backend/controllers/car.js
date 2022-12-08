@@ -1,19 +1,19 @@
 import { selectCarGroup, selectCarInfo } from "../services/index.js";
 
 const getCars = async(req, res) => {
-    const {
-        brand, 
-        model,
-        class_name, 
-        gearbox_type,
-        year_start,
-        year_finish,
-        seats_number,
-        start_date, 
-        end_date
-    } = req.body;
-
     try {
+        const {
+            brand, 
+            model,
+            class_name, 
+            gearbox_type,
+            year_start,
+            year_finish,
+            seats_number,
+            start_date, 
+            end_date
+        } = req.query;
+
         //TODO: get page from client
         let page = 0;
         let rows_count = 5;
@@ -44,9 +44,10 @@ const getCars = async(req, res) => {
 }
 
 const getCarInfo = async(req, res) => {
-    const {car_group_id} = req.body;
     try{
-        let info = await selectCarInfo(car_group_id);
+        const {id} = req.query; // car_group_id
+
+        let info = await selectCarInfo(id);
         if (info) {
             return res.status(200).json({
                 success: true,

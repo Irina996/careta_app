@@ -8,44 +8,52 @@ import {
 } from "../services/index.js";
 
 const getUser = async(req, res) => {
-    const {
-        email, 
-        password
-    } = req.body;
-    
-    let user = await selectUser(email);
-    // console.log('User', user);
-    if (user){
-        if (await bcrypt.compare(password, user.user_password)) {
+    try{
+        const {
+            email, 
+            password
+        } = req.body;
+        
+        let user = await selectUser(email);
+        // console.log('User', user);
+        if (user){
+            if (await bcrypt.compare(password, user.user_password)) {
 
-            if (await selectClient(user.user_id)) {
-                user.role = roles.client;
-            } else if(await selectAdmin(user.user_id)){
-                user.role = roles.admin;
+                if (await selectClient(user.user_id)) {
+                    user.role = roles.client;
+                } else if(await selectAdmin(user.user_id)){
+                    user.role = roles.admin;
+                } else {
+                    return res.status(403).json({
+                        success: false,
+                        message: 'login failed'
+                    });
+                }
+
+                console.log(user)
+
+                jwt.sign({user}, secretKey, (err, token)=>{
+                    return res.status(201).json({
+                        success: true,
+                        message: 'login successful',
+                        data: token
+                    });
+                })
             } else {
                 return res.status(403).json({
                     success: false,
-                    message: 'login failed'
+                    message: 'wrong password'
                 });
             }
-
-            console.log(user)
-
-            jwt.sign({user}, secretKey, (err, token)=>{
-                return res.status(201).json({
-                    success: true,
-                    message: 'login successful',
-                    data: token
-                });
-            })
         } else {
             return res.status(403).json({
                 success: false,
-                message: 'wrong password'
+                message: 'wrong email'
             });
         }
-    } else {
-        return res.status(403).json({
+    } catch(err) {
+        console.log(err);
+        return res.status(500).json({
             success: false,
             message: 'wrong email'
         });

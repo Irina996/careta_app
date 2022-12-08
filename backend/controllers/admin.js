@@ -51,32 +51,39 @@ const getCars = async(req, res) => {
 
 const createCarGroup = async(brand, model, car_class, gearbox, 
     creation_year, seats_number, fuel_consumption, cost, img_url)=> {
-    let group_id = await selectCarGroupId(brand, model, car_class, gearbox, 
-        creation_year, seats_number, fuel_consumption, cost);
+    
+    try {
+        let group_id = await selectCarGroupId(brand, model, car_class, gearbox, 
+            creation_year, seats_number, fuel_consumption, cost);
 
-    if (!group_id) {
-        //create car group
-        let brand_id = await selectBrandId(brand);
-        if (!brand_id) {
-            brand_id = await insertBrand(brand);
+        if (!group_id) {
+            //create car group
+            let brand_id = await selectBrandId(brand);
+            if (!brand_id) {
+                brand_id = await insertBrand(brand);
+            }
+
+            let model_id = await selectModelId(model);
+            if (!model_id){
+                model_id = await insertModel(model);
+            }
+
+            let class_id = await selectClassId(car_class);
+            if (!class_id) {
+                class_id = await insertClass(car_class);
+            }
+
+            group_id = await insertCarGroup(brand_id, 
+                model_id, class_id, gearbox, creation_year, 
+                fuel_consumption, seats_number, img_url, cost);
+
         }
-
-        let model_id = await selectModelId(model);
-        if (!model_id){
-            model_id = await insertModel(model);
-        }
-
-        let class_id = await selectClassId(car_class);
-        if (!class_id) {
-            class_id = await insertClass(car_class);
-        }
-
-        group_id = await insertCarGroup(brand_id, 
-            model_id, class_id, gearbox, creation_year, 
-            fuel_consumption, seats_number, img_url, cost);
-
+        return group_id;
     }
-    return group_id;
+    catch(err) {
+        console.log(err);
+        return 0;
+    }
 }
 
 const addCar = async(req, res) => {

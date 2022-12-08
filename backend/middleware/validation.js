@@ -1,7 +1,14 @@
 import Validator from 'validatorjs';
 
-const validator = async(body, rules, customMessage, callback) => {
-    const validation = new Validator(body, rules, customMessage);
+const validator = async(req, rules, customMessage, callback) => {
+    let info = {};
+    if (!isEmpty(req.body)) {
+        info = req.body;
+    } else if (!isEmpty(req.query)) {
+        info = req.query;
+    }
+
+    const validation = new Validator(info, rules, customMessage);
 
     validation.passes(() => callback(null, true));
 
@@ -46,6 +53,14 @@ Validator.register('after_or_equal_now', value => {
 Validator.register('vin', value => vinRegex.test(value),
     'car number must be composed of four digits, two letters and another digit (e.g. 1234 AB-5)')
 
+function isEmpty(obj) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop))
+            return false;
+    }
+    return JSON.stringify(obj) === JSON.stringify({});
+}
+
 const register = async(req, res, next) => {
     const validationRule = {
         email: 'required|email',
@@ -56,7 +71,7 @@ const register = async(req, res, next) => {
         client_address: 'required'
     }
 
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -76,7 +91,7 @@ const login = async(req, res, next) => {
         password: 'required|min:6|strict'
     }
 
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -102,7 +117,7 @@ const carsFilter = async (req, res, next) => {
         start_date: 'required|date|after_or_equal_now',
         end_date: 'required|after_now'
     }
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -125,7 +140,7 @@ const booking = async(req, res, next) => {
         baby_seat_amount: 'required',
         is_driver: 'required|boolean'
     }
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -143,7 +158,7 @@ const validateId = async(req, res, next) => {
     let validationRule = {
         id: 'required|integer'
     }
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -170,7 +185,7 @@ const carCharacteristics = async(req, res, next)=> {
         color: "required",
         cost: "required|numeric|min:1",
     }
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
@@ -197,7 +212,7 @@ const fine = async(req, res, next) => {
         fine_cost: "required|numeric|min:0", 
         fine_date: "required|date"
     }
-    await validator(req.body, validationRule, {}, (err, status) => {
+    await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
             res.status(412)
                 .send({
