@@ -18,11 +18,10 @@ const CarItem = observer (({car}) => {
             <Card style={{width:200}}  border={"dark"} className="d-flex mx-auto mb-5 flex-column align-items-center ">
                 <Image width={200} height={200} src={car.image}/>
                 <div className="d-flex flex-column align-items-center ">
-                    <h6>{car.id}</h6> 
-                    <h6>{car.car_number}</h6> 
-                    <h6>{car.color}</h6> 
-                    <h6>{car.carbrand}</h6> 
-                   
+                    <h6>{car.brand_name}</h6> 
+                    <h6>{car.car_cost}</h6> 
+                    <h6>{car.model_name}</h6> 
+
                     <Button onClick={() => navigate(CAR_ROUTE + '/' + car.id)}
                         className="mx-auto mb-3"
                         variant={"outline-secondary"}> Show

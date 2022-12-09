@@ -24,9 +24,8 @@ export default class CarStore{
             {id: 1, car_brand: "subaru", car_model: "outback", car_class: "middle", year: "2017", cost:"125$"},
             // {id: 2, car_brand: "toyota", car_model: "corolla", car_class: "premium", year: "2021", cost:"350$"}
         ]
-        this._cars = [
-            
-        ]
+        this._cars = []
+        
         this._selectedbrand = {}
         this._selectedclass = {}
         this._selectedgearbox = {}
