@@ -107,15 +107,15 @@ const login = async(req, res, next) => {
 
 const carsFilter = async (req, res, next) => {
     const validationRule = {
-        brand: 'present',
-        model: 'present',
-        class_name: 'present',
-        gearbox_type: 'present',
-        year_start: 'required|digits:4',
-        year_finish: 'required|digits:4',
-        seats_number: 'required',
-        start_date: 'required|date|after_or_equal_now',
-        end_date: 'required|after_now'
+        brand: 'string',
+        model: 'string',
+        class_name: 'string',
+        gearbox_type: 'string',
+        year_start: 'integer|min:2000|max:2100',
+        year_finish: 'integer|min:2000|max:2100',
+        seats_number: 'integer|min:1',
+        start_date: 'date|after_or_equal_now',
+        end_date: 'date|after_now'
     }
     await validator(req, validationRule, {}, (err, status) => {
         if (!status) {
