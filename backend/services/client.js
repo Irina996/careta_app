@@ -20,7 +20,7 @@ const selectClient = async(user_id) => {
     let query_params = [user_id];
     try{
         let result = await db_query(query_text, query_params);
-        return result[0];
+        return result[0].client_id;
     } catch(err){
         return undefined;
     }

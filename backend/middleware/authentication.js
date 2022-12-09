@@ -17,6 +17,10 @@ const verifyToken = async(req, res, next, role)=> {
                         });
                 } else {
                     if (authData.user.role == role) {
+                        if (authData.user.role == roles.client) {
+                            req.query.id = authData.user.id;
+                            req.body.id = authData.user.id;
+                        }
                         next();
                     }
                     else{

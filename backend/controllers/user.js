@@ -18,8 +18,9 @@ const getUser = async(req, res) => {
         // console.log('User', user);
         if (user){
             if (await bcrypt.compare(password, user.user_password)) {
-
-                if (await selectClient(user.user_id)) {
+                let client_id = await selectClient(user.user_id)
+                if (client_id) {
+                    user.id = client_id;
                     user.role = roles.client;
                 } else if(await selectAdmin(user.user_id)){
                     user.role = roles.admin;

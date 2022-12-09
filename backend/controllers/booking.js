@@ -3,7 +3,7 @@ import state from "../config/state_code.js";
 
 const getBookingList = async(req, res) => {
     try{
-        const {id} = req.query; // client id
+        const {id} = req.query; // client_id
         let bookingList = await selectBookingList(id);
         return res.status(200).json({
             success: true,
