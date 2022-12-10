@@ -1,29 +1,29 @@
-import { db_query } from "./index.js";
+import { db_query } from './index.js';
 
-const selectCarGroup = async(
-        brand, 
-        model, 
-        class_name, 
-        gearbox_type, 
-        year_start, 
-        year_finish, 
-        seats_number,
-        offset_number,
-        rows_count,
-        start_date,
-        end_date
-    )=> {
-
+const selectCarGroup = async (
+    brand,
+    model,
+    class_name,
+    gearbox_type,
+    year_start,
+    year_finish,
+    seats_number,
+    offset_number,
+    rows_count,
+    start_date,
+    end_date
+) => {
     let query_params = [
-        '%' + brand + '%', 
-        '%' + model + '%', 
+        '%' + brand + '%',
+        '%' + model + '%',
         '%' + class_name + '%',
         '%' + gearbox_type + '%',
-        year_start, year_finish,
+        year_start,
+        year_finish,
         offset_number,
         rows_count,
         start_date,
-        end_date
+        end_date,
     ];
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
@@ -45,25 +45,26 @@ const selectCarGroup = async(
           AND Car_model.model_name LIKE $2
           AND Car_class.class_name LIKE $3
           AND Gearbox_type.type_name LIKE $4
-          AND Car_group.creation_year BETWEEN $5 AND $6`
+          AND Car_group.creation_year BETWEEN $5 AND $6`;
     if (seats_number != '') {
         query_text = query_text + `AND Car_group.seats_number=$11`;
         query_params.push(seats_number);
     }
-    query_text = query_text + 
+    query_text =
+        query_text +
         `GROUP BY Car_group.group_id, Car_brand.brand_name,
           Car_model.model_name, Car_group.image,
           Car_group.car_cost
         HAVING COUNT(Bookings.car_id) < COUNT(Car.car_id)
         OFFSET $7
         FETCH NEXT $8 ROWS ONLY;`;
-                    
+
     let result = await db_query(query_text, query_params);
     //console.log(result);
     return result;
-}
+};
 
-const selectCarInfo = async(group_id)=> {
+const selectCarInfo = async (group_id) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
@@ -80,9 +81,9 @@ const selectCarInfo = async(group_id)=> {
     let result = await db_query(query_text, query_params);
     //console.log(result);
     return result;
-}
+};
 
-const selectAvailableCarId = async(start_date, end_date, group_id)=> {
+const selectAvailableCarId = async (start_date, end_date, group_id) => {
     let query_text = 
         `SELECT Car.car_id FROM Car
         LEFT JOIN
@@ -98,16 +99,16 @@ const selectAvailableCarId = async(start_date, end_date, group_id)=> {
     try {
         return {
             success: true,
-            data: result[0].car_id
-        }
-    } catch(error) {
+            data: result[0].car_id,
+        };
+    } catch (error) {
         return {
-            success: false
-        }
+            success: false,
+        };
     }
-}
+};
 
-const selectAllCarGroups = async(offset_number, rows_count)=> {
+const selectAllCarGroups = async (offset_number, rows_count) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
             Car_model.model_name, Car_group.image,
@@ -120,9 +121,9 @@ const selectAllCarGroups = async(offset_number, rows_count)=> {
     let query_params = [offset_number, rows_count];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const selectAllCars=async(offset_number, rows_count)=>{
+const selectAllCars = async (offset_number, rows_count) => {
     let query_text = 
         `SELECT Car.car_id, Car_brand.brand_name,
                 Car_model.model_name, Car_group.image,
@@ -135,10 +136,18 @@ const selectAllCars=async(offset_number, rows_count)=>{
     let query_params = [offset_number, rows_count];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const selectCarGroupId = async(brand, model, car_class, gearbox, 
-    creation_year, seats_number, fuel_consumption, cost)=> {
+const selectCarGroupId = async (
+    brand,
+    model,
+    car_class,
+    gearbox,
+    creation_year,
+    seats_number,
+    fuel_consumption,
+    cost
+) => {
     let query_text = 
         `SELECT Car_group.group_id
         FROM Car_group
@@ -154,19 +163,35 @@ const selectCarGroupId = async(brand, model, car_class, gearbox,
           AND seats_number=$6
           AND Car_group.fuel_consumption=$7
           AND car_cost=$8;`;
-    let query_params = [brand, model, car_class, gearbox, 
-        creation_year, seats_number, fuel_consumption, cost];
+    let query_params = [
+        brand,
+        model,
+        car_class,
+        gearbox,
+        creation_year,
+        seats_number,
+        fuel_consumption,
+        cost,
+    ];
     try {
         let result = await db_query(query_text, query_params);
         return result[0].group_id;
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
-}
+};
 
-const insertCarGroup = async(brand_id, model_id, 
-    class_id, gearbox, year, fuel_consumption, 
-    seats_number, image, car_cost)=> {
+const insertCarGroup = async (
+    brand_id,
+    model_id,
+    class_id,
+    gearbox,
+    year,
+    fuel_consumption,
+    seats_number,
+    image,
+    car_cost
+) => {
     try {
         let query_text = 
             `INSERT INTO Car_group(car_brand_id, car_model_id, 
@@ -177,17 +202,26 @@ const insertCarGroup = async(brand_id, model_id,
                     (SELECT type_id FROM Gearbox_type WHERE type_name=$4), 
                     $5, $6, $7, $8, $9)
             RETURNING group_id;`;
-        let query_params = [brand_id, model_id, class_id, gearbox, year, 
-            fuel_consumption, seats_number, image, car_cost];
+        let query_params = [
+            brand_id,
+            model_id,
+            class_id,
+            gearbox,
+            year,
+            fuel_consumption,
+            seats_number,
+            image,
+            car_cost,
+        ];
         let result = await db_query(query_text, query_params);
         return result[0].group_id;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const insertCar = async(group_id, color_id, car_number)=> {
-    try{
+const insertCar = async (group_id, color_id, car_number) => {
+    try {
         let query_text = 
             `INSERT INTO Car(car_group_id, color_id, car_number) 
             VALUES ($1, $2, $3)
@@ -195,63 +229,61 @@ const insertCar = async(group_id, color_id, car_number)=> {
         let query_params = [group_id, color_id, car_number];
         let result = await db_query(query_text, query_params);
         return result[0].car_id;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const deleteCar = async(car_id)=> {
-    try{
+const deleteCar = async (car_id) => {
+    try {
         let query_text = `DELETE FROM Car WHERE car_id=$1;`;
         let query_params = [car_id];
         let result = await db_query(query_text, query_params);
         return result;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const updateCar = async(car_number, color_id, group_id, car_id)=> {
-    try{
-        let query_text = 
-            `UPDATE Car
+const updateCar = async (car_number, color_id, group_id, car_id) => {
+    try {
+        let query_text = `UPDATE Car
             SET car_number=$1, color_id=$2, car_group_id=$3
             WHERE car_id=$4;`;
         let query_params = [car_number, color_id, group_id, car_id];
         let result = await db_query(query_text, query_params);
         return result;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const deleteCarGroup = async(group_id)=> {
-    try{
+const deleteCarGroup = async (group_id) => {
+    try {
         let query_text = `DELETE FROM Car_group WHERE group_id=$1;`;
         let query_params = [group_id];
         let result = await db_query(query_text, query_params);
         return result;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const getEmptyCarGroupIds = async()=>{
-    try{
-        let query_text = 
-            `SELECT group_id
+const getEmptyCarGroupIds = async () => {
+    try {
+        let query_text = `SELECT group_id
             FROM Car_group
             LEFT JOIN Car ON Car.car_group_id=Car_group.group_id
             WHERE Car.car_id IS NULL;`;
         let query_params = [];
         let result = await db_query(query_text, query_params);
         return result;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-export { 
+export {
     selectCarGroup,
     selectCarInfo,
     selectAvailableCarId,

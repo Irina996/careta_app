@@ -1,29 +1,29 @@
-import { 
+import {
     deleteCar,
     deleteFines,
-    insertBrand, 
-    insertCar, 
-    insertCarGroup, 
-    insertClass, 
-    insertColor, 
-    insertFine, 
-    insertModel, 
-    selectAllCars, 
-    selectAllFines, 
-    selectBrandId, 
-    selectCarGroupId, 
-    selectClassId, 
-    selectColorId, 
-    selectModelId, 
-    selectStateRentalList, 
+    insertBrand,
+    insertCar,
+    insertCarGroup,
+    insertClass,
+    insertColor,
+    insertFine,
+    insertModel,
+    selectAllCars,
+    selectAllFines,
+    selectBrandId,
+    selectCarGroupId,
+    selectClassId,
+    selectColorId,
+    selectModelId,
+    selectStateRentalList,
     updateCar,
     updateRate,
-    updateRent
-} from "../services/index.js";
+    updateRent,
+} from '../services/index.js';
 import state from '../config/state_code.js';
 
-const getCars = async(req, res) => {
-    try{
+const getCars = async (req, res) => {
+    try {
         //TODO: get page from client
         let page = 0;
         let rows_count = 5;
@@ -36,25 +36,41 @@ const getCars = async(req, res) => {
             return res.status(200).json({
                 success: true,
                 message: 'successful',
-                data: cars
+                data: cars,
             });
         } else {
             return res.status(404).json({
                 success: false,
-                message: 'fail'
+                message: 'fail',
             });
         }
-    } catch(e){
+    } catch (e) {
         console.log(e);
     }
-}
+};
 
-const createCarGroup = async(brand, model, car_class, gearbox, 
-    creation_year, seats_number, fuel_consumption, cost, img_url)=> {
-    
+const createCarGroup = async (
+    brand,
+    model,
+    car_class,
+    gearbox,
+    creation_year,
+    seats_number,
+    fuel_consumption,
+    cost,
+    img_url
+) => {
     try {
-        let group_id = await selectCarGroupId(brand, model, car_class, gearbox, 
-            creation_year, seats_number, fuel_consumption, cost);
+        let group_id = await selectCarGroupId(
+            brand,
+            model,
+            car_class,
+            gearbox,
+            creation_year,
+            seats_number,
+            fuel_consumption,
+            cost
+        );
 
         if (!group_id) {
             //create car group
@@ -64,7 +80,7 @@ const createCarGroup = async(brand, model, car_class, gearbox,
             }
 
             let model_id = await selectModelId(model);
-            if (!model_id){
+            if (!model_id) {
                 model_id = await insertModel(model);
             }
 
@@ -73,44 +89,58 @@ const createCarGroup = async(brand, model, car_class, gearbox,
                 class_id = await insertClass(car_class);
             }
 
-            group_id = await insertCarGroup(brand_id, 
-                model_id, class_id, gearbox, creation_year, 
-                fuel_consumption, seats_number, img_url, cost);
-
+            group_id = await insertCarGroup(
+                brand_id,
+                model_id,
+                class_id,
+                gearbox,
+                creation_year,
+                fuel_consumption,
+                seats_number,
+                img_url,
+                cost
+            );
         }
         return group_id;
-    }
-    catch(err) {
+    } catch (err) {
         console.log(err);
         return 0;
     }
-}
+};
 
-const addCar = async(req, res) => {
+const addCar = async (req, res) => {
     try {
         const {
-            brand, 
-            model, 
-            car_class, 
-            gearbox, 
-            creation_year, 
-            seats_number, 
+            brand,
+            model,
+            car_class,
+            gearbox,
+            creation_year,
+            seats_number,
             fuel_consumption,
             img_url,
             car_number,
             color,
-            cost
+            cost,
         } = req.body;
 
+        let group_id = await createCarGroup(
+            brand,
+            model,
+            car_class,
+            gearbox,
+            creation_year,
+            seats_number,
+            fuel_consumption,
+            cost,
+            img_url
+        );
 
-        let group_id = await createCarGroup(brand, model, car_class, gearbox, 
-            creation_year, seats_number, fuel_consumption, cost, img_url);
-        
-        if(!group_id) {
-            return res.status(500).json({ 
+        if (!group_id) {
+            return res.status(500).json({
                 success: false,
-                message: 'fail to create car group' 
-            })
+                message: 'fail to create car group',
+            });
         }
 
         let color_id = await selectColorId(color);
@@ -119,61 +149,70 @@ const addCar = async(req, res) => {
         }
 
         let car_id = await insertCar(group_id, color_id, car_number);
-        if(!car_id) {
-            return res.status(500).json({ 
+        if (!car_id) {
+            return res.status(500).json({
                 success: false,
-                message: 'fail to create car' 
-            })
+                message: 'fail to create car',
+            });
         }
 
         return res.status(200).json({
             success: true,
-            message: 'successful'
+            message: 'successful',
         });
-    } catch(err) {
-        return res.status(500).json({ 
+    } catch (err) {
+        return res.status(500).json({
             success: false,
-            message: err.message 
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const removeCar = async(req, res)=> {
+const removeCar = async (req, res) => {
     try {
-        const {id} = req.body; // car_id
-        let result = await deleteCar(id); 
+        const { id } = req.body; // car_id
+        let result = await deleteCar(id);
 
         return res.status(200).json({
             success: true,
-            message: 'successful'
+            message: 'successful',
         });
-    } catch(err) {
-        return res.status(500).json({ 
+    } catch (err) {
+        return res.status(500).json({
             success: false,
-            message: err.message 
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const editCar = async(req, res)=>{
+const editCar = async (req, res) => {
     try {
         const {
             id,
-            brand, 
-            model, 
-            car_class, 
-            gearbox, 
-            creation_year, 
-            seats_number, 
+            brand,
+            model,
+            car_class,
+            gearbox,
+            creation_year,
+            seats_number,
             fuel_consumption,
             img_url,
             car_number,
             color,
-            cost
+            cost,
         } = req.body;
-        
-        let group_id = await createCarGroup(brand, model, car_class, gearbox, 
-            creation_year, seats_number, fuel_consumption, cost, img_url);
+
+        let group_id = await createCarGroup(
+            brand,
+            model,
+            car_class,
+            gearbox,
+            creation_year,
+            seats_number,
+            fuel_consumption,
+            cost,
+            img_url
+        );
 
         let color_id = await selectColorId(color);
         if (!color_id) {
@@ -184,17 +223,17 @@ const editCar = async(req, res)=>{
 
         return res.status(200).json({
             success: true,
-            message: 'successful'
+            message: 'successful',
         });
-    } catch(err) {
-        return res.status(500).json({ 
+    } catch (err) {
+        return res.status(500).json({
             success: false,
-            message: err.message 
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const getRentalList = async(req, res)=> {
+const getRentalList = async (req, res) => {
     try {
         let activeRent = await selectStateRentalList(state.paid);
         let badRent = await selectStateRentalList(state.bad);
@@ -205,20 +244,20 @@ const getRentalList = async(req, res)=> {
             message: 'successful',
             data: {
                 active: activeRent,
-                history: [badRent, goodRent]
-            }
+                history: [badRent, goodRent],
+            },
         });
-    } catch(err) {
-        return res.status(500).json({ 
+    } catch (err) {
+        return res.status(500).json({
             success: false,
-            message: err.message 
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const estimateRent = async(req, res, state_value)=>{
+const estimateRent = async (req, res, state_value) => {
     try {
-        const {id} = req.body; // rent_id
+        const { id } = req.body; // rent_id
 
         let result = await updateRent(state_value, id);
 
@@ -226,50 +265,50 @@ const estimateRent = async(req, res, state_value)=>{
             success: true,
             message: 'successful',
         });
-    } catch(err) {
-        return res.status(500).json({ 
+    } catch (err) {
+        return res.status(500).json({
             success: false,
-            message: err.message 
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const getFines = async(req, res)=> {
+const getFines = async (req, res) => {
     try {
         let result = await selectAllFines();
         return res.status(200).json({
             success: true,
             message: 'successful',
-            data: result
+            data: result,
         });
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const removeFine = async(req, res)=> {
+const removeFine = async (req, res) => {
     try {
-        const {id} = req.body; // fine_id
+        const { id } = req.body; // fine_id
         let result = await deleteFines(id);
 
         return res.status(200).json({
             success: true,
             message: 'successful',
         });
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const addFine = async(req, res)=> {
+const addFine = async (req, res) => {
     try {
-        const {car_id, fine_cost, fine_date} = req.body;
+        const { car_id, fine_cost, fine_date } = req.body;
         let fine_id = await insertFine(car_id, fine_cost, fine_date);
 
         if (fine_id && fine_cost > 100.0) {
@@ -279,30 +318,30 @@ const addFine = async(req, res)=> {
             success: true,
             message: 'successful',
         });
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
-}
+};
 
-const editFine = async(req, res)=> {
+const editFine = async (req, res) => {
     try {
-        const {car_id, fine_cost, fine_date} = req.body;
+        const { car_id, fine_cost, fine_date } = req.body;
         let result = await updateFine(car_id, fine_cost, fine_date);
 
         return res.status(200).json({
             success: true,
             message: 'successful',
         });
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
-}
+};
 
 export {
     getCars,
@@ -315,4 +354,4 @@ export {
     removeFine,
     addFine,
     editFine,
-}
+};

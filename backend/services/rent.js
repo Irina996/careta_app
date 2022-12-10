@@ -1,6 +1,6 @@
-import { db_query } from "./index.js";
+import { db_query } from './index.js';
 
-const selectRentalList = async(client_id) => {
+const selectRentalList = async (client_id) => {
     let query_text = 
         `SELECT Rent.rent_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
@@ -22,18 +22,17 @@ const selectRentalList = async(client_id) => {
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const insertRent = async(booking_id, rent_cost, rent_state) => {
-    let query_text = 
-        `INSERT INTO Rent(booking_id, rent_cost, rent_state) 
+const insertRent = async (booking_id, rent_cost, rent_state) => {
+    let query_text = `INSERT INTO Rent(booking_id, rent_cost, rent_state) 
         VALUES ($1, $2, $3);`;
     let query_params = [booking_id, rent_cost, rent_state];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const selectStateRentalList = async(state_id) => {
+const selectStateRentalList = async (state_id) => {
     let query_text = 
         `SELECT Rent.rent_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
@@ -58,19 +57,13 @@ const selectStateRentalList = async(state_id) => {
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const updateRent = async(state_id, rent_id) => {
-    let query_text = 
-        `UPDATE Rent SET rent_state=$1 WHERE rent_id=$2;;`;
+const updateRent = async (state_id, rent_id) => {
+    let query_text = `UPDATE Rent SET rent_state=$1 WHERE rent_id=$2;;`;
     let query_params = [state_id, rent_id];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-export {
-    selectRentalList,
-    insertRent,
-    selectStateRentalList,
-    updateRent,
-}
+export { selectRentalList, insertRent, selectStateRentalList, updateRent };

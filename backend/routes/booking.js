@@ -1,5 +1,10 @@
 import express from 'express';
-import { cancelBooking, createBooking, getBookingList, payBooking } from '../controllers/booking.js';
+import {
+    cancelBooking,
+    createBooking,
+    getBookingList,
+    payBooking,
+} from '../controllers/booking.js';
 import { verifyClient } from '../middleware/authentication.js';
 import { booking, validateId } from '../middleware/validation.js';
 

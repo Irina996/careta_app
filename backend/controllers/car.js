@@ -1,16 +1,16 @@
-import { selectCarGroup, selectCarInfo } from "../services/index.js";
+import { selectCarGroup, selectCarInfo } from '../services/index.js';
 
 const getCarParameters = (object) => {
     let {
-        brand, 
+        brand,
         model,
-        class_name, 
+        class_name,
         gearbox_type,
         year_start,
         year_finish,
         seats_number,
-        start_date, 
-        end_date
+        start_date,
+        end_date,
     } = object;
 
     const date = new Date();
@@ -31,10 +31,10 @@ const getCarParameters = (object) => {
     if (gearbox_type == undefined) {
         object.gearbox_type = '';
     }
-    if (year_start == undefined || year_start == ''){
+    if (year_start == undefined || year_start == '') {
         object.year_start = 2000;
     }
-    if (year_finish == undefined || year_finish == ''){
+    if (year_finish == undefined || year_finish == '') {
         object.year_finish = year;
     }
     if (seats_number == undefined) {
@@ -44,24 +44,24 @@ const getCarParameters = (object) => {
         object.start_date = currentDate;
     }
     if (end_date == undefined || end_date == '') {
-        object.end_date = `${year+10}-${month}-${day}`
+        object.end_date = `${year + 10}-${month}-${day}`;
     }
- 
-    return object
-}
 
-const getCars = async(req, res) => {
+    return object;
+};
+
+const getCars = async (req, res) => {
     try {
         const {
-            brand, 
+            brand,
             model,
-            class_name, 
+            class_name,
             gearbox_type,
             year_start,
             year_finish,
             seats_number,
-            start_date, 
-            end_date
+            start_date,
+            end_date,
         } = getCarParameters(req.query);
 
         //TODO: get page from client
@@ -69,54 +69,59 @@ const getCars = async(req, res) => {
         let rows_count = 5;
 
         let offset_number = page * rows_count;
-        
-        let cars = await selectCarGroup(brand, model, 
-            class_name, gearbox_type, year_start, 
-            year_finish, seats_number, offset_number, 
-            rows_count, start_date, end_date
+
+        let cars = await selectCarGroup(
+            brand,
+            model,
+            class_name,
+            gearbox_type,
+            year_start,
+            year_finish,
+            seats_number,
+            offset_number,
+            rows_count,
+            start_date,
+            end_date
         );
         //console.log(cars);
-        
+
         if (cars) {
             return res.status(200).json({
                 success: true,
                 message: 'successful',
-                data: cars
+                data: cars,
             });
         } else {
             return res.status(404).json({
                 success: false,
-                message: 'fail'
+                message: 'fail',
             });
         }
-    } catch(e) {
-        console.error(e)
+    } catch (e) {
+        console.error(e);
     }
-}
+};
 
-const getCarInfo = async(req, res) => {
-    try{
-        const {id} = req.query; // car_group_id
+const getCarInfo = async (req, res) => {
+    try {
+        const { id } = req.query; // car_group_id
 
         let info = await selectCarInfo(id);
         if (info) {
             return res.status(200).json({
                 success: true,
                 message: 'successful',
-                data: info
+                data: info,
             });
         } else {
             return res.status(404).json({
                 success: false,
-                message: 'fail'
+                message: 'fail',
             });
         }
-    } catch(e) {
+    } catch (e) {
         console.error(e);
     }
-}
-
-export {
-    getCars,
-    getCarInfo
 };
+
+export { getCars, getCarInfo };

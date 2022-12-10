@@ -7,9 +7,9 @@ const paymentRouter = express.Router();
 paymentRouter.use(verifyClient);
 
 paymentRouter.get('/stripe-key', (req, res) => {
-    res.send({ publishableKey: publicKey});
+    res.send({ publishableKey: publicKey });
 });
- 
+
 paymentRouter.post('/pay', payment, pay);
 
 export default paymentRouter;
