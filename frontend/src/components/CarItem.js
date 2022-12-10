@@ -16,11 +16,12 @@ const CarItem = observer (({car}) => {
     return(
         <Col md={3} >
             <Card style={{width:200}}  border={"dark"} className="d-flex mx-auto mb-5 flex-column align-items-center ">
-                <Image width={200} height={200} src={car.image}/>
+                <Image width={190} height={170} src={car.image}/>
                 <div className="d-flex flex-column align-items-center ">
                     <h6>{car.brand_name}</h6> 
-                    <h6>{car.car_cost}</h6> 
                     <h6>{car.model_name}</h6> 
+                    <h6>{car.car_cost + " $"}</h6>  
+
 
                     <Button onClick={() => navigate(CAR_ROUTE + '/' + car.id)}
                         className="mx-auto mb-3"

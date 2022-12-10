@@ -12,18 +12,15 @@ import {useNavigate} from 'react-router-dom'
 
 const CarItemAdmin = observer (({car}) => {
     const navigate = useNavigate()
-    const cargroup1 = {id: 1, car_brand: "subaru", car_model: "outback", car_class: "middle", year: "2017", cost:"125$"}
-    const car1 = {id: 1, car_number: "1234AA-7", car_group_id: cargroup1.id, color: "black"}
     
     return(
         <Col md={3} >
             <Card style={{width:200}}  border={"dark"} className="d-flex mx-auto mb-5 flex-column align-items-center ">
-                <Image width={200} height={200} src={car.img}/>
+                <Image width={190} height={170} src={car.image}/>
                 <div className="d-flex flex-column align-items-center ">
-                    <h6>{cargroup1.car_brand}</h6> 
-                    <h6>{cargroup1.car_model}</h6> 
-                    <h6>{car1.car_number}</h6> 
-                    <h6>{cargroup1.cost}</h6> 
+                    <h6>{car.brand_name}</h6> 
+                    <h6>{car.model_name}</h6> 
+                    <h6>{car.car_cost + " $"}</h6>  
                    <Row className="d-flex space-between flex-row">
                     <Button
                         className="mx-auto mb-3"

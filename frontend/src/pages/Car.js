@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Container, Image, Row, Button } from 'react-bootstrap';
-import { BOOKING_ROUTE, PAYMENT_ROUTE } from '../utils/consts';
+import { BOOKING_ROUTE, STRIPE_ROUTE } from '../utils/consts';
 import {useNavigate} from 'react-router-dom'
+import { observer } from 'mobx-react-lite';
+import { fetchOneCar, fetchType } from '../http/carAPI';
+import { useContext, useEffect } from 'react';
+import { Context } from '../index';
+import { useParams } from 'react-router-dom';
 
 const Car = () => {
-    const car_1 = {id:1, brand_id:1, class_id:1, model_id:1, gearbox_id:1, year:2017, consumption: 200, seats: 4, cost: 140, image:'/src/images/t.jpg'}
+    const [car, setCars] = useState({info: []})
+    const {car_id} = useParams()
+
+    useEffect(() => {
+        fetchOneCar(car_id).then(data => car.setCars(data.data))
+    }, [])
     const navigate = useNavigate()
 
     return (
@@ -16,20 +26,16 @@ const Car = () => {
         <div className="d-flex mx-auto mt-5 mb-5 justify-content-center align-items-center ">
             <Col md={4}>
             <div className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center " >
-                <h5>{car_1.brand_id}</h5>
-                <h5>{car_1.class_id}</h5>
-                <h5>{car_1.model_id}</h5>
-                <h5>{car_1.gearbox_id}</h5>
-                <h5>{car_1.year}</h5>
-                <h5>{car_1.consumption}</h5>
-                <h5>{car_1.seats}</h5>
+            <h6>{car.brand_name}</h6> 
+            <h6>{car.model_name}</h6> 
+                    
             </div>
             </Col>
 
             <Col md={4}>
                 <Row>
                 <div className="d-flex mx-auto mb-5 align-items-center justify-content-center">
-                    <Image width={450} height={450} src={car_1.img}/>
+                    <Image width={450} height={450} src={car.image}/>
                 </div>
                 </Row>
             </Col>
@@ -55,11 +61,11 @@ const Car = () => {
                     </label>
                 </div>
 
-                <h2>{car_1.cost}</h2>
+                <h2>{car.car_cost}</h2>
             </div>
 
             <div className="d-flex flex-row justify-content-center align-items-center ">
-                <Button onClick={() => navigate(PAYMENT_ROUTE + '/')}
+                <Button onClick={() => navigate(STRIPE_ROUTE + '/')}
                         className="mx-2"
                         variant={"outline-secondary"}> Pay
                 </Button>

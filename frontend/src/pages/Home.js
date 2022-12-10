@@ -11,7 +11,7 @@ const Home = observer(() => {
     const {car} = useContext(Context)
 
     useEffect(() => {
-        fetchCar().then(data => car.setCars(data.rows))
+        fetchCar().then(data => car.setCars(data.data))
     }, [])
 
 
@@ -25,7 +25,6 @@ const Home = observer(() => {
                     <TypeBar/>
                 </Col>
                 <Col md={8}>
-                {/* <BrandBar/> */}
                 <div className="d-flex align-items-center">
                     <h2 className=" mx-auto mt-5 mb-5">Cars for book</h2>
                 </div>

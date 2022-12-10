@@ -35,9 +35,12 @@ class CheckoutForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <CardSection />
-        <button type="submit" disabled={!stripe}>
-          Submit Payment
+        <div className="d-flex justify-content-center mt-3">
+        <button className="pay_button" type="submit" disabled={!stripe}>
+          Pay now!
         </button>
+        </div>
+    
       </form>
     );
   }

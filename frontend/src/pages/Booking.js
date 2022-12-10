@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Image, Row, Button } from 'react-bootstrap';
-import { BOOKING_ROUTE, HOME_ROUTE, RENT_ROUTE, PAYMENT_ROUTE } from '../utils/consts';
+import { STRIPE_ROUTE, HOME_ROUTE, RENT_ROUTE, PAYMENT_ROUTE } from '../utils/consts';
 import {useNavigate} from 'react-router-dom'
 
 const Booking = () => {
@@ -42,7 +42,7 @@ const Booking = () => {
             </div>
 
             <div className="d-flex flex-row justify-content-center align-items-center ">
-                <Button onClick={() => navigate(PAYMENT_ROUTE + '/')}
+                <Button onClick={() => navigate(STRIPE_ROUTE + '/')}
                         className="mx-2"
                         variant={"outline-secondary"}> Rent
                 </Button>

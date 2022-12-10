@@ -25,7 +25,9 @@ const CARD_ELEMENT_OPTIONS = {
 function CardSection() {
   return (
     <Container>
-      Card details
+    <div className="d-flex justify-content-center mt-3">
+      <h3>Payment</h3>
+    </div>
       <CardElement options={CARD_ELEMENT_OPTIONS} />
     </Container>
   );
