@@ -61,10 +61,22 @@ const insertFine = async(car_id, fine_cost, fine_date) => {
 const updateFine = async(car_id, fine_cost, fine_date) => {
     let query_text = 
         `UPDATE Fine SET fine_cost=$2, fine_date=$3
-         WHERE car_id=$1;;`;
+         WHERE car_id=$1;`;
     let query_params = [car_id, fine_cost, fine_date];
     let result = await db_query(query_text, query_params);
     return result;
+}
+
+const selectFineCost = async(fine_id) => {
+    let query_text = 
+        `SELECT fine_cost FROM Fine WHERE fine_id=$1;`;
+    let query_params = [fine_id];
+    let result = await db_query(query_text, query_params);
+    try{
+        return result[0].fine_cost;
+    } catch(err) {
+        return 0;
+    }
 }
 
 export {
@@ -73,4 +85,5 @@ export {
     selectAllFines,
     insertFine,
     updateFine,
+    selectFineCost,
 }

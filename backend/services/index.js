@@ -15,7 +15,7 @@ import {
 } from './car.js';
 import { selectBookingList, insertBooking, updateBooking, selectBookingCost } from './booking.js';
 import { selectRentalList, insertRent, selectStateRentalList, updateRent } from './rent.js';
-import { selectFines, deleteFines, selectAllFines, insertFine, updateFine } from './fine.js';
+import { selectFines, deleteFines, selectAllFines, insertFine, updateFine, selectFineCost } from './fine.js';
 import { selectBrandId, insertBrand} from './car_brand.js';
 import { selectModelId, insertModel } from './car_model.js';
 import { selectClassId, insertClass } from './car_class.js';
@@ -83,4 +83,5 @@ export {
     updateFine,
     updateRate,
     selectAdmin,
+    selectFineCost,
 }

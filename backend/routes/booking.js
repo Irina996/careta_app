@@ -9,6 +9,6 @@ bookingRouter.use(verifyClient);
 bookingRouter.get('/list/',validateId, getBookingList);
 bookingRouter.post('/create/', booking, createBooking);
 bookingRouter.post('/delete/', validateId, cancelBooking);
-bookingRouter.post('/pay/', validateId, payBooking);
+//bookingRouter.post('/pay/', validateId, payBooking);
 
 export default bookingRouter;

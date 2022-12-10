@@ -226,6 +226,27 @@ const fine = async(req, res, next) => {
     }).catch(err => console.log(err))
 }
 
+const payment = async(req, res, next) => {
+    let validationRule = {
+        id: 'required',
+        payment_purpose: 'in:fine,rent',
+        payment_method_id: 'required_without:payment_intent_id',
+        payment_intent_id: 'required_without:payment_method_id'
+    }
+    await validator(req, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412)
+                .send({
+                    success: false,
+                    message: 'Validation failed',
+                    data: err
+                });
+        } else {
+            next();
+        }
+    }).catch(err => console.log(err))
+}
+
 export {
     register, 
     login,
@@ -234,4 +255,5 @@ export {
     validateId,
     carCharacteristics,
     fine,
+    payment,
 }

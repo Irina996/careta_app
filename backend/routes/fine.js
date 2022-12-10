@@ -7,6 +7,6 @@ const fineRouter = express.Router();
 fineRouter.use(verifyClient);
 
 fineRouter.get('/', validateId, getFines);
-fineRouter.post('/pay', validateId, payFine);
+//fineRouter.post('/pay', validateId, payFine);
 
 export default fineRouter;

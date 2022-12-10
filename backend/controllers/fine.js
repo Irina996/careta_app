@@ -1,4 +1,4 @@
-import { deleteFines, selectCarInfo, selectFines } from "../services/index.js"
+import { deleteFines, selectCarInfo, selectFineCost, selectFines } from "../services/index.js"
 
 
 const getFines = async(req, res) => {
@@ -30,11 +30,8 @@ const payFine = async(req, res) => {
     try{
         const {id} = req.body; // fine_id
 
-        //TODO: add payment
-        //TODO: check if fine with such id exist
-
         let result = await deleteFines(id);
-        console.log(result);
+        //console.log(result);
 
         return res.status(200).json({
             success: true,

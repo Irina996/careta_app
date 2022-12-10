@@ -89,10 +89,6 @@ const payBooking = async(req, res) => {
     try{
         const booking_id = req.body.id; //booking_id
 
-        let rent_cost = await selectBookingCost(booking_id);
-
-        // TODO: add payment
-
         await updateBooking(booking_id, state.paid);
         await insertRent(booking_id, rent_cost, state.paid);
 
