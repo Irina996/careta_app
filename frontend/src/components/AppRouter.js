@@ -10,6 +10,7 @@ import AdminFines from '../pages/AdminFines';
 import AdminRent from '../pages/AdminRent';
 import Car from '../pages/Car';
 import Auth from '../pages/Auth';
+import Stripe from '../pages/Stripe';
 import Payment from '../pages/Payment';
 import { HOME_ROUTE } from '../utils/consts';
 import { Context } from '..';
@@ -29,6 +30,7 @@ const AppRouter = () => {
             <Route path='/payment' element={<Payment />}/>  
             <Route path='/login' element={<Auth />}/> 
             <Route path='/registration' element={<Auth />}/> 
+            <Route path='/payment/pay' element={<Stripe />}/> 
             <Route path='/adminrent' element={user.isAuth ? (<AdminRent />) : (<Navigate replace to={'/'}/>)}/> ,
             <Route path='/adminfines' element={user.isAuth ? (<AdminFines />) : (<Navigate replace to={'/'}/>)}/> ,
         </Routes>

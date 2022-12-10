@@ -10,6 +10,7 @@ import fineRouter from './routes/fine.js';
 import fileUpload from 'express-fileupload';
 import adminRouter from './routes/admin.js';
 import cors from 'cors';
+import paymentRouter from './routes/payment.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/booking', bookingRouter);
 app.use('/rent', rentalRouter);
 app.use('/fines/', fineRouter);
 app.use('/admin/', adminRouter);
+app.use('/payment/', paymentRouter);
 
 // create port
 const port = process.env.PORT || 5000;

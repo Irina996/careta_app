@@ -1,6 +1,6 @@
 import React from 'react';
 import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
-
+import {stripePaymentMethodHandler} from './script.js';
 import CardSection from './CardSection';
 
 class CheckoutForm extends React.Component {

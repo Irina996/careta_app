@@ -4,6 +4,7 @@
 import React from 'react';
 import {CardElement} from '@stripe/react-stripe-js';
 import './Styles.css'
+import { Col, Container } from 'react-bootstrap';
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
@@ -23,10 +24,10 @@ const CARD_ELEMENT_OPTIONS = {
 };
 function CardSection() {
   return (
-    <label>
+    <Container>
       Card details
       <CardElement options={CARD_ELEMENT_OPTIONS} />
-    </label>
+    </Container>
   );
 };
 export default CardSection;

@@ -9,7 +9,7 @@ import CheckoutForm from './CheckoutForm';
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_test_51LmcFFIEP3De9ah1jnU58FzH9dR4fkqRDrzbs9DlfaTpzahhSyrN0sq9SzCSxbGIOrs7b09ndLuKBcHBefdGm18q000uMonjhj');
 
-function Stripe() {
+const Stripe = () => {
   return (
     <Elements stripe={stripePromise}>
       <CheckoutForm />
@@ -17,4 +17,4 @@ function Stripe() {
   );
 };
 
-ReactDOM.render(<Stripe />, document.getElementById('root'));
+export default Stripe;

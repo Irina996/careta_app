@@ -1,5 +1,5 @@
 import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BOOKING_ROUTE, PAYMENT_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, ADMINRENT_ROUTE, ADMINFINES_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, STRIPE_ROUTE, BOOKING_ROUTE, PAYMENT_ROUTE, CAR_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, RENT_ROUTE, FINES_ROUTE, ADMINRENT_ROUTE, ADMINFINES_ROUTE} from "./utils/consts";
 import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
@@ -9,6 +9,7 @@ import Fines from "./pages/Fines";
 import Payment from "./pages/Payment";
 import AdminFines from "./pages/AdminFines";
 import AdminRent from "./pages/AdminRent";
+import Stripe from "./pages/Stripe";
 
 export const authRoutes = [
     {
@@ -57,5 +58,9 @@ export const publicRoutes = [
     {
         path: CAR_ROUTE + '/:id',
         Component: Car
+    },
+    {
+        path: STRIPE_ROUTE,
+        Component: Stripe
     },
 ]

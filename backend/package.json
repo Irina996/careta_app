@@ -24,6 +24,7 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "streamifier": "^0.1.1",
+    "stripe": "^11.3.0",
     "validatorjs": "^3.22.1"
   }
 }

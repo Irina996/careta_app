@@ -1,3 +1,24 @@
+import stripe from "./Stripe.js";
+
+export const stripePaymentMethodHandler = async (result) => {
+    if (result.error) {
+      // Show error in payment form
+    } else {
+      // Otherwise send paymentMethod.id to your server (see Step 4)
+      const res = await fetch('/pay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payment_method_id: result.paymentMethod.id,
+        }),
+      })
+      const paymentResponse = await res.json();
+  
+      // Handle server response (see Step 4)
+      handleServerResponse(paymentResponse);
+    }
+}
+
 const handleServerResponse = async (response) => {
     if (response.error) {
       // Show error from server on payment form
