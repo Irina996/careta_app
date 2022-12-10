@@ -1,24 +1,21 @@
-import { selectRentalList } from "../services/index.js";
+import { selectRentalList } from '../services/index.js';
 
-
-const getRentalList = async(req, res) => {
-    try{
-        const {id} = req.query; // client_id
-        let rentList = await selectRentalList(id);
+const getRentalList = async (req, res) => {
+    try {
+        const { client_id } = req.query;
+        let rentList = await selectRentalList(client_id);
         return res.status(200).json({
             success: true,
             message: 'successful',
-            data: rentList
+            data: rentList,
         });
-    } catch(err){
+    } catch (err) {
         console.log(err);
         return res.status(500).json({
             success: false,
-            message: 'fail'
-        })
+            message: 'fail',
+        });
     }
-}
+};
 
-export {
-    getRentalList,
-}
+export { getRentalList };

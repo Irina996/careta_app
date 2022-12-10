@@ -4,6 +4,6 @@ const state = {
     canceled: 3,
     good: 4,
     bad: 5,
-}
+};
 
 export default state;

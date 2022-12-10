@@ -1,7 +1,7 @@
-import pg from 'pg'
-import dotenv from 'dotenv'
-import fs from 'fs'
-import bcrypt from 'bcrypt'
+import pg from 'pg';
+import dotenv from 'dotenv';
+import fs from 'fs';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ const pool = new pg.Pool({
 const client = await pool.connect();
 
 // create tables
-console.log('Creating tables...')
+console.log('Creating tables...');
 await pool.query(create_tables_sql);
 
 // add admin
@@ -28,22 +28,26 @@ if (process.env.ADMINMAIL && process.env.ADMINPASSWORD) {
     var password = await bcrypt.hash(process.env.ADMINPASSWORD, 10);
     var user_id = 0;
 
-    console.log('Adding admin...')
+    console.log('Adding admin...');
 
-    await pool.query(
-        'INSERT INTO public.User(email, user_password) VALUES ($1, $2) RETURNING user_id;', 
-        [admin, password]
-    ).then(result => {
-        user_id = result.rows[0].user_id;
-    });
-    await pool.query('INSERT INTO public.Admin(user_id) VALUES ($1);', [user_id])
+    await pool
+        .query(
+            'INSERT INTO public.User(email, user_password) VALUES ($1, $2) RETURNING user_id;',
+            [admin, password]
+        )
+        .then((result) => {
+            user_id = result.rows[0].user_id;
+        });
+    await pool.query('INSERT INTO public.Admin(user_id) VALUES ($1);', [
+        user_id,
+    ]);
 }
 
 // add some data
-console.log('Adding some required data...')
+console.log('Adding some required data...');
 await pool.query(init_data_sql);
 
 client.release();
 pool.end();
 
-console.log("Successfully ended");
+console.log('Successfully ended');

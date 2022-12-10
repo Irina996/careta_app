@@ -6,7 +6,6 @@ import { validateId } from '../middleware/validation.js';
 const fineRouter = express.Router();
 fineRouter.use(verifyClient);
 
-fineRouter.get('/', validateId, getFines);
-//fineRouter.post('/pay', validateId, payFine);
+fineRouter.get('/', getFines);
 
 export default fineRouter;

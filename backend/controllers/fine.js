@@ -1,14 +1,17 @@
-import { deleteFines, selectCarInfo, selectFineCost, selectFines } from "../services/index.js"
+import {
+    deleteFines,
+    selectCarInfo,
+    selectFines,
+} from '../services/index.js';
 
+const getFines = async (req, res) => {
+    try {
+        const { client_id } = req.query;
 
-const getFines = async(req, res) => {
-    try{
-        const {id} = req.query; // client_id
-
-        let fines = await selectFines(id);
+        let fines = await selectFines(client_id);
         let result_data = [];
 
-        for (var i in fines){
+        for (var i in fines) {
             let car_info = await selectCarInfo(fines[i].car_group_id);
             result_data.push(Object.assign(fines[i], car_info[0]));
         }
@@ -16,37 +19,34 @@ const getFines = async(req, res) => {
         return res.status(200).json({
             success: true,
             message: 'successful',
-            data: result_data
+            data: result_data,
         });
-    } catch(e) {
+    } catch (e) {
         return res.status(406).json({
             success: false,
-            message: 'fail'
-        })
+            message: 'fail',
+        });
     }
-}
+};
 
-const payFine = async(req, res) => {
-    try{
-        const {id} = req.body; // fine_id
+const payFine = async (req, res) => {
+    try {
+        const { id } = req.body; // fine_id
 
         let result = await deleteFines(id);
         //console.log(result);
 
         return res.status(200).json({
             success: true,
-            message: 'successful'
+            message: 'successful',
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).json({
             success: false,
-            message: 'fail'
+            message: 'fail',
         });
     }
-}
+};
 
-export { 
-    getFines,
-    payFine,
-}
+export { getFines, payFine };

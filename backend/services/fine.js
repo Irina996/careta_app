@@ -1,6 +1,6 @@
-import { db_query } from "./index.js";
+import { db_query } from './index.js';
 
-const selectFines = async(client_id) => {
+const selectFines = async (client_id) => {
     let query_text = 
         `SELECT fine_id, Car.car_group_id, Fine.fine_cost,
             Booking.baby_seat_amount, Booking.is_driver, 
@@ -16,16 +16,16 @@ const selectFines = async(client_id) => {
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const deleteFines = async(fine_id) => {
+const deleteFines = async (fine_id) => {
     let query_text = `DELETE FROM Fine WHERE fine_id=$1;`;
     let query_params = [fine_id];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const selectAllFines = async() => {
+const selectAllFines = async () => {
     let query_text = 
         `SELECT fine_id, Car.car_group_id, Fine.fine_cost,
                 Booking.baby_seat_amount, Booking.is_driver,
@@ -43,41 +43,38 @@ const selectAllFines = async() => {
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const insertFine = async(car_id, fine_cost, fine_date) => {
-    let query_text = 
-        `INSERT INTO Fine(car_id, fine_cost, fine_date) 
+const insertFine = async (car_id, fine_cost, fine_date) => {
+    let query_text = `INSERT INTO Fine(car_id, fine_cost, fine_date) 
          VALUES ($1, $2, $3) RETURNING fine_id;`;
     let query_params = [car_id, fine_cost, fine_date];
     let result = await db_query(query_text, query_params);
-    try{
+    try {
         return result[0].fine_id;
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
-}
+};
 
-const updateFine = async(car_id, fine_cost, fine_date) => {
-    let query_text = 
-        `UPDATE Fine SET fine_cost=$2, fine_date=$3
+const updateFine = async (car_id, fine_cost, fine_date) => {
+    let query_text = `UPDATE Fine SET fine_cost=$2, fine_date=$3
          WHERE car_id=$1;`;
     let query_params = [car_id, fine_cost, fine_date];
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const selectFineCost = async(fine_id) => {
-    let query_text = 
-        `SELECT fine_cost FROM Fine WHERE fine_id=$1;`;
+const selectFineCost = async (fine_id) => {
+    let query_text = `SELECT fine_cost FROM Fine WHERE fine_id=$1;`;
     let query_params = [fine_id];
     let result = await db_query(query_text, query_params);
-    try{
+    try {
         return result[0].fine_cost;
-    } catch(err) {
+    } catch (err) {
         return 0;
     }
-}
+};
 
 export {
     selectFines,
@@ -86,4 +83,4 @@ export {
     insertFine,
     updateFine,
     selectFineCost,
-}
+};

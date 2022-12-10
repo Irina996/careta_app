@@ -1,6 +1,6 @@
-import { db_query } from "./index.js";
+import { db_query } from './index.js';
 
-const selectBookingList = async(client_id) => {
+const selectBookingList = async (client_id) => {
     let query_text = 
         `SELECT Booking.booking_id, Car_brand.brand_name,
             Car_model.model_name, Car_class.class_name,
@@ -21,35 +21,46 @@ const selectBookingList = async(client_id) => {
     // return approved client bookings
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const insertBooking = async(client_id, car_id, 
-    start_date, end_date, baby_seat_amount, 
-    is_driver, booking_date) => {
+const insertBooking = async (
+    client_id,
+    car_id,
+    start_date,
+    end_date,
+    baby_seat_amount,
+    is_driver,
+    booking_date
+) => {
     let query_text = 
         `INSERT INTO Booking(client_id, car_id, start_date,
-                    end_date, baby_seat_amount, is_driver,
-                    booking_date, booking_state)
+                             end_date, baby_seat_amount, is_driver,
+                             booking_date, booking_state)
         VALUES ($1, $2, $3, $4, $5, $6, $7, 1);`;
-    let query_params = [client_id, car_id, 
-        start_date, end_date, baby_seat_amount, 
-        is_driver, booking_date];
+    let query_params = [
+        client_id,
+        car_id,
+        start_date,
+        end_date,
+        baby_seat_amount,
+        is_driver,
+        booking_date,
+    ];
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
-const updateBooking = async(booking_id, state_id) => {
-    let query_text = 
-        `UPDATE Booking SET booking_state = $2 WHERE booking_id = $1;`;
+const updateBooking = async (booking_id, state_id) => {
+    let query_text = `UPDATE Booking SET booking_state = $2 WHERE booking_id = $1;`;
     let query_params = [booking_id, state_id];
 
     let result = await db_query(query_text, query_params);
     return result;
-}
+};
 
 // return booking cost(days * 24 hours * car cost)
-const selectBookingCost = async(booking_id) => {
+const selectBookingCost = async (booking_id) => {
     let query_text = 
         `SELECT Car_group.car_cost * 24 * (Booking.end_date - Booking.start_date + 1) 
             as booking_cost 
@@ -61,11 +72,6 @@ const selectBookingCost = async(booking_id) => {
 
     let result = await db_query(query_text, query_params);
     return result[0].booking_cost;
-}
+};
 
-export {
-    selectBookingList,
-    insertBooking,
-    updateBooking,
-    selectBookingCost,
-}
+export { selectBookingList, insertBooking, updateBooking, selectBookingCost };

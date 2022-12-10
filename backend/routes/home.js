@@ -1,6 +1,6 @@
-import express from 'express'
+import express from 'express';
 import { carsFilter, validateId } from '../middleware/validation.js';
-import { getCars, getCarInfo} from '../controllers/car.js';
+import { getCars, getCarInfo } from '../controllers/car.js';
 
 const mainRouter = express.Router();
 
