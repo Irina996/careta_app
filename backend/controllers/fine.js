@@ -3,9 +3,9 @@ import { deleteFines, selectCarInfo, selectFineCost, selectFines } from "../serv
 
 const getFines = async(req, res) => {
     try{
-        const {id} = req.query; // client_id
+        const {client_id} = req.query;
 
-        let fines = await selectFines(id);
+        let fines = await selectFines(client_id);
         let result_data = [];
 
         for (var i in fines){

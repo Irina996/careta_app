@@ -6,9 +6,8 @@ import { booking, validateId } from '../middleware/validation.js';
 const bookingRouter = express.Router();
 bookingRouter.use(verifyClient);
 
-bookingRouter.get('/list/',validateId, getBookingList);
+bookingRouter.get('/list/', getBookingList);
 bookingRouter.post('/create/', booking, createBooking);
 bookingRouter.post('/delete/', validateId, cancelBooking);
-//bookingRouter.post('/pay/', validateId, payBooking);
 
 export default bookingRouter;

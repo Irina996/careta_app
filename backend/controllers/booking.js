@@ -3,8 +3,8 @@ import state from "../config/state_code.js";
 
 const getBookingList = async(req, res) => {
     try{
-        const {id} = req.query; // client_id
-        let bookingList = await selectBookingList(id);
+        const {client_id} = req.query; 
+        let bookingList = await selectBookingList(client_id);
         return res.status(200).json({
             success: true,
             message: 'successful',
@@ -21,8 +21,8 @@ const getBookingList = async(req, res) => {
 
 const createBooking = async(req, res) => {
     try{
-        const {
-            client_id, 
+        const { 
+            client_id,
             car_group_id,
             start_date, 
             end_date, 

@@ -133,7 +133,6 @@ const carsFilter = async (req, res, next) => {
 
 const booking = async(req, res, next) => {
     const validationRule = {
-        client_id: 'required|integer', 
         car_group_id: 'required|integer',
         start_date: 'required|after_or_equal_now', 
         end_date: 'required|after_now',

@@ -78,7 +78,7 @@ const pay = async (req, res) => {
         let intent;
         if (req.body.payment_method_id) {
             intent = await createPaymentIntent(
-                req.body.id,
+                req.body.id, // id of payment object
                 req.body.payment_purpose, 
                 req.body.payment_method_id
             );

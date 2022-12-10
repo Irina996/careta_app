@@ -3,8 +3,8 @@ import { selectRentalList } from "../services/index.js";
 
 const getRentalList = async(req, res) => {
     try{
-        const {id} = req.query; // client_id
-        let rentList = await selectRentalList(id);
+        const {client_id} = req.query; 
+        let rentList = await selectRentalList(client_id);
         return res.status(200).json({
             success: true,
             message: 'successful',
