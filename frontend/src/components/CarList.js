@@ -17,7 +17,7 @@ const CarList = observer (() => {
         <Row className="d-flex">
             {
                 car?.cars?.map(car =>
-                    <CarItem key={car.id} car={car}/>
+                    <CarItem key={car.group_id} car={car}/>
                     
                 )
             }

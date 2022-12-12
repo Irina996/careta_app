@@ -23,7 +23,7 @@ const CarItem = observer (({car}) => {
                     <h6>{car.car_cost + " $"}</h6>  
 
 
-                    <Button onClick={() => navigate(CAR_ROUTE + '/' + car.id)}
+                    <Button onClick={() => navigate(CAR_ROUTE + '/' + car.group_id)}
                         className="mx-auto mb-3"
                         variant={"outline-secondary"}> Show
                     </Button>
