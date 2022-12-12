@@ -1,10 +1,20 @@
 import React from 'react';
+import { useContext, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Container, Col, Form, Button, Row } from 'react-bootstrap';
 import BrandBar from '../components/BrandBar';
 import CarListAdmin from '../components/CarListAdmin';
 import AdminBar from '../components/AdminBar';
+import { fetchCar, fetchType } from '../http/carAPI';
+import { Context } from '../index';
 
-const Admin = () => {
+const Admin = observer(() => {
+    const {car} = useContext(Context)
+
+    useEffect(() => {
+        fetchCar().then(data => car.setCars(data.data))
+    }, [])
+
     return (
         <Container>
             <Row >
@@ -23,6 +33,6 @@ const Admin = () => {
             </Row>
         </Container>
     );
-};
+});
 
 export default Admin;

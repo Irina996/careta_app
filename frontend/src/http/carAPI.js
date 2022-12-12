@@ -10,8 +10,8 @@ export const fetchCar = async () => {
     return data
 } 
 
-export const fetchOneCar = async (id) => { 
-    const {data} = await $host.get('home/' + id) 
+export const fetchOneCar = async (car_id) => { 
+    const {data} = await $host.get('home/car?' + car_id) 
     return data
 } 
 

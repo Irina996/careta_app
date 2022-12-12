@@ -5,7 +5,7 @@ export const stripePaymentMethodHandler = async (result) => {
       // Show error in payment form
     } else {
       // Otherwise send paymentMethod.id to your server (see Step 4)
-      const res = await fetch('/pay', {
+      const res = await fetch('http://localhost:5000/payment/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -32,7 +32,7 @@ const handleServerResponse = async (response) => {
       } else {
         // The card action has been handled
         // The PaymentIntent can be confirmed again on the server
-        const serverResponse = await fetch('/pay', {
+        const serverResponse = await fetch('http://localhost:5000/payment/pay', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ payment_intent_id: paymentIntent.id })
