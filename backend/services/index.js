@@ -1,6 +1,12 @@
 import pool from '../config/db.js';
 import { insertUser, selectUser, selectUserIdByEmail } from './user.js';
-import { insertClient, selectClient, updateRate } from './client.js';
+import {
+    insertClient,
+    selectClient,
+    updateRate,
+    insertCreditData,
+    selectCreditData,
+} from './client.js';
 import {
     selectCarGroup,
     selectCarInfo,
@@ -102,4 +108,6 @@ export {
     selectFineCost,
     selectRelatedBookingId,
     updateBookingCar,
+    insertCreditData,
+    selectCreditData,
 };

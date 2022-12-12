@@ -45,4 +45,37 @@ const updateRate = async (fine_id, rate_difference) => {
     return await db_query(query_text, query_params);
 };
 
-export { insertClient, selectClient, updateRate };
+const insertCreditData = async (
+    client_id,
+    card_number,
+    card_holder,
+    exp_date,
+    cvv
+) => {
+    let query_text = 
+        `INSERT INTO Credit_card (client_id, card_number, card_holder, exp_date, CVV)
+        VALUES($1, $2, $3, $4, $5) 
+        ON CONFLICT(client_id) DO UPDATE 
+            SET card_number=$2, card_holder=$3, exp_date=$4, CVV=$5;`;
+    let query_params = [client_id, card_number, card_holder, exp_date, cvv];
+    console.log(query_params);
+
+    let result = await db_query(query_text, query_params);
+    return result;
+};
+
+const selectCreditData = async (client_id) => {
+    let query_text = `SELECT * FROM Credit_card WHERE client_id=$1;`;
+    let query_params = [client_id];
+
+    let result = await db_query(query_text, query_params);
+    return result[0];
+};
+
+export {
+    insertClient,
+    selectClient,
+    updateRate,
+    insertCreditData,
+    selectCreditData,
+};
