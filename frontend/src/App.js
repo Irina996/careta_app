@@ -1,16 +1,17 @@
-import React from 'react';
-import  Navbar  from './components/NavBar';
-import {BrowserRouter} from "react-router-dom";
-import AppRouter from "./components/AppRouter";
+import Navbar from "./components/NavBar";
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./components/AppRouter";
+import { AuthProvider } from "./contexts";
 
 const App = () => {
-
-    return (
-        <BrowserRouter>
-            <Navbar/>
-            <AppRouter />
-        </BrowserRouter>
-    );
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
+        <AppRouter />
+      </BrowserRouter>
+    </AuthProvider>
+  );
 };
 
 export default App;

@@ -1,8 +1,12 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+import { secretKey } from '../config/jwt.js';
 import {
     insertUser,
     insertClient,
     selectUserIdByEmail,
+    selectUser,
 } from '../services/index.js';
 
 const createClient = async (req, res) => {
@@ -29,7 +33,7 @@ const createClient = async (req, res) => {
                 client_address
             );
             let user = await selectUser(email);
-            jwt.sign({ user }, secretKey, (err, token) => {
+            return jwt.sign({ user }, secretKey, (err, token) => {
                 return res.status(201).json({
                     success: true,
                     message: 'register successful',
