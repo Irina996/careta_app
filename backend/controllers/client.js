@@ -28,9 +28,14 @@ const createClient = async (req, res) => {
                 phone,
                 client_address
             );
-            return res.status(201).json({
-                success: true,
-                message: 'register successful',
+            let user = await selectUser(email);
+            jwt.sign({ user }, secretKey, (err, token) => {
+                return res.status(201).json({
+                    success: true,
+                    message: 'register successful',
+                    role: 'client',
+                    data: token,
+                });
             });
         }
         return res.status(403).json({
