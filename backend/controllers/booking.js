@@ -3,7 +3,7 @@ import {
     insertRent,
     selectAvailableCarId,
     selectBookingList,
-    updateBooking,
+    updateBookingState,
 } from '../services/index.js';
 import state from '../config/state_code.js';
 
@@ -87,7 +87,7 @@ const cancelBooking = async (req, res) => {
     try {
         const { id } = req.body; //booking_id
 
-        let result = await updateBooking(id, state.canceled);
+        let result = await updateBookingState(id, state.canceled);
 
         res.status(200).json({
             success: true,
@@ -106,7 +106,7 @@ const payBooking = async (req, res) => {
     try {
         const booking_id = req.body.id; //booking_id
 
-        await updateBooking(booking_id, state.paid);
+        await updateBookingState(booking_id, state.paid);
         await insertRent(booking_id, rent_cost, state.paid);
 
         res.status(200).json({

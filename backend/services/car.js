@@ -41,7 +41,8 @@ const selectCarGroup = async (
                            (Booking.start_date >= $9 AND Booking.start_date <= $10)
                           OR (Booking.start_date <= $9 AND Booking.end_date >= $9)
                        GROUP BY car_id) Bookings ON Bookings.car_id = Car.car_id
-        WHERE Car_brand.brand_name LIKE $1
+        WHERE Car.is_deleted=false
+          AND Car_brand.brand_name LIKE $1
           AND Car_model.model_name LIKE $2
           AND Car_class.class_name LIKE $3
           AND Gearbox_type.type_name LIKE $4
@@ -92,7 +93,7 @@ const selectAvailableCarId = async (start_date, end_date, group_id) => {
                                (Booking.start_date >= $1 AND Booking.start_date <= $2)
                               OR (Booking.start_date <= $1 AND Booking.end_date >= $1)
                            GROUP BY car_id) Bookings ON Bookings.car_id = Car.car_id
-        WHERE Bookings.car_id IS NULL AND Car.car_group_id=$3
+        WHERE Car.is_deleted=false AND Bookings.car_id IS NULL AND Car.car_group_id=$3
         LIMIT 1;`;
     let query_params = [start_date, end_date, group_id];
     let result = await db_query(query_text, query_params);
@@ -132,6 +133,7 @@ const selectAllCars = async (offset_number, rows_count) => {
             INNER JOIN Car_group ON Car.car_group_id=Car_group.group_id
             INNER JOIN Car_brand ON Car_group.car_brand_id=Car_brand.brand_id
             INNER JOIN Car_model ON Car_group.car_model_id=Car_model.model_id
+        WHERE Car.is_deleted=false
         OFFSET $1 FETCH NEXT $2 ROWS ONLY;`;
     let query_params = [offset_number, rows_count];
     let result = await db_query(query_text, query_params);
@@ -236,7 +238,7 @@ const insertCar = async (group_id, color_id, car_number) => {
 
 const deleteCar = async (car_id) => {
     try {
-        let query_text = `DELETE FROM Car WHERE car_id=$1;`;
+        let query_text = `UPDATE Car SET is_deleted=true WHERE car_id=$1;`;
         let query_params = [car_id];
         let result = await db_query(query_text, query_params);
         return result;

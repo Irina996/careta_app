@@ -69,7 +69,8 @@ CREATE TABLE public.Car (
 	car_id SERIAL PRIMARY KEY,
 	car_group_id INTEGER NOT NULL REFERENCES public.Car_group(group_id),
 	color_id INTEGER NOT NULL REFERENCES public.Color(color_id),
-	car_number text NOT NULL UNIQUE
+	car_number text NOT NULL UNIQUE,
+    is_deleted BOOLEAN DEFAULT false NOT NULL
 );
 
 CREATE TABLE public.State(

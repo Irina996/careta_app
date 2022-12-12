@@ -10,12 +10,15 @@ import {
     insertModel,
     selectAllCars,
     selectAllFines,
+    selectAvailableCarId,
     selectBrandId,
     selectCarGroupId,
     selectClassId,
     selectColorId,
     selectModelId,
+    selectRelatedBookingId,
     selectStateRentalList,
+    updateBookingCar,
     updateCar,
     updateRate,
     updateRent,
@@ -171,12 +174,44 @@ const addCar = async (req, res) => {
 const removeCar = async (req, res) => {
     try {
         const { id } = req.body; // car_id
-        let result = await deleteCar(id);
+
+        let dep_bookings = []
+
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${year}-${month}-${day}`;
+
+        let bookings = await selectRelatedBookingId(id, currentDate);
+        for (var i in bookings) {
+            let availableCarId = await selectAvailableCarId(
+                bookings[i].start_date,
+                bookings[i].end_date,
+                bookings[i].car_group_id
+            );
+            let car_id;
+            if (availableCarId.success) {
+                car_id = availableCarId.data;
+                let updateResult = await updateBookingCar(bookings[i].booking_id, car_id);
+            } else {
+                dep_bookings.push(bookings[i].booking_id);
+            }
+        }
+
+        let deleteResult = await deleteCar(id);
+
+        if (dep_bookings.length > 0) {
+            return res.status(200).json({
+                success: true,
+                message: 'warning: exist bookings with that car',
+            });
+        }
 
         return res.status(200).json({
             success: true,
             message: 'successful',
-        });
+        });  
     } catch (err) {
         return res.status(500).json({
             success: false,

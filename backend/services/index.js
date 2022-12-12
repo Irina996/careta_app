@@ -16,8 +16,10 @@ import {
 import {
     selectBookingList,
     insertBooking,
-    updateBooking,
+    updateBookingState,
     selectBookingCost,
+    updateBookingCar,
+    selectRelatedBookingId,
 } from './booking.js';
 import {
     selectRentalList,
@@ -70,7 +72,7 @@ export {
     selectRentalList,
     selectAvailableCarId,
     insertBooking,
-    updateBooking,
+    updateBookingState,
     insertRent,
     selectBookingCost,
     selectFines,
@@ -98,4 +100,6 @@ export {
     updateRate,
     selectAdmin,
     selectFineCost,
+    selectRelatedBookingId,
+    updateBookingCar,
 };

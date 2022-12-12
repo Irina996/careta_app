@@ -51,13 +51,21 @@ const insertBooking = async (
     return result;
 };
 
-const updateBooking = async (booking_id, state_id) => {
+const updateBookingState = async (booking_id, state_id) => {
     let query_text = `UPDATE Booking SET booking_state = $2 WHERE booking_id = $1;`;
     let query_params = [booking_id, state_id];
 
     let result = await db_query(query_text, query_params);
     return result;
 };
+
+const updateBookingCar = async (booking_id, car_id) => {
+    let query_text = 'UPDATE Booking SET car_id=$2 WHERE booking_id=$1;';
+    let query_params = [booking_id, car_id];
+
+    let result = await db_query(query_text, query_params);
+    return result;
+}
 
 // return booking cost(days * 24 hours * car cost)
 const selectBookingCost = async (booking_id) => {
@@ -74,4 +82,29 @@ const selectBookingCost = async (booking_id) => {
     return result[0].booking_cost;
 };
 
-export { selectBookingList, insertBooking, updateBooking, selectBookingCost };
+const selectRelatedBookingId = async (car_id, date) => {
+    try {
+        let query_text = 
+            `SELECT booking_id, start_date, end_date, Car.car_group_id 
+            FROM Booking
+                INNER JOIN Car ON Car.car_id=Booking.car_id
+            WHERE 
+                Booking.car_id=$1
+                    AND (booking_state=2 AND end_date>$2)
+               OR (booking_state=1 AND start_date>$2);`;
+        let query_params = [car_id, date];
+        let result = await db_query(query_text, query_params);
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export {
+    selectBookingList,
+    insertBooking,
+    updateBookingState,
+    selectBookingCost,
+    updateBookingCar,
+    selectRelatedBookingId,
+};
