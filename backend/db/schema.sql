@@ -46,10 +46,10 @@ CREATE TABLE public.Color (
 
 CREATE TABLE public.Credit_card (
 	client_id SERIAL PRIMARY KEY REFERENCES Client(client_id),
-	card_number INTEGER NOT NULL,
+	card_number text NOT NULL,
 	card_holder text NOT NULL,
-	exp_date date NOT NULL,
-	CVV INTEGER NOT NULL
+	exp_date text NOT NULL,
+	CVV text NOT NULL
 );
 
 CREATE TABLE public.Car_group (

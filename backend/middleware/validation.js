@@ -19,6 +19,8 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
 const phoneRegex = /\+\d{3}\(\d{2}\)\d{7}/;
 const dateRegex = /^(\d\d\d\d)\-(0\d|1[0-2])\-(0\d|1\d|2\d|3[0-1])$/;
 const vinRegex = /\d\d\d\d [A-Z][A-Z]-[1-7]/; // vehicle identification number
+const cardNumberRegex = /\d{16}/;
+const cvvRegex = /\d{3}/;
 
 // password policy
 Validator.register(
@@ -68,6 +70,18 @@ Validator.register(
     'vin',
     (value) => vinRegex.test(value),
     'car number must be composed of four digits, two letters and another digit (e.g. 1234 AB-5)'
+);
+
+Validator.register(
+    'card',
+    (value) => cardNumberRegex.test(value),
+    'card number must contain 16 numbers'
+);
+
+Validator.register(
+    'cvv',
+    (value) => cvvRegex.test(value),
+    'cvv must contain 3 numbers'
 );
 
 function isEmpty(obj) {
@@ -253,6 +267,26 @@ const payment = async (req, res, next) => {
     }).catch((err) => console.log(err));
 };
 
+const credit_card = async (req, res, next) => {
+    let validationRule = {
+        card_number: 'required|card',
+        card_holder: 'required|string',
+        exp_date: 'required',
+        CVV: 'required|cvv',
+    };
+    await validator(req, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412).send({
+                success: false,
+                message: 'Validation failed',
+                data: err,
+            });
+        } else {
+            next();
+        }
+    }).catch((err) => console.log(err));
+};
+
 export {
     register,
     login,
@@ -262,4 +296,5 @@ export {
     carCharacteristics,
     fine,
     payment,
+    credit_card,
 };
