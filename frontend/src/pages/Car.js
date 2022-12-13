@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Col, Container, Image, Row, Button } from 'react-bootstrap';
 import { BOOKING_ROUTE, STRIPE_ROUTE } from '../utils/consts';
 import {useLocation, useNavigate} from 'react-router-dom'
@@ -11,18 +11,44 @@ import { useParams } from 'react-router-dom';
 const Car = () => {
     const [car, setCars] = useState([])
     const {id} = useParams()
+    const navigate = useNavigate()
+    const [date1, setDate1] = useState('')
+    const [date2, setDate2] = useState('')
+    const [driver, setDriver] = useState('')
+    const [baby_seats, setSeats] = useState('')
+
+    const countDays = useCallback(() =>{
+        let oneDay = 24 * 60 * 60 * 1000;
+        let first = new Date(date1);
+        let firstDate = first.getTime()
+        let second = new Date(date2);
+        let secondDate = second.getTime()
+        let diff = Math.round(Math.abs((firstDate - secondDate) / oneDay))
+
+    return diff;
+    }, [date1, date2])
+
+    const cost1 = useMemo(() => {
+        if (!car[0]?.car_cost) return 0;
+        if (date1.length === 0 || date2.length === 0) return car[0]?.car_cost;
+        const days = countDays();
+        let result = days * car[0]?.car_cost;
+        if (driver) result += 15;
+        if (baby_seats) result += 10;
+        return result;
+        
+    },[car, date1, date2, driver, baby_seats, countDays])
+
+
+ 
 
     useEffect(() => {
         fetchOneCar(id).then(data => setCars(data.data))
     }, [id])
 
-    const navigate = useNavigate()
 
-    const [cost1, setCost1] = useState();
 
-    // const clickCost = async() =>{
-    //     car[0]?.car_cost = car[0]?.car_cost + 5
-    // }
+
 
     return (
         <Container style={{background: 'lightgray'}}>
@@ -56,32 +82,27 @@ const Car = () => {
             <div className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center " >
             <h5 >Availability</h5>
                 <div className="input-group input-daterange" className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center ">
-                    <input type="date" className="form-control"/>
+                    <input type="date" value={date1 || ''} onChange={e => setDate1(e.target.value)} className="form-control"/>
                     <div className="input-group-addon">to</div>
-                    <input type="date" className="form-control" />
+                    <input type="date" value={date2 || ''} onChange={e => setDate2(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                    <input className="form-check-input" checked={driver || ''} onChange={e => setDriver(e.target.checked)} type="checkbox" value="" id="flexCheckDefault"/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         With driver
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"/>
+                    <input className="form-check-input" checked={baby_seats || ''} onChange={e => setSeats(e.target.checked)}type="checkbox" value="" id="flexCheckChecked"/>
                     <label className="form-check-label" htmlFor="flexCheckChecked">
                         Baby seats
                     </label>
                 </div>
 
-            <h4>Cost: {car[0]?.car_cost} $</h4> 
+            <h4 >Cost: {cost1.toFixed(2)} $</h4> 
             </div>
 
             <div className="d-flex flex-row justify-content-center align-items-center ">
-                <Button onClick={() => navigate(STRIPE_ROUTE + '/')}
-                        className="mx-2 btn-lg"
-                        variant={"outline-secondary"}
-                        > Pay
-                </Button>
                 <Button onClick={() => navigate(BOOKING_ROUTE)}
                         className="mx-2 btn-lg"
                         variant={"outline-secondary"}> Book
