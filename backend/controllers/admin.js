@@ -29,7 +29,10 @@ const getCars = async (req, res) => {
     try {
         //TODO: get page from client
         let page = 0;
-        let rows_count = 5;
+        if (req.query.page != undefined) {
+            page = req.query.page;
+        }
+        let rows_count = 8;
 
         let offset_number = page * rows_count;
 
