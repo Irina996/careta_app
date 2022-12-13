@@ -27,10 +27,9 @@ import state from '../config/state_code.js';
 
 const getCars = async (req, res) => {
     try {
-        //TODO: get page from client
         let page = 0;
         if (req.query.page != undefined) {
-            page = req.query.page;
+            page = req.query.page - 1;
         }
         let rows_count = 8;
 
