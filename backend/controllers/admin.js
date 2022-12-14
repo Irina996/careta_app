@@ -16,6 +16,7 @@ import {
     selectCarInfo,
     selectClassId,
     selectColorId,
+    selectCountAllCars,
     selectModelId,
     selectRelatedBookingId,
     selectStateRentalList,
@@ -28,11 +29,15 @@ import state from '../config/state_code.js';
 
 const getCars = async (req, res) => {
     try {
+        const rows_count = 8;
+
+        let count = await selectCountAllCars();
+        let max_page_count = parseInt(count / rows_count) + 1;
+
         let page = 0;
         if (req.query.page != undefined) {
             page = req.query.page - 1;
         }
-        let rows_count = 8;
 
         let offset_number = page * rows_count;
 
@@ -43,6 +48,7 @@ const getCars = async (req, res) => {
                 success: true,
                 message: 'successful',
                 data: cars,
+                max_page_count: max_page_count
             });
         } else {
             return res.status(404).json({

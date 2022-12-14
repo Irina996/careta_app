@@ -65,6 +65,57 @@ const selectCarGroup = async (
     return result;
 };
 
+const selectCountCarGroup = async () => {
+    let query_params = [
+        '%' + brand + '%',
+        '%' + model + '%',
+        '%' + class_name + '%',
+        '%' + gearbox_type + '%',
+        year_start,
+        year_finish,
+        offset_number,
+        rows_count,
+        start_date,
+        end_date,
+    ];
+    let query_text = 
+        `SELECT COUNT(Car_group.group_id), Car_group.group_id, 
+                Car_brand.brand_name, Car_model.model_name, 
+                Car_group.image, Car_group.car_cost
+        FROM Car_group
+        INNER JOIN Car_brand ON Car_group.car_brand_id=Car_brand.brand_id
+        INNER JOIN Car_model ON Car_group.car_model_id=Car_model.model_id
+        INNER JOIN Car_class ON Car_group.car_class_id=Car_class.class_id
+        INNER JOIN Gearbox_type ON Gearbox_type.type_id=Car_group.gearbox_type_id
+        INNER JOIN Car ON Car.car_group_id=Car_group.group_id
+        LEFT JOIN
+        (SELECT car_id FROM Booking
+                       WHERE
+                           (Booking.start_date >= $9 AND Booking.start_date <= $10)
+                          OR (Booking.start_date <= $9 AND Booking.end_date >= $9)
+                       GROUP BY car_id) Bookings ON Bookings.car_id = Car.car_id
+        WHERE Car.is_deleted=false
+          AND Car_brand.brand_name LIKE $1
+          AND Car_model.model_name LIKE $2
+          AND Car_class.class_name LIKE $3
+          AND Gearbox_type.type_name LIKE $4
+          AND Car_group.creation_year BETWEEN $5 AND $6`;
+    if (seats_number != '') {
+        query_text = query_text + `AND Car_group.seats_number=$11`;
+        query_params.push(seats_number);
+    }
+    query_text =
+        query_text +
+        `GROUP BY Car_group.group_id, Car_brand.brand_name,
+          Car_model.model_name, Car_group.image,
+          Car_group.car_cost
+        HAVING COUNT(Bookings.car_id) < COUNT(Car.car_id)`;
+
+    let result = await db_query(query_text, query_params);
+    //console.log(result);
+    return result;
+}
+
 const selectCarGroupInfo = async (group_id) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
@@ -165,6 +216,15 @@ const selectAllCars = async (offset_number, rows_count) => {
     let result = await db_query(query_text, query_params);
     return result;
 };
+
+const selectCountAllCars = async () => {
+    let query_text = 
+        `SELECT COUNT(Car.car_id)
+        FROM Car WHERE Car.is_deleted=false;`
+    let query_params = [];
+    let result = await db_query(query_text, query_params);
+    return result[0].count;
+}
 
 const selectCarGroupId = async (
     brand,
@@ -323,4 +383,5 @@ export {
     deleteCar,
     updateCar,
     selectCarInfo,
+    selectCountAllCars,
 };

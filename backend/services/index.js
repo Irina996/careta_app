@@ -19,6 +19,7 @@ import {
     deleteCar,
     updateCar,
     selectCarInfo,
+    selectCountAllCars,
 } from './car.js';
 import {
     selectBookingList,
@@ -112,4 +113,5 @@ export {
     insertCreditData,
     selectCreditData,
     selectCarInfo,
+    selectCountAllCars,
 };
