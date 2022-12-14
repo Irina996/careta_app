@@ -32,7 +32,7 @@ const getCars = async (req, res) => {
         const rows_count = 8;
 
         let count = await selectCountAllCars();
-        let max_page_count = parseInt(count / rows_count) + 1;
+        let max_page_count = Math.ceil(count / rows_count);
 
         let page = 0;
         if (req.query.page != undefined) {
