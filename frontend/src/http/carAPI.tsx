@@ -1,3 +1,4 @@
+import { useAuthContext } from "../contexts";
 import { $authHost, $host } from "./index";
 
 export interface ICar {
@@ -44,3 +45,28 @@ export const fetchOneCar = async (id: string) => {
   const { data } = await $host.get("home/car?id=" + id);
   return data;
 };
+
+export const createBook = async (input: { car_group_id: number, start_date: string, end_date: string, baby_seat_amount: number, is_driver: boolean } , props: {
+  onSuccess?: () => void;
+  token:string
+}) => { 
+  // const { token } = useAuthContext() 
+  const response = await $host.post('booking/create', input, {
+    headers: {
+      authorization: `Bearer ${props.token}`
+    },
+  })
+
+  props.onSuccess && props.onSuccess()
+  return response  
+}  
+
+export const useGetBookings = async () => { 
+  const { token } = useAuthContext() 
+  const response = await $host.get('booking/list/headers', {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  })  
+  return response  
+}  

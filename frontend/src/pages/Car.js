@@ -3,10 +3,11 @@ import { Col, Container, Image, Row, Button } from 'react-bootstrap';
 import { BOOKING_ROUTE, STRIPE_ROUTE } from '../utils/consts';
 import {useLocation, useNavigate} from 'react-router-dom'
 import { observer } from 'mobx-react-lite';
-import { fetchOneCar, fetchType } from '../http/carAPI';
+import { fetchOneCar, fetchType, createBook } from '../http/carAPI';
 import { useContext, useEffect } from 'react';
 import { Context } from '../index';
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../contexts';
 
 const Car = () => {
     const [car, setCars] = useState([])
@@ -40,12 +41,23 @@ const Car = () => {
     },[car, date1, date2, driver, baby_seats, countDays])
 
 
- 
+    const {token} = useAuthContext()
 
     useEffect(() => {
         fetchOneCar(id).then(data => setCars(data.data))
     }, [id])
 
+    const onCreateBook = useCallback(() => {
+        createBook(
+          { car_group_id: id, start_date: date1, end_date: date2, baby_seat_amount: baby_seats, is_driver: driver},
+          {
+            onSuccess: () => {
+              navigate("/booking");
+            },
+            token
+          }
+        );
+      }, [id, date1, date2, baby_seats, driver, token]);
 
 
 
@@ -103,7 +115,7 @@ const Car = () => {
             </div>
 
             <div className="d-flex flex-row justify-content-center align-items-center ">
-                <Button onClick={() => navigate(BOOKING_ROUTE)}
+                <Button onClick={onCreateBook}
                         className="mx-2 btn-lg"
                         variant={"outline-secondary"}> Book
                 </Button>
