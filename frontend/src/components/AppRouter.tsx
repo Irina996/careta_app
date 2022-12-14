@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { ReactElement, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { Home } from "../pages/Home";
@@ -6,18 +6,18 @@ import Booking from "../pages/Booking";
 import Rent from "../pages/Rent";
 import { Fines } from "../pages/Fines";
 import Admin from "../pages/Admin";
-import AdminFines from "../pages/AdminFines";
-import AdminRent from "../pages/AdminRent";
+import { AdminFines } from "../pages/AdminFines";
+import { AdminRent } from "../pages/AdminRent";
 import Car from "../pages/Car";
 import Auth from "../pages/Auth";
 import Stripe from "../pages/Stripe";
 
 import { Context } from "..";
 import { useAuthContext } from "../contexts";
+import UserStore from "../store/UserStore";
 
-export const AppRouter = () => {
+export const AppRouter = (): ReactElement => {
   const { isAuthenticated, role } = useAuthContext();
-  const { user } = useContext(Context);
 
   return (
     <Routes>
@@ -39,7 +39,7 @@ export const AppRouter = () => {
       )}
       {isAuthenticated && role === "admin" && (
         <>
-          <Route exact path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/adminrent" element={<AdminRent />} />
           <Route path="/adminfines" element={<AdminFines />} />
         </>
