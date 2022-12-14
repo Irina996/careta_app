@@ -13,8 +13,10 @@ import {
     selectAvailableCarId,
     selectBrandId,
     selectCarGroupId,
+    selectCarInfo,
     selectClassId,
     selectColorId,
+    selectCountAllCars,
     selectModelId,
     selectRelatedBookingId,
     selectStateRentalList,
@@ -27,11 +29,15 @@ import state from '../config/state_code.js';
 
 const getCars = async (req, res) => {
     try {
+        const rows_count = 8;
+
+        let count = await selectCountAllCars();
+        let max_page_count = Math.ceil(count / rows_count);
+
         let page = 0;
         if (req.query.page != undefined) {
             page = req.query.page - 1;
         }
-        let rows_count = 8;
 
         let offset_number = page * rows_count;
 
@@ -42,6 +48,7 @@ const getCars = async (req, res) => {
                 success: true,
                 message: 'successful',
                 data: cars,
+                max_page_count: max_page_count
             });
         } else {
             return res.status(404).json({
@@ -53,6 +60,20 @@ const getCars = async (req, res) => {
         console.log(e);
     }
 };
+
+const getCarInfo = async (req, res) => {
+    try {
+        const {id} = req.params; // car_id
+        let car = await selectCarInfo(id);
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+            data: car,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 const createCarGroup = async (
     brand,
@@ -391,4 +412,5 @@ export {
     removeFine,
     addFine,
     editFine,
+    getCarInfo,
 };

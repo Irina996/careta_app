@@ -1,4 +1,4 @@
-import { selectCarGroup, selectCarInfo } from '../services/index.js';
+import { selectCarGroup, selectCarGroupInfo, selectCountCarGroup } from '../services/index.js';
 
 const getCarParameters = (object) => {
     let {
@@ -64,11 +64,25 @@ const getCars = async (req, res) => {
             end_date,
         } = getCarParameters(req.query);
 
+        const rows_count = 8;
+
+        let count = await selectCountCarGroup(
+            brand,
+            model,
+            class_name,
+            gearbox_type,
+            year_start,
+            year_finish,
+            seats_number,
+            start_date,
+            end_date
+        );
+        let max_page_count = Math.ceil(count / rows_count);
+
         let page = 0;
         if (req.query.page != undefined) {
             page = req.query.page - 1;
         }
-        let rows_count = 8;
 
         let offset_number = page * rows_count;
 
@@ -92,6 +106,7 @@ const getCars = async (req, res) => {
                 success: true,
                 message: 'successful',
                 data: cars,
+                max_page_count: max_page_count
             });
         } else {
             return res.status(404).json({
@@ -108,7 +123,7 @@ const getCarInfo = async (req, res) => {
     try {
         const { id } = req.query; // car_group_id
 
-        let info = await selectCarInfo(id);
+        let info = await selectCarGroupInfo(id);
         if (info) {
             return res.status(200).json({
                 success: true,

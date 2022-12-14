@@ -216,11 +216,38 @@ const carCharacteristics = async (req, res, next) => {
                 message: 'Validation failed',
                 data: err,
             });
-        } else if (!req.files) {
+        } else {
+            next();
+        }
+    }).catch((err) => console.log(err));
+};
+
+const imageFile = async (req, res) => {
+    try {
+        if (!req.files) {
             res.status(412).send({
                 success: false,
                 message: 'Validation failed',
                 data: 'image  is required',
+            });
+        } else {
+            next();
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const imageUrl = async (req, res, next) => {
+    let validationRule = {
+        img_url: 'required|string',
+    };
+    await validator(req, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412).send({
+                success: false,
+                message: 'Validation failed',
+                data: err,
             });
         } else {
             next();
@@ -297,4 +324,6 @@ export {
     fine,
     payment,
     credit_card,
+    imageFile,
+    imageUrl,
 };

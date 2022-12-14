@@ -11,12 +11,15 @@ import {
     getRentalList,
     removeCar,
     removeFine,
+    getCarInfo,
 } from '../controllers/admin.js';
 import { verifyAdmin } from '../middleware/authentication.js';
 import { uploadImage } from '../middleware/image_upload.js';
 import {
     carCharacteristics,
     fine,
+    imageFile,
+    imageUrl,
     validateId,
 } from '../middleware/validation.js';
 
@@ -24,12 +27,20 @@ const adminRouter = express.Router();
 adminRouter.use(verifyAdmin);
 
 adminRouter.get('/car/', getCars);
-adminRouter.post('/car/add/', carCharacteristics, uploadImage, addCar);
+adminRouter.get('/car/info/:id', getCarInfo)
+adminRouter.post(
+    '/car/add/', 
+    carCharacteristics, 
+    imageFile, 
+    uploadImage, 
+    addCar
+);
 adminRouter.post(
     '/car/edit/',
     validateId,
     carCharacteristics,
     uploadImage,
+    imageUrl,
     editCar
 );
 adminRouter.post('/car/delete/', validateId, removeCar);

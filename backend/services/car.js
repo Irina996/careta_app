@@ -65,7 +65,64 @@ const selectCarGroup = async (
     return result;
 };
 
-const selectCarInfo = async (group_id) => {
+const selectCountCarGroup = async (
+    brand,
+    model,
+    class_name,
+    gearbox_type,
+    year_start,
+    year_finish,
+    seats_number,
+    start_date,
+    end_date
+) => {
+    let query_params = [
+        '%' + brand + '%',
+        '%' + model + '%',
+        '%' + class_name + '%',
+        '%' + gearbox_type + '%',
+        year_start,
+        year_finish,
+        start_date,
+        end_date,
+    ];
+    let query_text = 
+        `SELECT COUNT (*) FROM (SELECT Car_group.group_id
+        FROM Car_group
+        INNER JOIN Car_brand ON Car_group.car_brand_id=Car_brand.brand_id
+        INNER JOIN Car_model ON Car_group.car_model_id=Car_model.model_id
+        INNER JOIN Car_class ON Car_group.car_class_id=Car_class.class_id
+        INNER JOIN Gearbox_type ON Gearbox_type.type_id=Car_group.gearbox_type_id
+        INNER JOIN Car ON Car.car_group_id=Car_group.group_id
+        LEFT JOIN
+        (SELECT car_id FROM Booking
+                       WHERE
+                           (Booking.start_date >= $7 AND Booking.start_date <= $8)
+                          OR (Booking.start_date <= $7 AND Booking.end_date >= $7)
+                       GROUP BY car_id) Bookings ON Bookings.car_id = Car.car_id
+        WHERE Car.is_deleted=false
+          AND Car_brand.brand_name LIKE $1
+          AND Car_model.model_name LIKE $2
+          AND Car_class.class_name LIKE $3
+          AND Gearbox_type.type_name LIKE $4
+          AND Car_group.creation_year BETWEEN $5 AND $6`;
+    if (seats_number != '') {
+        query_text = query_text + `AND Car_group.seats_number=$9`;
+        query_params.push(seats_number);
+    }
+    query_text =
+        query_text +
+        `GROUP BY Car_group.group_id, Car_brand.brand_name,
+          Car_model.model_name, Car_group.image,
+          Car_group.car_cost
+        HAVING COUNT(Bookings.car_id) < COUNT(Car.car_id)) as temp;`;
+
+    let result = await db_query(query_text, query_params);
+    //console.log(result);
+    return result[0].count;
+}
+
+const selectCarGroupInfo = async (group_id) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
@@ -82,6 +139,32 @@ const selectCarInfo = async (group_id) => {
     let result = await db_query(query_text, query_params);
     //console.log(result);
     return result;
+};
+
+const selectCarInfo = async (car_id) => {
+    let query_text = 
+        `SELECT Car.car_id, Car_brand.brand_name as brand,
+                Car_model.model_name as model, Car_class.class_name as car_class,
+                Gearbox_type.type_name as gearbox, Car_group.creation_year,
+                Car_group.fuel_consumption, Car_group.seats_number,
+                Car_group.image, Car_group.car_cost as cost, 
+                Car.car_number, Color.color_name as color
+        FROM Car
+            INNER JOIN Car_group ON car_group_id=group_id
+            INNER JOIN Car_brand ON car_brand_id=brand_id
+            INNER JOIN Car_model ON car_model_id=model_id
+            INNER JOIN Car_class ON car_class_id=class_id
+            INNER JOIN Gearbox_type ON type_id=gearbox_type_id
+            INNER JOIN Color ON Car.color_id=Color.color_id
+        WHERE Car.car_id=$1`;
+    let query_params = [car_id];
+    let result = await db_query(query_text, query_params);
+    //console.log(result);
+    try {
+        return result[0];
+    } catch(err) {
+        return {};
+    }
 };
 
 const selectAvailableCarId = async (start_date, end_date, group_id) => {
@@ -139,6 +222,15 @@ const selectAllCars = async (offset_number, rows_count) => {
     let result = await db_query(query_text, query_params);
     return result;
 };
+
+const selectCountAllCars = async () => {
+    let query_text = 
+        `SELECT COUNT(Car.car_id)
+        FROM Car WHERE Car.is_deleted=false;`
+    let query_params = [];
+    let result = await db_query(query_text, query_params);
+    return result[0].count;
+}
 
 const selectCarGroupId = async (
     brand,
@@ -287,7 +379,7 @@ const getEmptyCarGroupIds = async () => {
 
 export {
     selectCarGroup,
-    selectCarInfo,
+    selectCarGroupInfo,
     selectAvailableCarId,
     selectAllCarGroups,
     selectCarGroupId,
@@ -296,4 +388,7 @@ export {
     selectAllCars,
     deleteCar,
     updateCar,
+    selectCarInfo,
+    selectCountAllCars,
+    selectCountCarGroup,
 };
