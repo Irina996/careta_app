@@ -20,6 +20,7 @@ import {
     updateCar,
     selectCarInfo,
     selectCountAllCars,
+    selectCountCarGroup,
 } from './car.js';
 import {
     selectBookingList,
@@ -114,4 +115,5 @@ export {
     selectCreditData,
     selectCarInfo,
     selectCountAllCars,
+    selectCountCarGroup,
 };
