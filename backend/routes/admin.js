@@ -18,6 +18,8 @@ import { uploadImage } from '../middleware/image_upload.js';
 import {
     carCharacteristics,
     fine,
+    imageFile,
+    imageUrl,
     validateId,
 } from '../middleware/validation.js';
 
@@ -26,11 +28,18 @@ adminRouter.use(verifyAdmin);
 
 adminRouter.get('/car/', getCars);
 adminRouter.get('/car/info/:id', getCarInfo)
-adminRouter.post('/car/add/', carCharacteristics, uploadImage, addCar);
+adminRouter.post(
+    '/car/add/', 
+    carCharacteristics, 
+    imageFile, 
+    uploadImage, 
+    addCar
+);
 adminRouter.post(
     '/car/edit/',
     validateId,
     carCharacteristics,
+    imageUrl,
     uploadImage,
     editCar
 );
