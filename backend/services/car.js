@@ -137,12 +137,12 @@ const selectCarGroupInfo = async (group_id) => {
 
 const selectCarInfo = async (car_id) => {
     let query_text = 
-        `SELECT Car.car_id, Car_brand.brand_name,
-                Car_model.model_name, Car_class.class_name,
-                Gearbox_type.type_name, Car_group.creation_year,
+        `SELECT Car.car_id, Car_brand.brand_name as brand,
+                Car_model.model_name as model, Car_class.class_name as car_class,
+                Gearbox_type.type_name as gearbox, Car_group.creation_year,
                 Car_group.fuel_consumption, Car_group.seats_number,
-                Car_group.image, Car_group.car_cost, 
-                Car.car_number, Color.color_name
+                Car_group.image, Car_group.car_cost as cost, 
+                Car.car_number, Color.color_name as color
         FROM Car
             INNER JOIN Car_group ON car_group_id=group_id
             INNER JOIN Car_brand ON car_brand_id=brand_id
