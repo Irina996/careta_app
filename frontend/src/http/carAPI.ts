@@ -63,6 +63,21 @@ export type ICreateCar = Record<
 };
 export type ICarQueryParams = Partial<Record<EUrlKeys, string>>;
 
+export const createBook = async (input: { car_group_id: number, start_date: string, end_date: string, baby_seat_amount: number, is_driver: boolean } , props: {
+  onSuccess?: () => void;
+  token:string
+}) => { 
+  // const { token } = useAuthContext() 
+  const response = await $host.post('booking/create', input, {
+    headers: {
+      authorization: `Bearer ${props.token}`
+    },
+  })
+
+  props.onSuccess && props.onSuccess()
+  return response  
+}  
+
 export const createCar = async (car: ICreateCar, token?: string) => {
   const input = new FormData();
   for (var key in car) {
@@ -133,3 +148,20 @@ export const fetchAdminOneCar = async (id: number, token?: string) => {
 
   return data;
 };
+
+
+
+// KARINA
+ 
+export const getBookings = async (token?: string) => {
+  const { data } = await $host.get(
+    `booking/list/`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return data;
+}
