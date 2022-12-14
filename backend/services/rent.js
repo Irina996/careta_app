@@ -60,7 +60,7 @@ const selectStateRentalList = async (state_id) => {
 };
 
 const updateRent = async (state_id, rent_id) => {
-    let query_text = `UPDATE Rent SET rent_state=$1 WHERE rent_id=$2;;`;
+    let query_text = `UPDATE Rent SET rent_state=$1 WHERE rent_id=$2;`;
     let query_params = [state_id, rent_id];
     let result = await db_query(query_text, query_params);
     return result;

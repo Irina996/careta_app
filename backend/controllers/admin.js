@@ -335,6 +335,7 @@ const estimateRent = async (req, res, state_value) => {
 const getFines = async (req, res) => {
     try {
         let fines = await selectAllFines();
+        console.log(fines)
         let result_data = [];
 
         for (var i in fines) {

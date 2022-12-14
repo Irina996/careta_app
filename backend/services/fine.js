@@ -30,7 +30,7 @@ const selectAllFines = async () => {
         `SELECT fine_id, Car.car_group_id, Fine.fine_cost,
                 Booking.baby_seat_amount, Booking.is_driver,
                 Rent.rent_cost, Client.client_name, Client.surname,
-                public.User.email, fine_cost
+                public.User.email, fine_cost, Fine.car_id
         FROM Fine
             INNER JOIN Booking ON Booking.car_id = Fine.car_id
             INNER JOIN Rent ON Rent.booking_id = Booking.booking_id
