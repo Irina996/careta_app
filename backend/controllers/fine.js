@@ -1,6 +1,6 @@
 import {
     deleteFines,
-    selectCarInfo,
+    selectCarGroupInfo,
     selectFines,
 } from '../services/index.js';
 
@@ -12,7 +12,7 @@ const getFines = async (req, res) => {
         let result_data = [];
 
         for (var i in fines) {
-            let car_info = await selectCarInfo(fines[i].car_group_id);
+            let car_info = await selectCarGroupInfo(fines[i].car_group_id);
             result_data.push(Object.assign(fines[i], car_info[0]));
         }
 

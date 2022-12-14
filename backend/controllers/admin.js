@@ -13,6 +13,7 @@ import {
     selectAvailableCarId,
     selectBrandId,
     selectCarGroupId,
+    selectCarInfo,
     selectClassId,
     selectColorId,
     selectModelId,
@@ -53,6 +54,20 @@ const getCars = async (req, res) => {
         console.log(e);
     }
 };
+
+const getCarInfo = async (req, res) => {
+    try {
+        const {id} = req.body.id; // car_id
+        let car = await selectCarInfo(id);
+        return res.status(200).json({
+            success: true,
+            message: 'successful',
+            data: car,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 const createCarGroup = async (
     brand,

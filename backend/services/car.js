@@ -65,7 +65,7 @@ const selectCarGroup = async (
     return result;
 };
 
-const selectCarInfo = async (group_id) => {
+const selectCarGroupInfo = async (group_id) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
@@ -82,6 +82,32 @@ const selectCarInfo = async (group_id) => {
     let result = await db_query(query_text, query_params);
     //console.log(result);
     return result;
+};
+
+const selectCarInfo = async (car_id) => {
+    let query_text = 
+        `SELECT Car.car_id, Car_brand.brand_name,
+                Car_model.model_name, Car_class.class_name,
+                Gearbox_type.type_name, Car_group.creation_year,
+                Car_group.fuel_consumption, Car_group.seats_number,
+                Car_group.image, Car_group.car_cost, 
+                Car.car_number, Color.color_name
+        FROM Car
+            INNER JOIN Car_group ON car_group_id=group_id
+            INNER JOIN Car_brand ON car_brand_id=brand_id
+            INNER JOIN Car_model ON car_model_id=model_id
+            INNER JOIN Car_class ON car_class_id=class_id
+            INNER JOIN Gearbox_type ON type_id=gearbox_type_id
+            INNER JOIN Color ON Car.color_id=Color.color_id
+        WHERE Car.car_id=$1`;
+    let query_params = [car_id];
+    let result = await db_query(query_text, query_params);
+    //console.log(result);
+    try {
+        return result[0];
+    } catch(err) {
+        return {};
+    }
 };
 
 const selectAvailableCarId = async (start_date, end_date, group_id) => {
@@ -287,7 +313,7 @@ const getEmptyCarGroupIds = async () => {
 
 export {
     selectCarGroup,
-    selectCarInfo,
+    selectCarGroupInfo,
     selectAvailableCarId,
     selectAllCarGroups,
     selectCarGroupId,
@@ -296,4 +322,5 @@ export {
     selectAllCars,
     deleteCar,
     updateCar,
+    selectCarInfo,
 };

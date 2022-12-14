@@ -9,7 +9,7 @@ import {
 } from './client.js';
 import {
     selectCarGroup,
-    selectCarInfo,
+    selectCarGroupInfo,
     selectAvailableCarId,
     selectAllCarGroups,
     selectCarGroupId,
@@ -18,6 +18,7 @@ import {
     selectAllCars,
     deleteCar,
     updateCar,
+    selectCarInfo,
 } from './car.js';
 import {
     selectBookingList,
@@ -73,7 +74,7 @@ export {
     insertClient,
     selectClient,
     selectCarGroup,
-    selectCarInfo,
+    selectCarGroupInfo,
     selectBookingList,
     selectRentalList,
     selectAvailableCarId,
@@ -110,4 +111,5 @@ export {
     updateBookingCar,
     insertCreditData,
     selectCreditData,
+    selectCarInfo,
 };

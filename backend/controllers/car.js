@@ -1,4 +1,4 @@
-import { selectCarGroup, selectCarInfo } from '../services/index.js';
+import { selectCarGroup, selectCarGroupInfo } from '../services/index.js';
 
 const getCarParameters = (object) => {
     let {
@@ -108,7 +108,7 @@ const getCarInfo = async (req, res) => {
     try {
         const { id } = req.query; // car_group_id
 
-        let info = await selectCarInfo(id);
+        let info = await selectCarGroupInfo(id);
         if (info) {
             return res.status(200).json({
                 success: true,
