@@ -33,9 +33,17 @@ const createBooking = async (req, res) => {
             car_group_id,
             start_date,
             end_date,
-            baby_seat_amount,
-            is_driver,
         } = req.body;
+
+        let  baby_seat_amount = 0;
+        let is_driver = false;
+
+        if (req.body.baby_seat_amount != undefined) {
+            baby_seat_amount = req.body.baby_seat_amount;
+        }
+        if (req.body.is_driver != undefined) {
+            is_driver = req.body.is_driver;
+        }
 
         const date = new Date();
         let day = date.getDate();
