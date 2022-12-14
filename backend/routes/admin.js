@@ -39,8 +39,8 @@ adminRouter.post(
     '/car/edit/',
     validateId,
     carCharacteristics,
-    imageUrl,
     uploadImage,
+    imageUrl,
     editCar
 );
 adminRouter.post('/car/delete/', validateId, removeCar);
