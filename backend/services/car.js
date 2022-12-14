@@ -126,7 +126,7 @@ const selectCarGroupInfo = async (group_id) => {
     let query_text = 
         `SELECT Car_group.group_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
-                Gearbox_type.type_name, Car_group.creation_year,
+                Gearbox_type.type_name as gearbox, Car_group.creation_year,
                 Car_group.fuel_consumption, Car_group.seats_number,
                 Car_group.image, Car_group.car_cost
         FROM Car_group

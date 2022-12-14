@@ -4,7 +4,7 @@ const selectRentalList = async (client_id) => {
     let query_text = 
         `SELECT Rent.rent_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
-                Gearbox_type.type_name, Car_group.creation_year,
+                Gearbox_type.type_name as gearbox, Car_group.creation_year,
                 Car_group.fuel_consumption, Car_group.seats_number,
                 Car_group.image, Car_group.car_cost, Booking.booking_date,
                 Booking.is_driver, Booking.baby_seat_amount, State.state_name
@@ -36,7 +36,7 @@ const selectStateRentalList = async (state_id) => {
     let query_text = 
         `SELECT Rent.rent_id, Car_brand.brand_name,
                 Car_model.model_name, Car_class.class_name,
-                Gearbox_type.type_name, Car_group.creation_year,
+                Gearbox_type.type_name as gearbox, Car_group.creation_year,
                 Car_group.fuel_consumption, Car_group.seats_number,
                 Car_group.image, Rent.rent_cost as cost, Booking.booking_date,
                 Booking.is_driver, Booking.baby_seat_amount, State.state_name,

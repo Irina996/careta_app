@@ -13,6 +13,7 @@ import {
     selectAvailableCarId,
     selectBrandId,
     selectCarGroupId,
+    selectCarGroupInfo,
     selectCarInfo,
     selectClassId,
     selectColorId,
@@ -333,11 +334,18 @@ const estimateRent = async (req, res, state_value) => {
 
 const getFines = async (req, res) => {
     try {
-        let result = await selectAllFines();
+        let fines = await selectAllFines();
+        let result_data = [];
+
+        for (var i in fines) {
+            let car_info = await selectCarGroupInfo(fines[i].car_group_id);
+            result_data.push(Object.assign(fines[i], car_info[0]));
+        }
+
         return res.status(200).json({
             success: true,
             message: 'successful',
-            data: result,
+            data: result_data,
         });
     } catch (err) {
         return res.status(500).json({
