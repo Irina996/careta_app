@@ -38,10 +38,10 @@ const createBooking = async (req, res) => {
         let  baby_seat_amount = 0;
         let is_driver = false;
 
-        if (req.body.baby_seat_amount != undefined) {
+        if (req.body.baby_seat_amount != undefined && req.body.baby_seat_amount != "") {
             baby_seat_amount = req.body.baby_seat_amount;
         }
-        if (req.body.is_driver != undefined) {
+        if (req.body.is_driver != undefined && req.body.is_driver != "") {
             is_driver = req.body.is_driver;
         }
 
