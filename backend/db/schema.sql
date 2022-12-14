@@ -84,7 +84,7 @@ CREATE TABLE public.Booking(
 	car_id INTEGER NOT NULL REFERENCES public.Car(car_id),
 	start_date date NOT NULL,
 	end_date date NOT NULL,
-	baby_seat_amount INTEGER NOT NULL,
+	baby_seat_amount BOOLEAN NOT NULL,
 	is_driver BOOLEAN NOT NULL,
 	booking_date date NOT NULL,
 	booking_state INTEGER NOT NULL REFERENCES public.State(state_id)

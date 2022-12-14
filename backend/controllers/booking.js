@@ -35,7 +35,7 @@ const createBooking = async (req, res) => {
             end_date,
         } = req.body;
 
-        let  baby_seat_amount = 0;
+        let  baby_seat_amount = false;
         let is_driver = false;
 
         if (req.body.baby_seat_amount != undefined && req.body.baby_seat_amount != "") {

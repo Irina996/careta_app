@@ -73,8 +73,8 @@ const selectBookingCost = async (booking_id) => {
         `SELECT ROUND(CAST(
             Car_group.car_cost * (Booking.end_date - Booking.start_date)
                 + 15 * CAST(Booking.is_driver AS INTEGER)
-                + 10 * CAST((Booking.baby_seat_amount > 0) 
-                    AS INTEGER) AS NUMERIC), 2)
+                + 10 * CAST(Booking.baby_seat_amount AS INTEGER) 
+                AS NUMERIC), 2)
             as booking_cost 
         FROM Booking
             INNER JOIN Car ON Car.car_id = Booking.car_id

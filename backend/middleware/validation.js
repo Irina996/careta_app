@@ -163,7 +163,7 @@ const booking = async (req, res, next) => {
         car_group_id: 'required|integer',
         start_date: 'required|after_or_equal_now',
         end_date: 'required|after_now',
-        baby_seat_amount: 'integer',
+        baby_seat_amount: 'boolean',
         is_driver: 'boolean',
     };
     await validator(req, validationRule, {}, (err, status) => {
