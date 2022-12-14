@@ -57,7 +57,7 @@ const getCars = async (req, res) => {
 
 const getCarInfo = async (req, res) => {
     try {
-        const {id} = req.body.id; // car_id
+        const {id} = req.params; // car_id
         let car = await selectCarInfo(id);
         return res.status(200).json({
             success: true,
@@ -406,4 +406,5 @@ export {
     removeFine,
     addFine,
     editFine,
+    getCarInfo,
 };

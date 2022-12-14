@@ -11,8 +11,8 @@ import {
     getRentalList,
     removeCar,
     removeFine,
+    getCarInfo,
 } from '../controllers/admin.js';
-import { getCarInfo } from '../controllers/car.js';
 import { verifyAdmin } from '../middleware/authentication.js';
 import { uploadImage } from '../middleware/image_upload.js';
 import {
@@ -25,7 +25,7 @@ const adminRouter = express.Router();
 adminRouter.use(verifyAdmin);
 
 adminRouter.get('/car/', getCars);
-adminRouter.get('/car/info/', validateId, getCarInfo)
+adminRouter.get('/car/info/:id', getCarInfo)
 adminRouter.post('/car/add/', carCharacteristics, uploadImage, addCar);
 adminRouter.post(
     '/car/edit/',
