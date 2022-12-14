@@ -24,7 +24,7 @@ const createPaymentIntent = async (id, payment_purpose, payment_method_id) => {
         intent = await stripe.paymentIntents.create({
             payment_method: payment_method_id,
             amount: parseInt(payment_cost * 100),
-            currency: 'byn',
+            currency: 'usd',
             confirmation_method: 'manual',
             confirm: true,
         });

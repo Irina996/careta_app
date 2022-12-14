@@ -4,6 +4,7 @@ import {
     selectAvailableCarId,
     selectBookingList,
     updateBookingState,
+    selectBookingCost,
 } from '../services/index.js';
 import state from '../config/state_code.js';
 
@@ -105,6 +106,7 @@ const cancelBooking = async (req, res) => {
 const payBooking = async (req, res) => {
     try {
         const booking_id = req.body.id; //booking_id
+        let rent_cost = await selectBookingCost(id);
 
         await updateBookingState(booking_id, state.paid);
         await insertRent(booking_id, rent_cost, state.paid);

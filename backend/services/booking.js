@@ -70,7 +70,11 @@ const updateBookingCar = async (booking_id, car_id) => {
 // return booking cost(days * 24 hours * car cost)
 const selectBookingCost = async (booking_id) => {
     let query_text = 
-        `SELECT Car_group.car_cost * 24 * (Booking.end_date - Booking.start_date + 1) 
+        `SELECT ROUND(CAST(
+            Car_group.car_cost * (Booking.end_date - Booking.start_date)
+                + 15 * CAST(Booking.is_driver AS INTEGER)
+                + 10 * CAST((Booking.baby_seat_amount > 0) 
+                    AS INTEGER) AS NUMERIC), 2)
             as booking_cost 
         FROM Booking
             INNER JOIN Car ON Car.car_id = Booking.car_id
