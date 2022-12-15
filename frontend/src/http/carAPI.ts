@@ -55,6 +55,31 @@ export interface IAdminFullCar {
   seats_number: number;
 }
 
+
+export interface IBookingList {
+  baby_seat_amount: number;
+  booking_date: string;
+  brand_name: string;
+  booking_id: number;
+  car_cost: number;
+  class_name: string;
+  creation_year: number;
+  fuel_consumption: number;
+  gearbox: string;
+  image: string;
+  is_driver: boolean;
+  model_name: string;
+  seats_number: number;
+  type_name: string;
+}
+
+export interface IPaymentBooking {
+  booking_id: number;
+  payment_purpose: string;
+  payment_method_id: number; //?
+  payment_intent_id: number; //?
+}
+
 export type ICreateCar = Record<
   Exclude<ECarFields, "image">,
   string | number
@@ -153,15 +178,33 @@ export const fetchAdminOneCar = async (id: number, token?: string) => {
 
 // KARINA
  
-export const getBookings = async (token?: string) => {
-  const { data } = await $host.get(
-    `booking/list/`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
+export const fetchBookingList = async (token?: string) => {
+  const { data } = await $host.get<
+    IResponse<
+    Array<IBookingList>
+    >
+  >("booking/list/", {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   return data;
-}
+};
+
+export const deleteBooking = async (input: { id: number }, token?: string) => {
+  const { data } = await $host.post("booking/delete/", input, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
+export const postPaymentBooking = async (input: { id: number }, token?: string) => {
+  const { data } = await $host.post("payment/pay/", input, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
