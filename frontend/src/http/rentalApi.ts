@@ -44,10 +44,7 @@ export const fetchAdminRentalList = async (token?: string) => {
 // KARINA
 export const fetchRentalList = async (token?: string) => {
   const { data } = await $host.get<
-    IResponse<{
-      active: Array<IRentalList>;
-      history: [Array<IRentalList>, Array<IRentalList>];
-    }>
+    IResponse<Array<IRentalList> >
   >("rent/list/", {
     headers: {
       authorization: `Bearer ${token}`,
