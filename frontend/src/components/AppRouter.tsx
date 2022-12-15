@@ -23,6 +23,7 @@ export const AppRouter = (): ReactElement => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/thanks" element={<Thank />} />
       {!isAuthenticated && (
         <>
           <Route path="/login" element={<Auth />} />
@@ -36,7 +37,6 @@ export const AppRouter = (): ReactElement => {
           <Route path="/fines" element={<Fines />} />
           <Route path="/car/:id" element={<Car />} />
           <Route path="/payment/pay" element={<Stripe />} />
-          <Route path="/thankyou" element={<Thank />} />
         </>
       )}
       {isAuthenticated && role === "admin" && (
