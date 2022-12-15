@@ -36,45 +36,34 @@ export const FinesElem = ({
     <Row className="d-flex mx-5 justify-content-center align-items-center">
       <div
         style={{ background: "white", width: 800 }}
-        className="d-flex mx-5 justify-content-around align-items-center"
+        className="d-flex mx-5 mt-2 mb-2 justify-content-around align-items-center"
       >
-        <h5>{fines.fine_id}</h5>
+        <h6>{fines.fine_id}</h6>
         <div className="d-flex flex-row">
           <Image width={150} height={150} src={fines.image} />
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{fines.brand_name}</h5>
-          <h5>{fines.model_name}</h5>
-          <h5>{fines.gearbox}</h5>
-          <h5>{fines.creation_year}</h5>
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Brand: {fines.brand_name}</h6>
+          <h6>Model: {fines.model_name}</h6>
+          <h6>Gearbox: {fines.gearbox}</h6>
+          <h6>Year: {fines.creation_year}</h6>
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{fines.class_name}</h5>
-          <h5>{fines.fuel_consumption}</h5>
-          <h5>{fines.seats_number}</h5>
-          {/* <h5>{fines.booking_date.split("T")[0]}</h5> */}
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Class: {fines.class_name}</h6>
+          <h6>Fuel: {fines.fuel_consumption}</h6>
+          <h6>Number of seats: {fines.seats_number}</h6>
+          {/* <h6>{fines.booking_date.split("T")[0]}</h6> */}
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{fines.is_driver}</h5>
-          <h5>{fines.baby_seat_amount}</h5>
-          <h5>{fines.rent_cost}</h5>
-          {/* <h5>{fines.state_name}</h5> */}
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Name: {fines.client_name}</h6>
+          <h6>E-mail: {fines.email}</h6>
+          <h5>Cost: {fines.rent_cost}</h5>
+          {/* <h6>{fines.state_name}</h6> */}
         </div>
 
-        <div className="d-flex flex-column justify-content-center align-items-center ">
-          <div className="d-flex flex-column">
-            {/* <h5>{fines.time}</h5> */}
-            <h5>{fines.rent_cost}</h5>
-          </div>
-        </div>
-        <div className="d-flex flex-column ">
-          <h5>{fines.client_name}</h5>
-          <h5>{fines.email}</h5>
-          {/* <h5>{fines.state_name}</h5> */}
-        </div>
 
         <div className="d-flex flex-column ">
           <h6>Add fine's cost:</h6>

@@ -34,37 +34,34 @@ export const RentalElem = ({
     <Row className="d-flex mx-5 justify-content-center align-items-center">
       <div
         style={{ background: "white", width: 800 }}
-        className="d-flex mx-5 justify-content-around align-items-center"
+        className="d-flex mx-5 mt-2 mb-2 justify-content-around align-items-center"
       >
-        <h5>{rent.rent_id}</h5>
+        <h6>{rent.rent_id}</h6>
         <div className="d-flex flex-row">
           <Image width={150} height={150} src={rent.image} />
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{rent.brand_name}</h5>
-          <h5>{rent.model_name}</h5>
-          <h5>{rent.gearbox}</h5>
-          <h5>{rent.creation_year}</h5>
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Brand: {rent.brand_name}</h6>
+          <h6>Model: {rent.model_name}</h6>
+          <h6>Gearbox: {rent.gearbox}</h6>
+          <h6>Year: {rent.creation_year}</h6>
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{rent.class_name}</h5>
-          <h5>{rent.fuel_consumption}</h5>
-          <h5>{rent.seats_number}</h5>
-          <h5>{rent.booking_date.split('T')[0]}</h5>
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Class: {rent.class_name}</h6>
+          <h6>Fuel: {rent.fuel_consumption}</h6>
+          <h6>Numbe of seats: {rent.seats_number}</h6>
+          <h6>Date: {rent.booking_date.split('T')[0]}</h6>
         </div>
 
-        <div className="d-flex flex-column ">
-          <h5>{rent.is_driver}</h5>
-          <h5>{rent.baby_seat_amount}</h5>
-          <h5>{rent.cost} $</h5>
-          <h5>{rent.state_name}</h5>
+        <div className="d-flex mx-2 flex-column ">
+          <h6>Name:{rent.client_name}</h6>
+          <h6>E-mail: {rent.email}</h6>
+          <h5>Cost: {rent.cost} $</h5>
+          <h6>State: {rent.state_name}</h6>
         </div>
-        <div className="d-flex flex-column ">
-          <h5>{rent.client_name}</h5>
-          <h5>{rent.email}</h5>
-        </div>
+
         {!isHistory && (
           <div className="d-flex flex-row justify-content-center align-items-center ">
             <Button onClick={onGood} className="mx-2" variant={"outline-secondary"}>
