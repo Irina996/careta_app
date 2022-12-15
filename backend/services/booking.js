@@ -6,7 +6,12 @@ const selectBookingList = async (client_id) => {
             Car_model.model_name, Car_class.class_name,
             Gearbox_type.type_name, Car_group.creation_year,
             Car_group.fuel_consumption, Car_group.seats_number,
-            Car_group.image, Car_group.car_cost, Booking.booking_date,
+            Car_group.image, ROUND(CAST(
+                Car_group.car_cost * (Booking.end_date - Booking.start_date)
+                    + 15 * CAST(Booking.is_driver AS INTEGER)
+                    + 10 * CAST(Booking.baby_seat_amount AS INTEGER) 
+                    AS NUMERIC), 2)
+                as car_cost , Booking.booking_date,
             Booking.is_driver, Booking.baby_seat_amount
         FROM Booking
             INNER JOIN Car ON Car.car_id=Booking.car_id
