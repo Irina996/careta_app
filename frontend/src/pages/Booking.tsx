@@ -8,15 +8,17 @@ import {
 } from "../utils/consts";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts";
-import { deleteBooking, fetchBookingList, IBookingList } from "../http/carAPI";
+import { deleteBooking, fetchBookingList,  createPayment, IBookingList } from "../http/carAPI";
 import { BookingElem } from "../components/BookingElem";
 
 export const Booking = (): ReactElement => {
   const [bookingList, setBookingList] = useState< Array<IBookingList>
+  
 
   >([]);
 
   const { token } = useAuthContext();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (token) {
@@ -35,18 +37,6 @@ export const Booking = (): ReactElement => {
     },
     [bookingList, token]
   );
-
-  // const onCreatePayment = useCallback(() => {
-  //   createPayment(
-  //     { booking_id: id},
-  //     {
-  //       onSuccess: () => {
-  //         navigate("/rent");
-  //       },
-  //       token
-  //     }
-  //   );
-  // }, [id, token]);
 
 
 
