@@ -20,7 +20,7 @@ const selectRentalList = async (client_id) => {
             INNER JOIN State ON Rent.rent_state=State.state_id
             INNER JOIN Client ON Client.client_id=Booking.client_id
             INNER JOIN public.User ON public.User.user_id=Client.user_id
-        WHERE client_id=$1;`;
+        WHERE Client.client_id=$1;`;
     let query_params = [client_id];
 
     let result = await db_query(query_text, query_params);

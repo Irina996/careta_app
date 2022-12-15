@@ -14,7 +14,7 @@ const selectFines = async (client_id) => {
             INNER JOIN public.User ON public.User.user_id=Client.user_id
         WHERE Booking.is_driver = false
           AND Fine.fine_date BETWEEN Booking.start_date AND Booking.end_date
-          AND client_id=$1;`;
+          AND Client.client_id=$1;`;
     let query_params = [client_id];
 
     let result = await db_query(query_text, query_params);
