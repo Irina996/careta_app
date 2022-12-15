@@ -6,6 +6,7 @@ import { useAuthContext } from "../contexts";
 import { addAdminFine, IFinesList } from "../http/finesApi";
 
 import { badRent, goodRent } from "../http/rentalApi";
+import { createCheckoutSession } from "../http/userAPI";
 import { ADMINFINES_ROUTE } from "../utils/consts";
 
 interface IFinesElemProps {
@@ -20,17 +21,13 @@ export const FinesItem = ({
   const navigate = useNavigate();
 
   const { token } = useAuthContext();
-
   const [fine_cost, setCost] = useState<string>();
 
-  const onAddFine = useCallback(() => {
-    if (fine_cost !== undefined) {
-      addAdminFine(
-        { fine_cost: Number(fine_cost), car_id: fines.car_id },
-        token
-      );
+  const onFine = useCallback(() => {
+    if (token) {
+      createCheckoutSession({ id: fines.fine_id, payment_purpose: 'fine' }, token)
     }
-  }, [token, fine_cost, fines.car_id]);
+  }, [fines.fine_id, token])
 
   return (
     <Row className="d-flex mx-5 justify-content-center align-items-center">
@@ -68,7 +65,7 @@ export const FinesItem = ({
         <div className="d-flex flex-column ">
           <div className="d-flex mt-3 flex-row justify-content-center align-items-center ">
             <Button
-              onClick={onAddFine}
+              onClick={onFine}
               className="mx-2"
               variant={"outline-secondary"}
             >
