@@ -36,6 +36,20 @@ export const Booking = (): ReactElement => {
     [bookingList, token]
   );
 
+  // const onCreatePayment = useCallback(() => {
+  //   createPayment(
+  //     { booking_id: id},
+  //     {
+  //       onSuccess: () => {
+  //         navigate("/rent");
+  //       },
+  //       token
+  //     }
+  //   );
+  // }, [id, token]);
+
+
+
   return (
     <>
       <Container

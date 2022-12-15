@@ -52,7 +52,7 @@ export const BookingElem = ({
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center "> 
             <Button 
-              onClick={() => navigate(STRIPE_ROUTE + "/")} 
+              // onClick={onCreateBook}
               className="mb-2" 
               variant={"outline-secondary"} 
             > 

@@ -76,7 +76,7 @@ const Car = () => {
             <h4>Class: {car[0]?.class_name}</h4> 
             <h4>Year: {car[0]?.creation_year}</h4> 
             <h4>Fuel consumption: {car[0]?.fuel_consumption}</h4> 
-            <h4>Type: {car[0]?.type_name}</h4> 
+            <h4>Type: {car[0]?.gearbox}</h4> 
             <h4>Number of seats: {car[0]?.seats_number}</h4> 
                     
             </div>

@@ -200,11 +200,15 @@ export const deleteBooking = async (input: { id: number }, token?: string) => {
   return data;
 };
 
-export const postPaymentBooking = async (input: { id: number }, token?: string) => {
-  const { data } = await $host.post("payment/pay/", input, {
+export const createPayment = async (input: { booking_id: number } , props: {
+  onSuccess?: () => void;
+  token:string
+}) => {  
+  const response = await $host.post('payment/pay', input, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${props.token}`
     },
-  });
-  return data;
-};
+  })
+  props.onSuccess && props.onSuccess()
+  return response  
+} 
