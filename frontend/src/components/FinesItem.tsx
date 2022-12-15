@@ -57,7 +57,7 @@ export const FinesItem = ({
         <div className="d-flex mx-2 flex-column ">
           <h6>Name: {fines.client_name}</h6>
           <h6>E-mail: {fines.email}</h6>
-          <h5>Cost: {fines.rent_cost} $</h5>
+          <h5>Cost: {fines.fine_cost} $</h5>
           {/* <h6>{fines.state_name}</h6> */}
         </div>
 
