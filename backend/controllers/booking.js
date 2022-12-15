@@ -113,7 +113,7 @@ const cancelBooking = async (req, res) => {
 
 const payBooking = async (booking_id) => {
     try {
-        let rent_cost = await selectBookingCost(id);
+        let rent_cost = await selectBookingCost(booking_id);
 
         await updateBookingState(booking_id, state.paid);
         await insertRent(booking_id, rent_cost, state.paid);

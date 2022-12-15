@@ -104,9 +104,9 @@ const successPay = async (req, res) => {
 
         // create rent or delete fine
         if (req.query.purpose == 'rent') {
-            await payBooking(req.query.purpose);
+            await payBooking(req.query.product);
         } else {
-            await payFine(req.query.purpose);
+            await payFine(req.query.product);
         }
 
         res.redirect(`${client_url}/thanks`);
