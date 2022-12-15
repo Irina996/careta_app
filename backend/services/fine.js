@@ -4,11 +4,14 @@ const selectFines = async (client_id) => {
     let query_text = 
         `SELECT fine_id, Car.car_group_id, Fine.fine_cost,
             Booking.baby_seat_amount, Booking.is_driver, 
-            Rent.rent_cost
+            Rent.rent_cost, Client.client_name, Client.surname,
+            public.User.email, fine_cost, Fine.car_id
         FROM Fine
             INNER JOIN Booking ON Booking.car_id = Fine.car_id
             INNER JOIN Rent ON Rent.booking_id = Booking.booking_id
             INNER JOIN Car ON Car.car_id = Fine.car_id
+            INNER JOIN Client ON Client.client_id=Booking.client_id
+            INNER JOIN public.User ON public.User.user_id=Client.user_id
         WHERE Booking.is_driver = false
           AND Fine.fine_date BETWEEN Booking.start_date AND Booking.end_date
           AND client_id=$1;`;
