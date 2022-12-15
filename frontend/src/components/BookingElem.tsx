@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../contexts";
 
 import { IBookingList, createPayment } from "../http/carAPI";
+import { createCheckoutSession } from "../http/userAPI";
 import { ADMINFINES_ROUTE, STRIPE_ROUTE, HOME_ROUTE } from "../utils/consts";
 
 interface IBookingElemProps {
@@ -20,17 +21,24 @@ export const BookingElem = ({
   const { token } = useAuthContext()
   const {id} = useParams()
 
-  const onCreatePayment = useCallback(() => {
-    // createPayment(
-    //   { booking_id: id},
-    //   {
-    //     onSuccess: () => {
-    //       navigate("/payment/pay");
-    //     },
-    //     token
-    //   }
-    // );
-  }, [id, token]);
+  // const onCreatePayment = useCallback(() => {
+  //   // createPayment(
+  //   //   { booking_id: id},
+  //   //   {
+  //   //     onSuccess: () => {
+  //   //       navigate("/payment/pay");
+  //   //     },
+  //   //     token
+  //   //   }
+  //   // );
+  // }, [id, token]);
+
+
+  const onRent = useCallback(() => {
+    if (token) {
+      createCheckoutSession({ id: book.booking_id, payment_purpose: 'rent' }, token)
+    }
+  }, [book.booking_id, token])
 
 
   return (
@@ -65,11 +73,11 @@ export const BookingElem = ({
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center "> 
             <Button 
-              onClick={onCreatePayment}
+              // onClick={onCreatePayment}
               className="mb-2" 
               variant={"outline-secondary"} 
+              onClick={onRent}
             > 
-              {" "} 
               Rent 
             </Button> 
             <Button 
@@ -77,7 +85,6 @@ export const BookingElem = ({
               className="mb-2" 
               variant={"outline-secondary"} 
             > 
-              {" "} 
               Cancel
             </Button> 
           </div>
