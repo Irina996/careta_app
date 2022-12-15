@@ -303,7 +303,7 @@ const getRentalList = async (req, res) => {
             message: 'successful',
             data: {
                 active: activeRent,
-                history: [badRent, goodRent],
+                history: [goodRent, badRent],
             },
         });
     } catch (err) {
