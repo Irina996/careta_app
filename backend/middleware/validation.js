@@ -278,8 +278,6 @@ const payment = async (req, res, next) => {
     let validationRule = {
         id: 'required',
         payment_purpose: 'in:fine,rent',
-        payment_method_id: 'required_without:payment_intent_id',
-        payment_intent_id: 'required_without:payment_method_id',
     };
     await validator(req, validationRule, {}, (err, status) => {
         if (!status) {

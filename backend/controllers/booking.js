@@ -111,24 +111,17 @@ const cancelBooking = async (req, res) => {
     }
 };
 
-const payBooking = async (req, res) => {
+const payBooking = async (booking_id) => {
     try {
-        const booking_id = req.body.id; //booking_id
         let rent_cost = await selectBookingCost(id);
 
         await updateBookingState(booking_id, state.paid);
         await insertRent(booking_id, rent_cost, state.paid);
 
-        res.status(200).json({
-            success: true,
-            message: 'successful',
-        });
+        return true;
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            success: false,
-            message: 'fail',
-        });
+        return false;
     }
 };
 

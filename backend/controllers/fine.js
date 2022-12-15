@@ -29,23 +29,15 @@ const getFines = async (req, res) => {
     }
 };
 
-const payFine = async (req, res) => {
+const payFine = async (fine_id) => {
     try {
-        const { id } = req.body; // fine_id
-
-        let result = await deleteFines(id);
+        let result = await deleteFines(fine_id);
         //console.log(result);
 
-        return res.status(200).json({
-            success: true,
-            message: 'successful',
-        });
+        return true;
     } catch (err) {
         console.log(err);
-        return res.status(500).json({
-            success: false,
-            message: 'fail',
-        });
+        return false;
     }
 };
 
