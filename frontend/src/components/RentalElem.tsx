@@ -51,12 +51,12 @@ export const RentalElem = ({
         <div className="d-flex mx-2 flex-column ">
           <h6>Class: {rent.class_name}</h6>
           <h6>Fuel: {rent.fuel_consumption}</h6>
-          <h6>Numbe of seats: {rent.seats_number}</h6>
+          <h6>Number of seats: {rent.seats_number}</h6>
           <h6>Date: {rent.booking_date.split('T')[0]}</h6>
         </div>
 
         <div className="d-flex mx-2 flex-column ">
-          <h6>Name:{rent.client_name}</h6>
+          <h6>Name: {rent.client_name}</h6>
           <h6>E-mail: {rent.email}</h6>
           <h5>Cost: {rent.cost} $</h5>
           <h6>State: {rent.state_name}</h6>
