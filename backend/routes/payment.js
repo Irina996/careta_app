@@ -15,7 +15,7 @@ paymentRouter.get('/stripe-key', verifyClient, (req, res) => {
 });
 
 paymentRouter.post('/card-data', verifyClient, credit_card, saveCardData);
-paymentRouter.get('/card-data', getCardData);
+paymentRouter.get('/card-data', verifyClient, getCardData);
 
 paymentRouter.post(
     '/create-checkout-session',
