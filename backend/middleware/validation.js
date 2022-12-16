@@ -134,28 +134,38 @@ const login = async (req, res, next) => {
 };
 
 const carsFilter = async (req, res, next) => {
-    const validationRule = {
-        brand: 'string',
-        model: 'string',
-        class_name: 'string',
-        gearbox_type: 'string',
-        year_start: 'integer|min:2000|max:2100',
-        year_finish: 'integer|min:2000|max:2100',
-        seats_number: 'integer|min:1',
-        start_date: 'date|after_or_equal_now',
-        end_date: 'date|after_now',
-    };
-    await validator(req, validationRule, {}, (err, status) => {
-        if (!status) {
-            res.status(412).send({
-                success: false,
-                message: 'Validation failed',
-                data: err,
-            });
-        } else {
-            next();
-        }
-    }).catch((err) => console.log(err));
+  const validationRule = {
+    brand: "string",
+    model: "string",
+    class_name: "string",
+    gearbox_type: "string",
+    year_start: "integer|min:2000|max:2100",
+    year_finish: "integer|min:2000|max:2100",
+    seats_number: "integer|min:1",
+    start_date: "date|after_or_equal_now",
+    end_date: "date|after_now",
+  };
+  await validator(req, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: "Validation failed",
+        data: err,
+      });
+    } else if (
+      req.query.start_date != undefined &&
+      req.query.end_date != undefined &&
+      Date.parse(req.query.start_date) >= Date.parse(req.query.end_date)
+    ) {
+      res.status(412).send({
+        success: false,
+        message: "Validation failed",
+        data: "start date should be before end date",
+      });
+    } else {
+      next();
+    }
+  }).catch((err) => console.log(err));
 };
 
 const booking = async (req, res, next) => {
@@ -172,6 +182,12 @@ const booking = async (req, res, next) => {
                 success: false,
                 message: 'Validation failed',
                 data: err,
+            });
+        } else if (Date.parse(req.body.start_date) >= Date.parse(req.body.end_date)) {
+            res.status(412).send({
+                success: false,
+                message: 'Validation failed',
+                data: 'start date should be before end date',
             });
         } else {
             next();
