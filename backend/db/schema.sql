@@ -99,7 +99,8 @@ CREATE TABLE public.Rent(
 
 CREATE TABLE public.Fine(
 	fine_id SERIAL PRIMARY KEY,
-	car_id INTEGER NOT NULL REFERENCES public.Car(car_id),
+	rent_id INTEGER NOT NULL REFERENCES public.Rent(rent_id),
 	fine_cost REAL NOT NULL,
-	fine_date date NOT NULL
+	fine_date date NOT NULL,
+	is_deleted BOOLEAN DEFAULT false NOT NULL
 );

@@ -375,8 +375,15 @@ const removeFine = async (req, res) => {
 
 const addFine = async (req, res) => {
     try {
-        const { car_id, fine_cost, fine_date } = req.body;
-        let fine_id = await insertFine(car_id, fine_cost, fine_date);
+        const { rent_id, fine_cost, fine_date } = req.body;
+        let fine_id = await insertFine(rent_id, fine_cost, fine_date);
+
+        if (!fine_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Fine before rent start',
+            });
+        }
 
         if (fine_id && fine_cost > 100.0) {
             let r = await updateRate(fine_id, -1);
@@ -395,8 +402,8 @@ const addFine = async (req, res) => {
 
 const editFine = async (req, res) => {
     try {
-        const { car_id, fine_cost, fine_date } = req.body;
-        let result = await updateFine(car_id, fine_cost, fine_date);
+        const { rent_id, fine_cost, fine_date } = req.body;
+        let result = await updateFine(rent_id, fine_cost, fine_date);
 
         return res.status(200).json({
             success: true,

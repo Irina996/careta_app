@@ -273,7 +273,7 @@ const imageUrl = async (req, res, next) => {
 
 const fine = async (req, res, next) => {
     let validationRule = {
-        car_id: 'required|integer',
+        rent_id: 'required|integer',
         fine_cost: 'required|numeric|min:0',
         fine_date: 'required|date',
     };
