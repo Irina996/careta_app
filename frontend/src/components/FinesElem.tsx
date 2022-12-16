@@ -26,11 +26,11 @@ export const FinesElem = ({
   const onAddFine = useCallback(() => {
     if (fine_cost !== undefined) {
       addAdminFine(
-        { fine_cost: Number(fine_cost), car_id: fines.car_id },
+        { fine_cost: Number(fine_cost), rent_id: fines.rent_id },
         token
       );
     }
-  }, [token, fine_cost, fines.car_id]);
+  }, [token, fine_cost, fines.rent_id]);
 
   return (
     <Row className="d-flex mx-5 justify-content-center align-items-center">

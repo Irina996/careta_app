@@ -4,7 +4,7 @@ export interface IFinesList {
   baby_seat_amount: boolean;
   brand_name: string;
   car_cost: number;
-  car_id: number;
+  rent_id: number;
   car_group_id: number;
   class_name: string;
   client_name: string;
@@ -42,7 +42,7 @@ export const fetchAdminFinesList = async (token?: string) => {
 };
 
 export const addAdminFine = async (
-  input: { fine_cost: number; car_id: number },
+  input: { fine_cost: number; rent_id: number },
   token?: string
 ) => {
   const { data } = await $host.post(

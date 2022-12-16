@@ -57,9 +57,7 @@ const Car = () => {
             token
           }
         );
-      }, [id, date1, date2, baby_seats, driver, token]);
-
-
+    }, [id, date1, date2, baby_seats, driver, token]);
 
 
     return (
@@ -94,9 +92,9 @@ const Car = () => {
             <div className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center " >
             <h5 >Availability</h5>
                 <div className="input-group input-daterange" className="d-flex mx-auto mb-5 flex-column justify-content-center align-items-center ">
-                    <input type="date" value={date1 || ''} onChange={e => setDate1(e.target.value)} className="form-control"/>
+                    <input type="date" value={date1 || ''}  id="fdate" onChange={e => setDate1(e.target.value)} className="form-control"/>
                     <div className="input-group-addon">to</div>
-                    <input type="date" value={date2 || ''} onChange={e => setDate2(e.target.value)} className="form-control" />
+                    <input type="date" id="sdate" value={date2 || ''} onChange={e => setDate2(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-check">
                     <input className="form-check-input" checked={driver || ''} onChange={e => setDriver(e.target.checked)} type="checkbox" value="" id="flexCheckDefault"/>
