@@ -56,7 +56,7 @@ CREATE TABLE public.Car_group (
 	group_id SERIAL PRIMARY KEY,
 	car_brand_id INTEGER NOT NULL REFERENCES  public.Car_brand(brand_id),
 	car_model_id INTEGER NOT NULL REFERENCES  public.Car_model(model_id),
-	car_class_id INTEGER NOT NULL REFERENCES  public.Car_model(model_id),
+	car_class_id INTEGER NOT NULL REFERENCES  public.Car_class(class_id),
 	gearbox_type_id INTEGER NOT NULL REFERENCES public.Gearbox_type(type_id),
 	creation_year INTEGER NOT NULL,
 	fuel_consumption REAL NOT NULL,
