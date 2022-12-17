@@ -109,6 +109,20 @@ const selectRelatedBookingId = async (car_id, date) => {
     }
 };
 
+const updateLateBookings = async (date_now) => {
+    try {
+        let query_text = 
+            `UPDATE Booking
+            SET booking_state=3
+            WHERE start_date <= $1;`;
+        let query_params = [date_now];
+        let result = await db_query(query_text, query_params);
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export {
     selectBookingList,
     insertBooking,
@@ -116,4 +130,5 @@ export {
     selectBookingCost,
     updateBookingCar,
     selectRelatedBookingId,
+    updateLateBookings,
 };

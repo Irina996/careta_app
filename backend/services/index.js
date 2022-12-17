@@ -29,6 +29,7 @@ import {
     selectBookingCost,
     updateBookingCar,
     selectRelatedBookingId,
+    updateLateBookings,
 } from './booking.js';
 import {
     selectRentalList,
@@ -116,4 +117,5 @@ export {
     selectCarInfo,
     selectCountAllCars,
     selectCountCarGroup,
+    updateLateBookings,
 };

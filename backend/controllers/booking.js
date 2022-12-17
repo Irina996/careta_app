@@ -5,12 +5,23 @@ import {
     selectBookingList,
     updateBookingState,
     selectBookingCost,
+    updateLateBookings,
 } from '../services/index.js';
 import state from '../config/state_code.js';
+
+const cancelLateBookings = async () => {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${year}-${month}-${day}`;
+    await updateLateBookings(currentDate);
+}
 
 const getBookingList = async (req, res) => {
     try {
         const { client_id } = req.query;
+        await cancelLateBookings();
         let bookingList = await selectBookingList(client_id);
         return res.status(200).json({
             success: true,
