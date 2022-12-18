@@ -23,6 +23,7 @@ import {
     selectStateRentalList,
     updateBookingCar,
     updateCar,
+    updateFine,
     updateRate,
     updateRent,
 } from '../services/index.js';
@@ -320,6 +321,15 @@ const estimateRent = async (req, res, state_value) => {
 
         let result = await updateRent(state_value, id);
 
+        if (state_value == state.bad) {
+            const date = new Date();
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            let currentDate = `${year}-${month}-${day}`;
+            await insertFine(id, 0, currentDate);
+        }
+
         return res.status(200).json({
             success: true,
             message: 'successful',
@@ -375,17 +385,10 @@ const removeFine = async (req, res) => {
 
 const addFine = async (req, res) => {
     try {
-        const { rent_id, fine_cost, fine_date } = req.body;
-        let fine_id = await insertFine(rent_id, fine_cost, fine_date);
+        const { rent_id, fine_cost} = req.body;
+        await updateFine(rent_id, fine_cost);
 
-        if (!fine_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'Fine before rent start',
-            });
-        }
-
-        if (fine_id && fine_cost > 100.0) {
+        if (fine_cost > 100.0) {
             let r = await updateRate(fine_id, -1);
         }
         return res.status(200).json({

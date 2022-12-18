@@ -47,7 +47,8 @@ const selectAllFines = async () => {
                Client.surname,
                public.User.email,
                fine_cost,
-               Booking.car_id
+               Booking.car_id,
+               Rent.rent_id
         FROM Fine
                  INNER JOIN Rent ON Rent.rent_id = Fine.rent_id
                  INNER JOIN Booking ON Booking.booking_id = Rent.booking_id
@@ -79,10 +80,9 @@ const insertFine = async (rent_id, fine_cost, fine_date) => {
     }
 };
 
-const updateFine = async (rent_id, fine_cost, fine_date) => {
-    let query_text = `UPDATE Fine SET fine_cost=$2, fine_date=$3
-         WHERE rent_id=$1;`;
-    let query_params = [rent_id, fine_cost, fine_date];
+const updateFine = async (rent_id, fine_cost) => {
+    let query_text = `UPDATE Fine SET fine_cost=$2 WHERE rent_id=$1;`;
+    let query_params = [rent_id, fine_cost];
     let result = await db_query(query_text, query_params);
     return result;
 };
