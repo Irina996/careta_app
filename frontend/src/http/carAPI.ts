@@ -174,9 +174,6 @@ export const fetchAdminOneCar = async (id: number, token?: string) => {
   return data;
 };
 
-
-
-// KARINA
  
 export const fetchBookingList = async (token?: string) => {
   const { data } = await $host.get<

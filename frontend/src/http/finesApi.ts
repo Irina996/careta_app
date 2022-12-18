@@ -57,7 +57,7 @@ export const addAdminFine = async (
   return data;
 };
 
-// KARINA
+
 export const fetchFinesList = async (token?: string) => {
   const { data } = await $host.get<IResponse<Array<IFinesList>>>("fines/", {
     headers: {
