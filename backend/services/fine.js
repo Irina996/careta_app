@@ -64,9 +64,6 @@ const selectAllFines = async () => {
 const insertFine = async (rent_id, fine_cost, fine_date) => {
     let query_text = 
         `INSERT INTO Fine(rent_id, fine_cost, fine_date)
-        VALUES ($1, $2, $3)
-        RETURNING fine_id;
-        INSERT INTO Fine(rent_id, fine_cost, fine_date)
         SELECT $1, $2, $3
         WHERE (SELECT start_date
             FROM Rent
