@@ -71,7 +71,7 @@ const insertFine = async (rent_id, fine_cost, fine_date) => {
         WHERE (SELECT start_date
             FROM Rent
                         INNER JOIN Booking ON Rent.booking_id = Booking.booking_id
-            WHERE rent_id = 12) <= $3
+            WHERE rent_id = $1) <= $3
         RETURNING fine_id;`;
     let query_params = [rent_id, fine_cost, fine_date];
     let result = await db_query(query_text, query_params);
