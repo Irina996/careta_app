@@ -4,7 +4,6 @@ const selectFines = async (client_id) => {
     let query_text = 
         `SELECT fine_id,
                Car.car_group_id,
-               Fine.fine_cost,
                Booking.baby_seat_amount,
                Booking.is_driver,
                Rent.rent_cost,
@@ -39,7 +38,6 @@ const selectAllFines = async () => {
     let query_text = 
         `SELECT fine_id,
                Car.car_group_id,
-               Fine.fine_cost,
                Booking.baby_seat_amount,
                Booking.is_driver,
                Rent.rent_cost,
